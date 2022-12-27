@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-578704771101202825
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 6
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: realtimeSkyboxDay
+  m_Shader: {fileID: -6465566751694194690, guid: fb26076498dcf374388a36ded8ac552b,
+    type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_20CAF406:
+        m_Texture: {fileID: 2800000, guid: d421977d3d5e40d47b07bb0ad79a4a35, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_3163ABF1:
+        m_Texture: {fileID: 2800000, guid: e5055e0d246bd1047bdb28057a93753c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_6BA91097:
+        m_Texture: {fileID: 2800000, guid: 6dfbb622ac6a2ac4d8bfe5674fe28374, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C317BDD3:
+        m_Texture: {fileID: 2800000, guid: 2d15e4a275691a645ab383c7c5724d67, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 4101ccb8f2386d14c843c54610af1778, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Vector1_166C34A9: 0.05
+    - Vector1_249357C1: 0.146
+    - Vector1_2CC6A532: 0
+    - Vector1_3B7A233E: 0
+    - Vector1_6F3D4927: -0.01
+    - Vector1_9BA3FBEE: 0.8
+    - Vector1_9E12CF26: 0.02
+    - Vector1_B93A03DE: 0.005
+    - Vector1_BA803F6: 0
+    - Vector1_D80769F7: 0
+    - Vector1_ECE38ED2: 0.05
+    - Vector1_FA4E5253: 0.5
+    - Vector1_FE797C36: 0.1
+    - _AtmosphereThickness: 2.79
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _EmissionScaleUI: 0
+    - _Exposure: 5.94
+    - _Glossiness: 0.5
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Rotation: 0
+    - _Scale: 0.3
+    - _SrcBlend: 1
+    - _SunSize: 0.295
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - Color_1EB49FED: {r: 0, g: 0, b: 0, a: 0}
+    - Color_424F81E0: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 0}
+    - Color_68FD0CD8: {r: 0.31594875, g: 0.69411767, b: 0.9433962, a: 1}
+    - Color_83CF459: {r: 0, g: 0, b: 0, a: 0}
+    - Color_AB9D6D2F: {r: 0, g: 0, b: 0, a: 0}
+    - Color_B54BEABE: {r: 1, g: 0.7875762, b: 0, a: 1}
+    - Color_BE31CDF2: {r: 0.051886797, g: 0.6060267, b: 1, a: 1}
+    - Color_D230EFA1: {r: 0.09344961, g: 0.085439645, b: 0.14150941, a: 0}
+    - Color_E5129607: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_B8A3E6A9: {r: 0.29, g: 0.54, b: 0, a: 0}
+    - Vector4_62625E5C: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 0.37800002, g: 0.9999997, b: 1, a: 1}
+    - _Color2: {r: 0, g: 0.17241383, b: 1, a: 1}
+    - _DayAndNight: {r: 0.1, g: 0.8, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColorUI: {r: 1, g: 1, b: 1, a: 1}
+    - _GroundColor: {r: 0.07586193, g: 0, b: 1, a: 1}
+    - _SkyTint: {r: 1, g: 0, b: 0, a: 1}
+    - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
+    - _WorldSpaceLightPos1: {r: 0, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
