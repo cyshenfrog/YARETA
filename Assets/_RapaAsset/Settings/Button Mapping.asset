@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc533db7fb8f28409a2df090c840d62, type: 3}
+  m_Name: Button Mapping
+  m_EditorClassIdentifier: 
+  Mapping:
+  - name: Jump
+    Type: 0
+    Button: 0
+    Axis: -1
+    KB: 85
+    Mouse: -1
+  - name: RoketJump
+    Type: 1
+    Button: 5
+    Axis: -1
+    KB: 81
+    Mouse: -1
+  - name: Running
+    Type: 2
+    Button: 4
+    Axis: -1
+    KB: 77
+    Mouse: -1
+  - name: Interact
+    Type: 3
+    Button: 2
+    Axis: -1
+    KB: 4
+    Mouse: -1
+  - name: LeftChoise
+    Type: 4
+    Button: 2
+    Axis: -1
+    KB: -1
+    Mouse: -1
+  - name: RightChoise
+    Type: 5
+    Button: 1
+    Axis: -1
+    KB: -1
+    Mouse: -1
+  - name: Scan
+    Type: 6
+    Button: 7
+    Axis: -1
+    KB: -1
+    Mouse: 1
+  - name: DrawMode
+    Type: 7
+    Button: 3
+    Axis: -1
+    KB: 16
+    Mouse: -1
+  - name: Menu
+    Type: 8
+    Button: -1
+    Axis: 0
+    KB: 87
+    Mouse: -1
+  - name: OffWork
+    Type: 9
+    Button: 2
+    Axis: -1
+    KB: -1
+    Mouse: -1
+  - name: Tutorial
+    Type: 10
+    Button: 9
+    Axis: -1
+    KB: 89
+    Mouse: -1
+  - name: Confirm
+    Type: 11
+    Button: 0
+    Axis: -1
+    KB: 86
+    Mouse: -1
+  - name: Cancel
+    Type: 12
+    Button: 1
+    Axis: -1
+    KB: 91
+    Mouse: -1
+  - name: Neither
+    Type: 13
+    Button: 3
+    Axis: -1
+    KB: -1
+    Mouse: -1
+  - name: Draw
+    Type: 14
+    Button: 7
+    Axis: -1
+    KB: -1
+    Mouse: 0
+  - name: Drag
+    Type: 15
+    Button: 7
+    Axis: -1
+    KB: -1
+    Mouse: 1

@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1026189109059600129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1026189109059600132}
+  - component: {fileID: 1026189109059600135}
+  - component: {fileID: 1026189109059600134}
+  m_Layer: 2
+  m_Name: Height Fog Override (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1026189109059600132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026189109059600129}
+  m_LocalRotation: {x: 0.009828323, y: 0.04434731, z: -0.014125934, w: 0.9988679}
+  m_LocalPosition: {x: -97.7, y: -5.3, z: -28.3}
+  m_LocalScale: {x: 68.01227, y: 25.203716, z: 35.171806}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 1.197, y: 5.0680003, z: -1.567}
+--- !u!65 &1026189109059600135
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026189109059600129}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1026189109059600134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026189109059600129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1c26670b7bd6a47ac695141473ab42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  styledBanner: 0
+  messageNoHeightFogGlobal: 0
+  categoryVolume: 0
+  volumeDistanceFade: 5
+  volumeGizmoVisibility: 0.15
+  categoryScene: 0
+  mainCamera: {fileID: 0}
+  mainDirectional: {fileID: 0}
+  categoryMode: 0
+  messagePreset: 0
+  messageTimeOfDay: 0
+  fogMode: 10
+  presetMaterial: {fileID: 0}
+  presetDay: {fileID: 0}
+  presetNight: {fileID: 0}
+  timeOfDay: 0
+  categoryFog: 0
+  fogIntensity: 0.934
+  fogAxisMode: 1
+  fogLayersMode: 10
+  fogColorStart: {r: 0.0977661, g: 0.11020042, b: 0.122641504, a: 1}
+  fogColorEnd: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
+  fogColorDuo: 0
+  fogDistanceStart: -100
+  fogDistanceEnd: 100
+  fogDistanceFalloff: 1
+  fogHeightStart: 0
+  fogHeightEnd: 500
+  fogHeightFalloff: 1
+  categorySkybox: 0
+  skyboxFogIntensity: 0
+  skyboxFogHeight: 1
+  skyboxFogFalloff: 1
+  skyboxFogFill: 1
+  categoryDirectional: 0
+  directionalIntensity: 0
+  directionalFalloff: 1
+  directionalColor: {r: 1, g: 1, b: 1, a: 1}
+  categoryNoise: 0
+  noiseMode: 0
+  noiseIntensity: 1
+  noiseDistanceEnd: 50
+  noiseScale: 5
+  noiseSpeed: {x: 0.5, y: 0, z: 0.016}
+  styledSpace0: 0
+  version: 180
+  directionalMode: 1

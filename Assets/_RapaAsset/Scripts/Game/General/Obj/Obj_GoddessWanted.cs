@@ -1,0 +1,5 @@
+﻿using UnityEngine;
+
+public class Obj_GoddessWanted : Obj_Info
+{
+}

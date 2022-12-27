@@ -1,0 +1,25 @@
+{
+    "name": "YARETA",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:57a6d82589ae03c4cabdc058f719f231",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:776d03a35f1b52c4a9aed9f56d7b4229",
+        "GUID:174bc9f391f1b7f4292b3824c5019a21",
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95",
+        "GUID:5ba0018c7c18fad4faa5d933bc000475",
+        "GUID:d7abfb1caeccec54f9351ebef17fc6bb",
+        "GUID:6d4810c931e638d489b58e9b332f3fb9",
+        "GUID:25e3dd68e4f35024e870d81e6f6e8a18"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
