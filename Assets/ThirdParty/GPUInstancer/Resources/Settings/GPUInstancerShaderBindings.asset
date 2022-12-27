@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d8588b9b4d4e344b3c6c8da8806a1c, type: 3}
+  m_Name: GPUInstancerShaderBindings
+  m_EditorClassIdentifier: 
+  shaderInstances:
+  - name: Universal Render Pipeline/Nature/Stylized Grass
+    instancedShader: {fileID: 4800000, guid: ce030fafd7a7125418bfe69f68bbdf7a, type: 3}
+    modifiedDate: 11/15/2022 13:19:20.649
+    isOriginalInstanced: 0
+    extensionCode: 
+  - name: IL3DN/Leaf
+    instancedShader: {fileID: 4800000, guid: da34259a0694f9b49b1ce997d7ea72d5, type: 3}
+    modifiedDate: 11/15/2022 13:19:21.830
+    isOriginalInstanced: 0
+    extensionCode: 
+  - name: IL3DN/Branch
+    instancedShader: {fileID: 4800000, guid: 10d4adbd99f4925478586cebc0ecdc9f, type: 3}
+    modifiedDate: 11/15/2022 13:19:22.815
+    isOriginalInstanced: 0
+    extensionCode: 
+  - name: IL3DN/Pine
+    instancedShader: {fileID: 4800000, guid: a05e4f282f934d947a64c53fd30ae8f8, type: 3}
+    modifiedDate: 11/15/2022 13:19:23.714
+    isOriginalInstanced: 0
+    extensionCode: 
+  - name: FlatKit/Stylized Surface
+    instancedShader: {fileID: 4800000, guid: ade105bb33dd00446907989e9d0ea933, type: 3}
+    modifiedDate: 11/15/2022 13:19:24.955
+    isOriginalInstanced: 0
+    extensionCode: 
+  - name: Universal Render Pipeline/Particles/Simple Lit
+    instancedShader: {fileID: 4800000, guid: 3ae98271e566ef2418053864143f81a1, type: 3}
+    modifiedDate: 11/15/2022 13:19:26.159
+    isOriginalInstanced: 0
+    extensionCode: 
+  - name: Universal Render Pipeline/Simple Lit
+    instancedShader: {fileID: 4800000, guid: 4df590142f3acde488ad9548c5cc91bb, type: 3}
+    modifiedDate: 11/15/2022 13:19:27.254
+    isOriginalInstanced: 0
+    extensionCode: 
