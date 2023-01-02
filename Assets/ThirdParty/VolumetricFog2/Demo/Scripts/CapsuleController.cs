@@ -39,7 +39,7 @@ namespace VolumetricFogAndMist2.Demos
             if ((transform.position - lastPos).magnitude > distanceCheck)
             {
                 lastPos = transform.position;
-                fogVolume.SetFogOfWarAlpha(transform.position, fogHoleRadius, 0, clearDuration);
+                fogVolume.SetFogOfWarAlpha(transform.position, fogHoleRadius, 0, true, clearDuration, .8f, 2, 0.5f);
             }
         }
     }

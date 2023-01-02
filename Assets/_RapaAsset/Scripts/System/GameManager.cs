@@ -49,7 +49,7 @@ public class GameManager : UnitySingleton_D<GameManager>
         base.Awake();
         Application.targetFrameRate = 60;
         //Cursor.lockState = CursorLockMode.Locked;
-        Cursorvisible = true;
+        //Cursorvisible = true;
         GameInput.OnSwitchController += UpdateCursor;
         GameInput.OnSwitchController += InitControllerType;
         SaveDataManager.MainCam = Camera.main;
@@ -112,7 +112,7 @@ public class GameManager : UnitySingleton_D<GameManager>
     {
         if (focus)
         {
-            Cursorvisible = Cursorvisible;
+            Cursor.visible = Cursorvisible;
         }
     }
 }
