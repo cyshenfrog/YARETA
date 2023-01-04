@@ -34,11 +34,11 @@ public class BigMonster : MonoBehaviour
                 Run();
                 return;
             }
-            if (GameInput.GetButtonDown(Actions.RightChoise))
+            if (GameInput.GetButtonDown(Actions.Right))
             {
                 Run();
             }
-            else if (GameInput.GetButtonDown(Actions.LeftChoise))
+            else if (GameInput.GetButtonDown(Actions.Left))
             {
                 StepBack();
             }

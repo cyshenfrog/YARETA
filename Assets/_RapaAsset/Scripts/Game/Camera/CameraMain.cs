@@ -244,20 +244,20 @@ public class CameraMain : UnitySingleton_D<CameraMain>
             }
         }
 
-        if (Hinput.anyGamepad.leftStick)
-        {
-            if (autoRotateCD > 0)
-            {
-                autoRotateCD -= Time.deltaTime;
-                if (autoRotateCD < 0)
-                    autoRotate = true;
-            }
-        }
-        else if (Hinput.anyGamepad.rightStick)
-        {
-            autoRotateCD = 2;
-            autoRotate = false;
-        }
+        //if (Hinput.anyGamepad.leftStick)
+        //{
+        //    if (autoRotateCD > 0)
+        //    {
+        //        autoRotateCD -= Time.deltaTime;
+        //        if (autoRotateCD < 0)
+        //            autoRotate = true;
+        //    }
+        //}
+        //else if (Hinput.anyGamepad.rightStick)
+        //{
+        //    autoRotateCD = 2;
+        //    autoRotate = false;
+        //}
 
         if (GameInput.IsCameraMove)
         {

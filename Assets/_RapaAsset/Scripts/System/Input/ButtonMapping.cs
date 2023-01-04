@@ -22,7 +22,7 @@ public class ButtonMapping : ScriptableObject
     public bool HasMapping(Actions Action)
     {
         ButtonMappingData mappingData = Mapping[(int)Action];
-        if (GameInput.usingGamepad)
+        if (GameInput.UsingJoystick)
         {
             return mappingData.Axis != Axis.None || mappingData.Button != Buttons.None;
         }

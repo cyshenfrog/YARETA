@@ -52,19 +52,19 @@ public class PasswordLock : MonoBehaviour
         if (!active)
             return;
 
-        if (Hinput.anyGamepad.dPad.down.justPressed || Hinput.anyGamepad.leftStick.down.justPressed || Hinput.anyGamepad.rightStick.down.justPressed)
+        if (GameInput.GetButtonDown(Actions.Down))
         {
             Rotate(false);
         }
-        else if (Hinput.anyGamepad.dPad.up.justPressed || Hinput.anyGamepad.leftStick.up.justPressed || Hinput.anyGamepad.rightStick.up.justPressed)
+        else if (GameInput.GetButtonDown(Actions.Up))
         {
             Rotate(true);
         }
-        else if (Hinput.anyGamepad.dPad.right.justPressed || Hinput.anyGamepad.leftStick.right.justPressed || Hinput.anyGamepad.rightStick.right.justPressed)
+        else if (GameInput.GetButtonDown(Actions.Right))
         {
             ChangeRoll(true);
         }
-        else if (Hinput.anyGamepad.dPad.left.justPressed || Hinput.anyGamepad.leftStick.left.justPressed || Hinput.anyGamepad.rightStick.left.justPressed)
+        else if (GameInput.GetButtonDown(Actions.Left))
         {
             ChangeRoll(false);
         }

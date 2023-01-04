@@ -22,27 +22,27 @@ public class livingBirdsDemoScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (GameInput.Keyboard.D.pressed || GameInput.Keyboard.rightArrow.pressed)
-        {
-            camera1.transform.localEulerAngles += new Vector3(0.0f, 90.0f, 0.0f) * Time.deltaTime;
-        }
-        if (GameInput.Keyboard.A.pressed || GameInput.Keyboard.leftArrow.pressed)
-        {
-            camera1.transform.localEulerAngles -= new Vector3(0.0f, 90.0f, 0.0f) * Time.deltaTime;
-        }
-        if (Hinput.mouse.leftClick.justPressed)
-        {
-            ray = currentCamera.ScreenPointToRay(Hinput.mouse.pixelPosition);
-            hits = Physics.RaycastAll(ray);
-            foreach (RaycastHit hit in hits)
-            {
-                if (hit.collider.tag == "lb_bird")
-                {
-                    hit.transform.SendMessage("KillBirdWithForce", ray.direction * 500);
-                    break;
-                }
-            }
-        }
+        //if (GameInput.Keyboard.D.pressed || GameInput.Keyboard.rightArrow.pressed)
+        //{
+        //    camera1.transform.localEulerAngles += new Vector3(0.0f, 90.0f, 0.0f) * Time.deltaTime;
+        //}
+        //if (GameInput.Keyboard.A.pressed || GameInput.Keyboard.leftArrow.pressed)
+        //{
+        //    camera1.transform.localEulerAngles -= new Vector3(0.0f, 90.0f, 0.0f) * Time.deltaTime;
+        //}
+        //if (Hinput.mouse.leftClick.justPressed)
+        //{
+        //    ray = currentCamera.ScreenPointToRay(Hinput.mouse.pixelPosition);
+        //    hits = Physics.RaycastAll(ray);
+        //    foreach (RaycastHit hit in hits)
+        //    {
+        //        if (hit.collider.tag == "lb_bird")
+        //        {
+        //            hit.transform.SendMessage("KillBirdWithForce", ray.direction * 500);
+        //            break;
+        //        }
+        //    }
+        //}
     }
 
     private void OnGUI()

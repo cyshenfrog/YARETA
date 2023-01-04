@@ -21,7 +21,7 @@ public class GameManager : UnitySingleton_D<GameManager>
         set
         {
             cursorvisible = value;
-            if (!GameInput.usingGamepad)
+            if (!GameInput.UsingJoystick)
             {
                 Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
                 Cursor.visible = value;
@@ -63,13 +63,12 @@ public class GameManager : UnitySingleton_D<GameManager>
 
     private void InitControllerType(bool usingGamepad)
     {
-        print(Hinput.gamepad[0].type);
         if (usingGamepad)
         {
-            if (Hinput.gamepad[0].type.Contains("DualShock"))
-                GameInput.ControllerType = ControllerType.PlayStation;
-            if (Hinput.gamepad[0].type.Contains("ProController"))
-                GameInput.ControllerType = ControllerType.Switch;
+            if (GameInput.RewiredPlayer.controllers.GetLastActiveController().name.Contains("Sony"))
+                GameInput.JoyButtonType = ControllerType.PlayStation;
+            if (GameInput.RewiredPlayer.controllers.GetLastActiveController().name.Contains("Nintendo"))
+                GameInput.JoyButtonType = ControllerType.Switch;
             GameInput.OnSwitchController -= InitControllerType;
         }
     }
@@ -84,27 +83,9 @@ public class GameManager : UnitySingleton_D<GameManager>
 
     private void Update()
     {
-        if (GameInput.usingGamepad)
-        {
 #if UNITY_EDITOR
-            if (Hinput.keyboard.anyKey.justPressed)
-                GameInput.usingGamepad = false;
-#else
-                if (Hinput.keyboard.anyKey.justPressed || Hinput.mouse.delta.magnitude > 0.1f)
-                    GameInput.usingGamepad = false;
-#endif
-        }
-        else
-        {
-            if (Hinput.anyGamepad.anyInput.justPressed)
-                GameInput.usingGamepad = true;
-        }
-#if UNITY_EDITOR
-        if (Hinput.keyboard.F1.justPressed)
-        {
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.F1))
             Cursorvisible = true;
-            GameInput.usingGamepad = false;
-        }
 #endif
     }
 

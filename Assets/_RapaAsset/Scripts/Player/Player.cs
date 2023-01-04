@@ -340,9 +340,9 @@ public class Player : UnitySingleton_D<Player>
         //Anim.SetFloat("Direction", GameInput.Move.x);
         if (!OneDirMode && CanSpringAndJump && GameInput.IsMove)
         {
-            if (Hinput.anyGamepad.leftStickClick.justPressed)
+            if (GameInput.GetButtonDown(Actions.ToggleRun))
                 AutoRunning = !AutoRunning;
-            if (GameInput.GetButton(Actions.Running) || Hinput.anyGamepad.leftTrigger || AutoRunning)
+            if (GameInput.GetButton(Actions.Run) || AutoRunning)
                 Anim.SetBool("isSprinting", true);
             else
                 Anim.SetBool("isSprinting", false);

@@ -19,11 +19,11 @@ public class UI_Begining : MonoBehaviour
 
     private void Update()
     {
-        if (Hinput.anyGamepad.dPad.right.justPressed || Hinput.anyGamepad.leftStick.right.justPressed || Hinput.anyGamepad.rightStick.right.justPressed)
+        if (GameInput.GetButtonDown(Actions.Right))
         {
             Chinese();
         }
-        else if (Hinput.anyGamepad.dPad.left.justPressed || Hinput.anyGamepad.leftStick.left.justPressed || Hinput.anyGamepad.rightStick.left.justPressed)
+        else if (GameInput.GetButtonDown(Actions.Left))
         {
             English();
         }

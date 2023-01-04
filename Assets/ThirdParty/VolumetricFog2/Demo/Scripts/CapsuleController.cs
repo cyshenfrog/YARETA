@@ -18,19 +18,19 @@ namespace VolumetricFogAndMist2.Demos
             float disp = Time.deltaTime * moveSpeed;
 
             // moves capsule with arrow keys
-            if (Hinput.keyboard.leftArrow.pressed)
+            if (Input.GetKey(KeyCode.LeftArrow))
             {
                 transform.Translate(-disp, 0, 0);
             }
-            else if (Hinput.keyboard.rightArrow.pressed)
+            else if (Input.GetKey(KeyCode.RightArrow))
             {
                 transform.Translate(disp, 0, 0);
             }
-            if (Hinput.keyboard.upArrow.pressed)
+            if (Input.GetKey(KeyCode.UpArrow))
             {
                 transform.Translate(0, 0, disp);
             }
-            else if (Hinput.keyboard.downArrow.pressed)
+            else if (Input.GetKey(KeyCode.DownArrow))
             {
                 transform.Translate(0, 0, -disp);
             }

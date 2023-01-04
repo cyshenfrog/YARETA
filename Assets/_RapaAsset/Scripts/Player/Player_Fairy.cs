@@ -57,9 +57,9 @@ public class Player_Fairy : Player
                 StopScan();
             return;
         }
-        if (GameInput.GetButtonDown(Actions.Scan))
+        if (GameInput.GetButtonDown(Actions.Touch))
             StartScan();
-        else if (GameInput.GetButtonUp(Actions.Scan))
+        else if (GameInput.GetButtonUp(Actions.Touch))
             StopScan();
         if (Scanning)
         {

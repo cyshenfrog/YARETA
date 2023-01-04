@@ -4,7 +4,7 @@ public class StageMain<T> : UnitySingleton_D<T> where T : Component
 {
     private void Update()
     {
-        if (Hinput.keyboard.F8.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.F8))
             Player.Instance.Die();
     }
 

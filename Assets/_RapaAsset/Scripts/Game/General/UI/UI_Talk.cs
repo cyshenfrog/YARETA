@@ -157,7 +157,7 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
                 Dialog.text = Tool_StringTool.CheckLineBreak(currentTalks[talkCount]);
             talkCount++;
             if (overrideInput && talkCount == currentTalks.Length)
-                UpdateOverrideIcon(GameInput.usingGamepad);
+                UpdateOverrideIcon(GameInput.UsingJoystick);
             if (autoMode)
                 AutoTalking = StartCoroutine(_AutoNext());
         }
@@ -194,7 +194,7 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
                 }
                 talkCount++;
                 if (overrideInput && talkCount == currentTalks.Length)
-                    UpdateOverrideIcon(GameInput.usingGamepad);
+                    UpdateOverrideIcon(GameInput.UsingJoystick);
                 if (autoMode)
                     AutoTalking = StartCoroutine(_AutoNext());
                 else
@@ -215,7 +215,7 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
         {
             overrideInput = false;
             GameInput.OnSwitchController -= UpdateOverrideIcon;
-            Button.GetComponent<UI_InputIcon>().Switch(GameInput.usingGamepad);
+            Button.GetComponent<UI_InputIcon>().Switch(GameInput.UsingJoystick);
         }
         TalkGroup.gameObject.SetActive(false);
     }

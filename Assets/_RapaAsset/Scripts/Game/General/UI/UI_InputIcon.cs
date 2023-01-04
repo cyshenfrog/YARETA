@@ -9,7 +9,7 @@ public class UI_InputIcon : MonoBehaviour
 {
     public ControllerButton ControllerIcon;
 
-    public Sprite Controller { get { return GameManager.Instance.ControllerSprites.GetSprit(GameInput.ControllerType, ControllerIcon); } }
+    public Sprite Controller { get { return GameManager.Instance.ControllerSprites.GetSprit(GameInput.JoyButtonType, ControllerIcon); } }
     public Sprite KB;
     private ControllerButton ori_C;
     private Sprite ori_KB;
@@ -33,25 +33,25 @@ public class UI_InputIcon : MonoBehaviour
         ori_KB = KB;
         icon = GetComponent<Image>();
         originalSize = icon.rectTransform.sizeDelta;
-        Switch(GameInput.usingGamepad);
+        Switch(GameInput.UsingJoystick);
         GameInput.OnSwitchController += Switch;
     }
 
     public void ResetKBIcon()
     {
         KB = ori_KB;
-        Switch(GameInput.usingGamepad);
+        Switch(GameInput.UsingJoystick);
     }
 
     public void ResetJoyIcon()
     {
         ControllerIcon = ori_C;
-        Switch(GameInput.usingGamepad);
+        Switch(GameInput.UsingJoystick);
     }
 
     public void UpdateIcon()
     {
-        Switch(GameInput.usingGamepad);
+        Switch(GameInput.UsingJoystick);
     }
 
     public void Switch(bool isController)

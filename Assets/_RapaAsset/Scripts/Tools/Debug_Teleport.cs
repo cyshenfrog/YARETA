@@ -12,43 +12,43 @@ public class Debug_Teleport : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Hinput.keyboard.digit1.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.Alpha1))
         {
             Teleport(0);
         }
-        if (Hinput.keyboard.digit2.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.Alpha2))
         {
             Teleport(1);
         }
-        if (Hinput.keyboard.digit3.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.Alpha3))
         {
             Teleport(2);
         }
-        if (Hinput.keyboard.digit4.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.Alpha4))
         {
             Teleport(3);
         }
-        if (Hinput.keyboard.digit5.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.Alpha5))
         {
             Teleport(4);
         }
-        if (Hinput.keyboard.digit6.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.Alpha6))
         {
             Teleport(5);
         }
-        if (Hinput.keyboard.digit7.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.Alpha7))
         {
             Teleport(6);
         }
-        if (Hinput.keyboard.digit8.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.Alpha8))
         {
             Teleport(7);
         }
-        if (Hinput.keyboard.digit9.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.Alpha9))
         {
             Teleport(8);
         }
-        if (Hinput.keyboard.digit0.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.Alpha0))
         {
             Teleport(9);
         }

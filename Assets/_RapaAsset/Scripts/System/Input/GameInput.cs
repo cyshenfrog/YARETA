@@ -1,16 +1,16 @@
-﻿using HinputClasses;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
+using Rewired;
 
 public enum Actions
 {
     Jump,
     RoketJump,
-    Running,
+    Run,
     Interact,
-    LeftChoise,
-    RightChoise,
-    Scan,
+    Left,
+    Right,
+    Touch,
     DrawMode,
     Menu,
     OffWork,
@@ -20,46 +20,46 @@ public enum Actions
     Neither,
     Draw,
     Drag,
+    ToggleRun,
+    Up,
+    Down,
     EnumLength
 }
 
 public static class GameInput
 {
-    public static ControllerType ControllerType;
-    private static bool _usingGamepad;
+    public static Rewired.Player RewiredPlayer
+    { get { return ReInput.isReady ? ReInput.players.GetPlayer(0) : null; } }
 
-    public static bool usingGamepad
+    public static Keyboard Keyboard { get { return ReInput.controllers.Keyboard; } }
+    public static Mouse Mouse { get { return ReInput.controllers.Mouse; } }
+    public static Joystick Joystick { get { return UsingJoystick ? (Joystick)ReInput.controllers.GetLastActiveController() : ReInput.controllers.GetJoystick(0); } }
+    public static ControllerType JoyButtonType;
+
+    private static Rewired.ControllerType lastControllerType;
+
+    public static bool UsingJoystick
     {
-        get { return _usingGamepad; }
-        set
+        get
         {
-            if (_usingGamepad != value)
+            if (lastControllerType != ReInput.controllers.GetLastActiveControllerType())
             {
-                _usingGamepad = value;
-                OnSwitchController?.Invoke(value);
+                lastControllerType = ReInput.controllers.GetLastActiveControllerType();
+                OnSwitchController?.Invoke(lastControllerType == Rewired.ControllerType.Joystick);
             }
-            else
-                _usingGamepad = value;
+            return lastControllerType == Rewired.ControllerType.Joystick;
         }
     }
 
     public static Action<bool> OnSwitchController = null;
-    public static bool AnyInput { get { return Hinput.anyInput || Hinput.keyboard.anyKey || Hinput.mouse.anyClick; } }
 
-    public static Keyboard Keyboard { get { return Hinput.keyboard; } }
+    public static bool AnyInput { get { return RewiredPlayer.GetAnyButton(); } }
 
     public static bool IsMove
     {
         get
         {
-            if (usingGamepad)
-            {
-                return Move != Vector2.zero;
-            }
-            else
-            {
-                return Keyboard.W || Keyboard.A || Keyboard.S || Keyboard.D;
-            }
+            return RewiredPlayer.GetAxis2D("MoveX", "MoveY") != Vector2.zero;
         }
     }
 
@@ -67,14 +67,7 @@ public static class GameInput
     {
         get
         {
-            if (usingGamepad)
-            {
-                return Hinput.anyGamepad.leftStick;
-            }
-            else
-            {
-                return new Vector2((Keyboard.D ? 1 : 0) - (Keyboard.A ? 1 : 0), (Keyboard.W ? 1 : 0) - (Keyboard.S ? 1 : 0));
-            }
+            return RewiredPlayer.GetAxis2D("MoveX", "MoveY");
         }
     }
 
@@ -90,14 +83,7 @@ public static class GameInput
     {
         get
         {
-            if (usingGamepad)
-            {
-                return Hinput.anyGamepad.rightStick.distance > 0;
-            }
-            else
-            {
-                return Hinput.mouse.delta != Vector2.zero;
-            }
+            return RewiredPlayer.GetAxis2D("CameraX", "CameraY") != Vector2.zero;
         }
     }
 
@@ -105,129 +91,22 @@ public static class GameInput
     {
         get
         {
-            if (usingGamepad)
-            {
-                return Hinput.anyGamepad.rightStick;
-            }
-            else
-            {
-                return Hinput.mouse.delta * 100;
-            }
+            return RewiredPlayer.GetAxis2D("CameraX", "CameraY");
         }
     }
 
-    private static ButtonMappingData mappingData;
-
     public static bool GetButton(Actions ButtonAction)
     {
-        if (GameManager.Instance.ButtonMapping.HasMapping(ButtonAction))
-            return Button(ButtonAction).pressed;
-        else
-            return false;
+        return RewiredPlayer.GetButton(ButtonAction.ToString());
     }
 
     public static bool GetButtonDown(Actions ButtonAction)
     {
-        if (GameManager.Instance.ButtonMapping.HasMapping(ButtonAction))
-            return Button(ButtonAction).justPressed;
-        else
-            return false;
+        return RewiredPlayer.GetButtonDown(ButtonAction.ToString());
     }
 
     public static bool GetButtonUp(Actions ButtonAction)
     {
-        if (GameManager.Instance.ButtonMapping.HasMapping(ButtonAction))
-            return Button(ButtonAction).justReleased;
-        else
-            return false;
-    }
-
-    public static Pressable Button(Actions Button)
-    {
-        mappingData = GameManager.Instance.ButtonMapping.GetMapping(Button);
-        if (usingGamepad)
-        {
-            if (mappingData.Button != Buttons.None)
-            {
-                return Hinput.anyGamepad.buttons[(int)mappingData.Button];
-            }
-            else if (mappingData.Axis != Axis.None)
-            {
-                switch (mappingData.Axis)
-                {
-                    case Axis.DPad_Up:
-                        return Hinput.anyGamepad.dPad.up;
-
-                    case Axis.DPad_Down:
-                        return Hinput.anyGamepad.dPad.down;
-
-                    case Axis.DPad_Left:
-                        return Hinput.anyGamepad.dPad.left;
-
-                    case Axis.DPad_Right:
-                        return Hinput.anyGamepad.dPad.right;
-
-                    case Axis.RightStick_Up:
-                        return Hinput.anyGamepad.rightStick.up;
-
-                    case Axis.RightStick_Down:
-                        return Hinput.anyGamepad.rightStick.down;
-
-                    case Axis.RightStick_Left:
-                        return Hinput.anyGamepad.rightStick.left;
-
-                    case Axis.RightStick_Right:
-                        return Hinput.anyGamepad.rightStick.right;
-
-                    case Axis.LeftStick_Up:
-                        return Hinput.anyGamepad.leftStick.up;
-
-                    case Axis.LeftStick_Down:
-                        return Hinput.anyGamepad.leftStick.down;
-
-                    case Axis.LeftStick_Left:
-                        return Hinput.anyGamepad.leftStick.left;
-
-                    case Axis.LeftStick_Right:
-                        return Hinput.anyGamepad.leftStick.right;
-
-                    case Axis.None:
-                    default:
-                        return null;
-                }
-            }
-            else
-                return null;
-        }
-        else
-        {
-            if (mappingData.KB != Keys.None)
-            {
-                return Hinput.keyboard.keys[(int)mappingData.KB];
-            }
-            else if (mappingData.Mouse != MouseClick.None)
-            {
-                switch (mappingData.Mouse)
-                {
-                    case MouseClick.leftClick:
-                        return Hinput.mouse.leftClick;
-
-                    case MouseClick.rightClick:
-                        return Hinput.mouse.rightClick;
-
-                    case MouseClick.middleClick:
-                        return Hinput.mouse.middleClick;
-
-                    case MouseClick.anyClick:
-                        return Hinput.mouse.anyClick;
-
-                    case MouseClick.None:
-                    default:
-                        return null;
-                }
-            }
-            else
-                return null;
-        }
+        return RewiredPlayer.GetButtonUp(ButtonAction.ToString());
     }
 }

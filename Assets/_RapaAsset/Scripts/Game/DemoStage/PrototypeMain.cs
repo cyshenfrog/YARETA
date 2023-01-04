@@ -85,7 +85,7 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
     {
         if (ThanksForPlaying.activeSelf)
         {
-            if (Hinput.keyboard.F4.justPressed)
+            if (GameInput.Keyboard.GetKeyDown(KeyCode.F4))
                 Application.Quit();
         }
         if (Offworked)

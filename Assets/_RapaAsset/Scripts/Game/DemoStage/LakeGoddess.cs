@@ -38,9 +38,9 @@ public class LakeGoddess : MonoBehaviour
     {
         if (!selecting)
             return;
-        if (GameInput.GetButtonDown(Actions.RightChoise))
+        if (GameInput.GetButtonDown(Actions.Right))
             Select(0);
-        else if (GameInput.GetButtonDown(Actions.LeftChoise)) Select(1);
+        else if (GameInput.GetButtonDown(Actions.Left)) Select(1);
         else if (GameInput.GetButtonDown(Actions.Neither)) Select(2);
     }
 

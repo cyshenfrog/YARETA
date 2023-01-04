@@ -32,7 +32,7 @@ public class FlyLeaf : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Hinput.keyboard.F9.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.F9))
         {
             Landing();
             transform.rotation = Quaternion.identity;

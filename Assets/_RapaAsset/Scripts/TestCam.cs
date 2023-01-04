@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class TestCam : MonoBehaviour
 {
@@ -16,38 +17,38 @@ public class TestCam : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Hinput.keyboard.W.pressed)
+        if (GameInput.Keyboard.GetKey(KeyCode.W))
         {
             transform.position += transform.forward * Time.deltaTime * Speed;
         }
-        if (Hinput.keyboard.S.pressed)
+        if (GameInput.Keyboard.GetKey(KeyCode.S))
         {
             transform.position -= transform.forward * Time.deltaTime * Speed;
         }
-        if (Hinput.keyboard.A.pressed)
+        if (GameInput.Keyboard.GetKey(KeyCode.A))
         {
             transform.position -= transform.right * Time.deltaTime * Speed;
         }
-        if (Hinput.keyboard.D.pressed)
+        if (GameInput.Keyboard.GetKey(KeyCode.D))
         {
             transform.position += transform.right * Time.deltaTime * Speed;
         }
-        if (Hinput.keyboard.Q.pressed)
+        if (GameInput.Keyboard.GetKey(KeyCode.Q))
         {
             transform.position -= transform.up * Time.deltaTime * Speed;
         }
-        if (Hinput.keyboard.E.pressed)
+        if (GameInput.Keyboard.GetKey(KeyCode.E))
         {
             transform.position += transform.up * Time.deltaTime * Speed;
         }
 
-        transform.localEulerAngles += 100 * (Vector3.left * Hinput.mouse.delta.y + Vector3.up * Hinput.mouse.delta.x);
+        transform.localEulerAngles += 100 * (Vector3.left * GameInput.Mouse.GetAxis(1) + Vector3.up * GameInput.Mouse.GetAxis(0));
 
-        if (Hinput.keyboard.leftShift.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.LeftShift))
         {
             Speed *= 10;
         }
-        else if (Hinput.keyboard.leftShift.justReleased)
+        else if (GameInput.Keyboard.GetKeyUp(KeyCode.LeftShift))
         {
             Speed /= 10;
         }

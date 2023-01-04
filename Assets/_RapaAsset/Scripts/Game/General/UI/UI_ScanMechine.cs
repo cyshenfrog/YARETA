@@ -80,21 +80,21 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
             {
                 SwitchTab();
             }
-            else if (Hinput.anyGamepad.dPad.right.justPressed || Hinput.anyGamepad.leftStick.right.justPressed || Hinput.anyGamepad.rightStick.right.justPressed)
+            else if (GameInput.GetButtonDown(Actions.Right))
             {
                 SwitchController(true);
             }
-            else if (Hinput.anyGamepad.dPad.left.justPressed || Hinput.anyGamepad.leftStick.left.justPressed || Hinput.anyGamepad.rightStick.left.justPressed)
+            else if (GameInput.GetButtonDown(Actions.Left))
             {
                 SwitchController(false);
             }
             return;
         }
-        if (Hinput.keyboard.F9.justPressed)
+        if (GameInput.Keyboard.GetKeyDown(KeyCode.F9))
         {
             OffworkButton.SetActive(!OffworkButton.activeSelf);
         }
-        if (GameInput.Keyboard.tab.justPressed)
+        if (GameInput.GetButtonDown(Actions.Menu))
         {
             Close();
         }
@@ -102,11 +102,11 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
         {
             SwitchTab();
         }
-        if (Hinput.mouse.scroll.down)
+        if (GameInput.Mouse.GetAxis(2) < 0)
         {
             ListRoot.anchoredPosition += Vector2.up * 50;
         }
-        if (Hinput.mouse.scroll.up)
+        if (GameInput.Mouse.GetAxis(2) > 0)
         {
             ListRoot.anchoredPosition += Vector2.down * 50;
         }
@@ -118,12 +118,12 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
         //{
         //    OnOffworkButtton();
         //}
-        if (Hinput.keyboard.S.justPressed || Hinput.anyGamepad.leftStick.down.justPressed || Hinput.anyGamepad.rightStick.down.justPressed || Hinput.anyGamepad.dPad.down.justPressed || Hinput.keyboard.downArrow.justPressed)
+        if (GameInput.GetButtonDown(Actions.Down))
         {
             SEManager.Instance.PlaySystemSE(SystemSE.UI選擇);
             Down();
         }
-        else if (Hinput.keyboard.W.justPressed || Hinput.anyGamepad.leftStick.up.justPressed || Hinput.anyGamepad.rightStick.up.justPressed || Hinput.anyGamepad.dPad.up.justPressed || Hinput.keyboard.upArrow.justPressed)
+        else if (GameInput.GetButtonDown(Actions.Up))
         {
             SEManager.Instance.PlaySystemSE(SystemSE.UI選擇);
             Up();
@@ -143,20 +143,20 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
     {
         if (Right)
         {
-            if (GameInput.ControllerType == ControllerType.Switch)
-                GameInput.ControllerType = ControllerType.XBOX;
+            if (GameInput.JoyButtonType == ControllerType.Switch)
+                GameInput.JoyButtonType = ControllerType.XBOX;
             else
-                GameInput.ControllerType = GameInput.ControllerType + 1;
+                GameInput.JoyButtonType = GameInput.JoyButtonType + 1;
         }
         else
         {
-            if (GameInput.ControllerType == ControllerType.XBOX)
-                GameInput.ControllerType = ControllerType.Switch;
+            if (GameInput.JoyButtonType == ControllerType.XBOX)
+                GameInput.JoyButtonType = ControllerType.Switch;
             else
-                GameInput.ControllerType = GameInput.ControllerType - 1;
+                GameInput.JoyButtonType = GameInput.JoyButtonType - 1;
         }
-        InputType.text = GameInput.ControllerType.ToString();
-        GameInput.OnSwitchController?.Invoke(GameInput.usingGamepad);
+        InputType.text = GameInput.JoyButtonType.ToString();
+        GameInput.OnSwitchController?.Invoke(GameInput.UsingJoystick);
     }
 
     public void SwitchTab()
@@ -268,7 +268,7 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
     public void MoveTo(int id)
     {
         UpdateInfo(id);
-        if (GameInput.usingGamepad)
+        if (GameInput.UsingJoystick)
         {
             if (scanDataList[id].transform.position.y > SelectorUpperBound)
             {
