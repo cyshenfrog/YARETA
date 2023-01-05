@@ -3,7 +3,6 @@ using Cinemachine;
 using DG.Tweening;
 using UltEvents;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class SerialRoot : MonoBehaviour
 {
@@ -43,7 +42,7 @@ public class SerialRoot : MonoBehaviour
         Player.Instance.transform.LookAt(Nodes[0], Vector3.up);
         enabled = true;
         Player.Instance.Model.SetActive(false);
-        initMousePos = Mouse.current.position.ReadValue();
+        initMousePos = GameInput.Mouse.screenPosition;
         StartGroup.SetActive(true);
         pulling = false;
         MoveUI.SetActive(true);
@@ -97,7 +96,6 @@ public class SerialRoot : MonoBehaviour
 
     public void Finish()
     {
-
         SEManager.Instance.PlaySystemSE(SystemSE.拔蘿蔔);
         Player.Instance.transform.DOMove(Player.Instance.transform.position - Player.Instance.transform.forward * 0.1f, 0.3f)
             .SetDelay(.5f)

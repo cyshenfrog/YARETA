@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CinemachineFreeLook))]
 public class CM_FreeLookInput : MonoBehaviour
@@ -24,11 +23,11 @@ public class CM_FreeLookInput : MonoBehaviour
         cam.m_YAxis.m_InputAxisValue += GameInput.CameraMove.y;
         if (Cursor.lockState == CursorLockMode.Locked)
         {
-            cam.m_XAxis.m_InputAxisValue += Mouse.current.delta.x.ReadValue();
-            cam.m_YAxis.m_InputAxisValue += Mouse.current.delta.y.ReadValue();
+            cam.m_XAxis.m_InputAxisValue += Rewired.ReInput.controllers.Mouse.screenPositionDelta.x;
+            cam.m_YAxis.m_InputAxisValue += Rewired.ReInput.controllers.Mouse.screenPositionDelta.y;
         }
 
-        if (Mouse.current.middleButton.wasPressedThisFrame)
+        if (Rewired.ReInput.controllers.Mouse.GetButtonDown(2))
             StartCoroutine(Recenter());
     }
 

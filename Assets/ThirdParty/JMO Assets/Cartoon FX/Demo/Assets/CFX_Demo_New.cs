@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
 using System.Text.RegularExpressions;
 
 // Cartoon FX - (c) 2015 - Jean Moreno
@@ -63,23 +62,23 @@ public class CFX_Demo_New : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
+        if (Rewired.ReInput.controllers.Keyboard.GetKeyDown(KeyCode.LeftArrow))
         {
             prevParticle();
         }
-        else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
+        else if (Rewired.ReInput.controllers.Keyboard.GetKeyDown(KeyCode.RightArrow))
         {
             nextParticle();
         }
-        else if (Keyboard.current.deleteKey.wasPressedThisFrame)
+        else if (Rewired.ReInput.controllers.Keyboard.GetKeyDown(KeyCode.Delete))
         {
             destroyParticles();
         }
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Rewired.ReInput.controllers.Mouse.GetButtonDown(0))
         {
             RaycastHit hit = new RaycastHit();
-            if (groundCollider.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 9999f))
+            if (groundCollider.Raycast(Camera.main.ScreenPointToRay(Rewired.ReInput.controllers.Mouse.screenPosition), out hit, 9999f))
             {
                 GameObject particle = spawnParticle();
                 particle.transform.position = hit.point + particle.transform.position;
