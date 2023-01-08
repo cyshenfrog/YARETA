@@ -30,7 +30,7 @@ public class WindyMode : MonoBehaviour
 
     public void StartWindy()
     {
-        Tool_Coroutine.Instance.Delay(2, d0);
+        Delay.Instance.Wait(2, d0);
         void d0()
         {
             SEManager.Instance.PlaySystemSE(SystemSE.大鳥飛走);
@@ -55,7 +55,7 @@ public class WindyMode : MonoBehaviour
             WindyEvent.Invoke();
             //Player.Instance.Status = PlayerStatus.Static;
         }
-        Tool_Coroutine.Instance.Delay(6.5f, d2);
+        Delay.Instance.Wait(6.5f, d2);
         void d2()
         {
             SEManager.Instance.PlaySystemSE(SystemSE.葉子起飛);
@@ -71,7 +71,7 @@ public class WindyMode : MonoBehaviour
         Player.Instance.transform.parent = null;
         Player.Instance.transform.localEulerAngles = Vector3.up * 260;
         Player.Instance.Anim.SetTrigger("GetUp");
-        Tool_Coroutine.Instance.Delay(3.5f, d2);
+        Delay.Instance.Wait(3.5f, d2);
         void d2()
         {
             UI_FullScreenFade.Instance.SetMovieMode(false);

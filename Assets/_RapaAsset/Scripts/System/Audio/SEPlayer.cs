@@ -97,7 +97,7 @@ public class SEPlayer : MonoBehaviour, IPointerClickHandler
     public void PlaySE()
     {
         if (delay > 0)
-            Tool_Coroutine.Instance.Delay(delay, () => _PlaySE(delay, transform.position));
+            Delay.Instance.Wait(delay, () => _PlaySE(delay, transform.position));
         else
             _PlaySE(delay, transform.position);
     }
@@ -105,7 +105,7 @@ public class SEPlayer : MonoBehaviour, IPointerClickHandler
     public void PlaySE(Vector3 position)
     {
         if (delay > 0)
-            Tool_Coroutine.Instance.Delay(delay, () => _PlaySE(delay, transform.position));
+            Delay.Instance.Wait(delay, () => _PlaySE(delay, transform.position));
         else
             _PlaySE(delay, position);
     }

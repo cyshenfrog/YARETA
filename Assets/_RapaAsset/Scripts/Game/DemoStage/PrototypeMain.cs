@@ -47,7 +47,7 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
         puzzelCount++;
         if (puzzelCount >= 3)
         {
-            Tool_Coroutine.Instance.Delay(2, () =>
+            Delay.Instance.Wait(2, () =>
                 {
                     UI_Talk.Instance.ShowTalk((int)TalkDataEnum.恭喜白金);
                 }
@@ -124,7 +124,7 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
     public void Ending()
     {
         EndingBGM.Play(3);
-        Tool_Coroutine.Instance.Delay(8, d);
+        Delay.Instance.Wait(8, d);
         void d()
         {
             if (SecretEnding)
@@ -295,7 +295,7 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
 
     private void ForceOffwork()
     {
-        Tool_Coroutine.Instance.Delay(2, () =>
+        Delay.Instance.Wait(2, () =>
             {
                 //UI_Talk.Instance.SetInputThisTime(MenuIconKB, MenuIconJoy, Actions.Menu);
                 UI_Talk.Instance.ShowTalk((int)TalkDataEnum.強制下班, AddPuzzelCount);

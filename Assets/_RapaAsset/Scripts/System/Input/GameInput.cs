@@ -109,4 +109,20 @@ public static class GameInput
     {
         return RewiredPlayer.GetButtonUp(ButtonAction.ToString());
     }
+
+    [RuntimeInitializeOnLoadMethod]
+    public static void RegistOnControllerConnected()
+    {
+        foreach (var item in ReInput.controllers.GetJoysticks())
+        {
+            item.calibrationMap.GetAxis(3).deadZone = 0.25f;
+        }
+        ReInput.ControllerConnectedEvent += OnControllerConnected;
+    }
+
+    private static void OnControllerConnected(ControllerStatusChangedEventArgs obj)
+    {
+        if (obj.controllerType == Rewired.ControllerType.Joystick)
+            ((Joystick)obj.controller).calibrationMap.GetAxis(3).deadZone = 0.25f;
+    }
 }

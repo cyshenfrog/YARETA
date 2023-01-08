@@ -154,7 +154,7 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
                     UI_ScanMechine.Instance.Lock = true;
                     Player.Instance.OpenMenu();
                     UI_Talk.Instance.BGDarker.SetActive(true);
-                    Tool_Coroutine.Instance.Delay(1.5f, () => UI_Talk.Instance.ShowTalk((int)TalkDataEnum.教學_任務, () =>
+                    Delay.Instance.Wait(1.5f, () => UI_Talk.Instance.ShowTalk((int)TalkDataEnum.教學_任務, () =>
                     {
                         UI_Talk.Instance.BGDarker.SetActive(false);
                         Player.Instance.Status = PlayerStatus.Wait;

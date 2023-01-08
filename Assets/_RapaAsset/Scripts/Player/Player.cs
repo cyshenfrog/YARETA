@@ -696,7 +696,7 @@ public class Player : UnitySingleton_D<Player>
     {
         Status = PlayerStatus.Wait;
         Anim.SetTrigger("GooseBack");
-        Tool_Coroutine.Instance.Delay(4, d);
+        Delay.Instance.Wait(4, d);
         void d()
         {
             Status = PlayerStatus.Moving;

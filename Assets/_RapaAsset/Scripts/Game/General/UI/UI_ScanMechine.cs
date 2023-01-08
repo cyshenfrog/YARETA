@@ -173,7 +173,7 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
             return;
         offworked = true;
         PrototypeMain.Instance.OffWork();
-        Tool_Coroutine.Instance.Delay(1, () =>
+        Delay.Instance.Wait(1, () =>
         {
             MenuRoot.gameObject.SetActive(true);
             Close();
@@ -191,7 +191,7 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
         SEManager.Instance.PlaySystemSE(SystemSE.Menu);
         open = true;
         onClose = OnClose;
-        Tool_Coroutine.Instance.Delay(0.5f, UploadAll);
+        Delay.Instance.Wait(0.5f, UploadAll);
         Player.Instance.Status = PlayerStatus.Wait;
     }
 

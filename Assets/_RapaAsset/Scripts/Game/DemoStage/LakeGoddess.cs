@@ -273,7 +273,7 @@ public class LakeGoddess : MonoBehaviour
             carrotCount++;
         if (originObj.ScanData == ScanDataEnum.葡萄)
             grapeCount++;
-        Tool_Coroutine.Instance.Delay(0.5f, () =>
+        Delay.Instance.Wait(0.5f, () =>
         {
             Destroy(originObj);
             Destroy(silver);

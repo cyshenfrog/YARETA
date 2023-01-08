@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Cinemachine;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(CinemachineFreeLook))]
 public class CM_FreeLookInput : MonoBehaviour
@@ -16,25 +17,16 @@ public class CM_FreeLookInput : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        cam.m_XAxis.m_InputAxisValue = 0;
-        cam.m_YAxis.m_InputAxisValue = 0;
+        cam.m_XAxis.m_InputAxisValue = GameInput.CameraMove.x;
+        cam.m_YAxis.m_InputAxisValue = GameInput.CameraMove.y;
 
-        cam.m_XAxis.m_InputAxisValue += GameInput.CameraMove.x;
-        cam.m_YAxis.m_InputAxisValue += GameInput.CameraMove.y;
-        if (Cursor.lockState == CursorLockMode.Locked)
-        {
-            cam.m_XAxis.m_InputAxisValue += Rewired.ReInput.controllers.Mouse.screenPositionDelta.x;
-            cam.m_YAxis.m_InputAxisValue += Rewired.ReInput.controllers.Mouse.screenPositionDelta.y;
-        }
-
-        if (Rewired.ReInput.controllers.Mouse.GetButtonDown(2))
-            StartCoroutine(Recenter());
+        if (GameInput.GetButtonDown(Actions.Touch))
+            Recenter(0.2f);
     }
 
-    private IEnumerator Recenter()
+    public void Recenter(float duration)
     {
-        cam.m_RecenterToTargetHeading.m_enabled = true;
-        yield return new WaitForSeconds(2);
-        cam.m_RecenterToTargetHeading.m_enabled = false;
+        DOTween.To(() => cam.m_YAxis.Value, x => cam.m_YAxis.Value = x, .6f, duration);
+        DOTween.To(() => cam.m_XAxis.Value, x => cam.m_XAxis.Value = x, Tools.GetTrimmedEular(cam.LookAt.eulerAngles.y), duration);
     }
 }

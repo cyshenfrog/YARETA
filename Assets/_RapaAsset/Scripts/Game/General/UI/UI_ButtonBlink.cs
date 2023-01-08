@@ -66,7 +66,7 @@ public class UI_ButtonBlink : MonoBehaviour
         else
         {
             Fill.fillAmount = 1;
-            Tool_Coroutine.Instance.Delay(Duration, () =>
+            Delay.Instance.Wait(Duration, () =>
             {
                 Invoke();
             });

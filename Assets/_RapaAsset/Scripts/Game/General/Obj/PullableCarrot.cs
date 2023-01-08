@@ -148,7 +148,7 @@ public class PullableCarrot : MonoBehaviour
         if (DirectPullOut)
         {
             SEManager.Instance.PlaySystemSE(SystemSE.拔根聲音LOOP);
-            Tool_Coroutine.Instance.Delay(1, () => { SEManager.Instance.Stop(); SEManager.Instance.PlaySystemSE(SystemSE.物品產生); });
+            Delay.Instance.Wait(1, () => { SEManager.Instance.Stop(); SEManager.Instance.PlaySystemSE(SystemSE.物品產生); });
         }
         else
             SEManager.Instance.PlaySystemSE(SystemSE.物品產生);

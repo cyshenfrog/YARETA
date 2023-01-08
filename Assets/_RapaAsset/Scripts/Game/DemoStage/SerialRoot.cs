@@ -52,7 +52,7 @@ public class SerialRoot : MonoBehaviour
     private void MoveForward()
     {
         //DOTween.To(() => rotateEuler, x => rotateEuler = x, Vector3.right * 20, 1f);
-        Tool_Coroutine.Instance.Delay(UI_ButtonBlink.Duration, then);
+        Delay.Instance.Wait(UI_ButtonBlink.Duration, then);
         void then()
         {
             AudioSource.Play();

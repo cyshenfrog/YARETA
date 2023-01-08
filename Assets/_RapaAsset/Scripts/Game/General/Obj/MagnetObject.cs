@@ -110,7 +110,7 @@ public class MagnetObject : MonoBehaviour
         if (other.CompareTag("KillY"))
         {
             Dragable.FinishDrag();
-            Tool_Coroutine.Instance.Delay(.5f, d);
+            Delay.Instance.Wait(.5f, d);
             void d()
             {
                 Physic.velocity = Vector3.zero;

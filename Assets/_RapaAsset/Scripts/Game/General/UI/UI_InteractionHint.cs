@@ -77,7 +77,7 @@ public class UI_InteractionHint : UnitySingleton_D<UI_InteractionHint>
 
     public void CloseIcon()
     {
-        Tool_Coroutine.Instance.Delay(UI_ButtonBlink.Duration, then);
+        Delay.Instance.Wait(UI_ButtonBlink.Duration, then);
         void then()
         {
             InteractButton.transform.position = 9999 * Vector3.down;
