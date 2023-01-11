@@ -28,12 +28,12 @@ public class CarrotSlot : MonoBehaviour
             {
                 SEManager.Instance.PlaySystemSE(SystemSE.機關解謎);
                 TriggerEvent.Invoke();
-                DOTween.To(() => ((CinemachineBasicMultiChannelPerlin)CameraMain.Instance.GetCurrentCam().GetComponentPipeline()[2]).m_AmplitudeGain,
-                    x => ((CinemachineBasicMultiChannelPerlin)CameraMain.Instance.GetCurrentCam().GetComponentPipeline()[2]).m_AmplitudeGain = x, .2f, 1);
+                //DOTween.To(() => ((CinemachineBasicMultiChannelPerlin)CameraMain.Instance.GetCurrentCam().GetComponentPipeline()[2]).m_AmplitudeGain,
+                //    x => ((CinemachineBasicMultiChannelPerlin)CameraMain.Instance.GetCurrentCam().GetComponentPipeline()[2]).m_AmplitudeGain = x, .2f, 1);
 
-                DOTween.To(() => ((CinemachineBasicMultiChannelPerlin)CameraMain.Instance.GetCurrentCam().GetComponentPipeline()[2]).m_AmplitudeGain,
-                        x => ((CinemachineBasicMultiChannelPerlin)CameraMain.Instance.GetCurrentCam().GetComponentPipeline()[2]).m_AmplitudeGain = x, 0, 1)
-                    .SetDelay(4);
+                //DOTween.To(() => ((CinemachineBasicMultiChannelPerlin)CameraMain.Instance.GetCurrentCam().GetComponentPipeline()[2]).m_AmplitudeGain,
+                //        x => ((CinemachineBasicMultiChannelPerlin)CameraMain.Instance.GetCurrentCam().GetComponentPipeline()[2]).m_AmplitudeGain = x, 0, 1)
+                //    .SetDelay(4);
             }
         }
     }

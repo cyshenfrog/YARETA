@@ -17,7 +17,7 @@ public class ObjTextFx : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.rotation = SaveDataManager.MainCam.transform.rotation;
+        transform.rotation = GameRef.MainCam.transform.rotation;
     }
 
     public void Init(string text, int level, Vector3 pos)

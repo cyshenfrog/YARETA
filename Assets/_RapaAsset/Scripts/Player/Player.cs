@@ -279,11 +279,11 @@ public class Player : UnitySingleton_D<Player>
             return;
         //Basic Section
         MovementUpdate();
-        if (GameData.CarringObj)
+        if (GameRef.CarringObj)
         {
-            if (GameInput.GetButtonDown(Actions.Interact) && !GameData.CarringObj.DontDrop)
+            if (GameInput.GetButtonDown(Actions.Interact) && !GameRef.CarringObj.DontDrop)
             {
-                GameData.CarringObj.Drop();
+                GameRef.CarringObj.Drop();
                 return;
             }
         }
@@ -387,9 +387,9 @@ public class Player : UnitySingleton_D<Player>
 
     public virtual void UpdateTargetDirection()
     {
-        forward = SaveDataManager.MainCam.transform.TransformDirection(Vector3.forward);
+        forward = GameRef.MainCam.transform.TransformDirection(Vector3.forward);
         forward.y = 0;
-        right = SaveDataManager.MainCam.transform.TransformDirection(Vector3.right);
+        right = GameRef.MainCam.transform.TransformDirection(Vector3.right);
 
         targetDirection = (GameInput.Move.x + DirectionShift) * right + (OneDirMode ? 0 : GameInput.Move.y) * forward;
     }
@@ -524,7 +524,6 @@ public class Player : UnitySingleton_D<Player>
             if (ShowGameover)
                 UI_FullScreenFade.Instance.GameoverIn(1);
             OnBlack?.Invoke();
-            CameraMain.Instance.Follower.Snap = true;
             transform.position = PrototypeMain.Instance.RespawnPos;
             //transform.SetPositionAndRotation(PrototypeMain.Instance.CheckPoints[PlayerPrefs.GetInt("CheckPoint", 1)].position, PrototypeMain.Instance.CheckPoints[PlayerPrefs.GetInt("CheckPoint", 1)].rotation);
 
@@ -536,7 +535,6 @@ public class Player : UnitySingleton_D<Player>
             yield return new WaitForSeconds(1f);
             SEManager.Instance.ResetWalkSE();
             UI_FullScreenFade.Instance.BlackOut(1);
-            CameraMain.Instance.Follower.Snap = false;
             CameraMain.Instance.Recenter(2f);
             Status = PlayerStatus.Moving;
         }
@@ -660,7 +658,7 @@ public class Player : UnitySingleton_D<Player>
     {
         t.Kill();
         t = DOTween.To(() => Anim.GetFloat("CrouchLevel"), x => Anim.SetFloat("CrouchLevel", x), 1, 1f);
-        CameraMain.Instance.SetCameraMode(CameraMode.OverShoulder);
+        CameraMain.Instance.SetCameraMode(CameraMode.Aim);
         Anim.SetBool("isSprinting", false);
         CanSpringAndJump = false;
     }
@@ -669,7 +667,7 @@ public class Player : UnitySingleton_D<Player>
     {
         t.Kill();
         t = DOTween.To(() => Anim.GetFloat("CrouchLevel"), x => Anim.SetFloat("CrouchLevel", x), 0, 1f);
-        CameraMain.Instance.SetCameraMode(CameraMode.Default3rdPerson);
+        CameraMain.Instance.SetCameraMode(CameraMode.Default);
         CanSpringAndJump = true;
     }
 

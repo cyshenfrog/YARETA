@@ -13,7 +13,6 @@ public class UI_Begining : MonoBehaviour
 
     private void Start()
     {
-        GameInput.OnSwitchController += Switch;
         English();
     }
 
@@ -33,11 +32,6 @@ public class UI_Begining : MonoBehaviour
         }
     }
 
-    private void Switch(bool usingGamepad)
-    {
-        GameManager.Cursorvisible = true;
-    }
-
     public void English()
     {
         IsCh = false;
@@ -54,10 +48,9 @@ public class UI_Begining : MonoBehaviour
 
     public void Confirm()
     {
-        GameInput.OnSwitchController -= Switch;
         SaveDataManager.Language = IsCh ? SystemLanguage.Chinese : SystemLanguage.English;
         LanguageRoot.SetActive(false);
         InputRoot.SetActive(true);
-        GameManager.Cursorvisible = false;
+        GameInput.Cursorvisible = false;
     }
 }

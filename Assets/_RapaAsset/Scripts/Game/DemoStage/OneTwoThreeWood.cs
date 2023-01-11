@@ -149,7 +149,7 @@ public class OneTwoThreeWood : UnitySingleton<OneTwoThreeWood>
 
         SEManager.Instance.PlaySystemSE(SystemSE.大鳥起風);
         //CameraMain.Instance.enabled = true;
-        CameraMain.Instance.cameraSpeed = 10f;
+        //CameraMain.Instance.cameraSpeed = 10f;
         Player.Instance.transform.DOLookAt(BirdModel.position, 1f);
         GressMat.SetVector("_WindDirection", BirdModel.forward);
         GressMat.DOKill();
@@ -188,7 +188,7 @@ public class OneTwoThreeWood : UnitySingleton<OneTwoThreeWood>
 
         //CameraMain.Instance.enabled = true;
         Player.Instance.Status = PlayerStatus.Moving;
-        CameraMain.Instance.cameraSpeed = 200f;
+        //CameraMain.Instance.cameraSpeed = 200f;
         if (enabled)
         {
             BirdModel.DOLocalRotate(Vector3.zero, 1)

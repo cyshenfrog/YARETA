@@ -23,7 +23,7 @@ public class Dragable : MonoBehaviour
     public Transform LookPos;
     public Transform StandPos;
     public GameObject[] Model;
-    public CameraMode CamMode = CameraMode.DragView;
+    public CameraMode CamMode = CameraMode.Default;
     public MoveMode MoveMode = MoveMode.OneDirAndTurn;
     public UltEvent OnDragStart;
     public UltEvent OnDragFinish;
@@ -123,7 +123,7 @@ public class Dragable : MonoBehaviour
         Player_IKManager.Instance.ResumeSimpleIK(PlayerIK.LeftHand, duration);
         Player_IKManager.Instance.ResumeSimpleIK(PlayerIK.RightHand, duration);
         Player_IKManager.Instance.StopLooking();
-        CameraMain.Instance.SetCameraMode(CameraMode.Default3rdPerson);
+        CameraMain.Instance.SetCameraMode(CameraMode.Default);
         follower.enabled = false;
         enable = false;
         StartCoroutine(delay());

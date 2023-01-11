@@ -84,8 +84,6 @@ public static class SaveDataManager
     /// </summary>
     public static GameState Status = GameState.Lobby;
 
-    public static Camera MainCam;
-
     #region 存檔區
 
     //TODO: 此區寫入存檔

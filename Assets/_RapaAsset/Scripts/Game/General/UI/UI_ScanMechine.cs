@@ -141,22 +141,22 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
 
     public void SwitchController(bool Right = true)
     {
-        if (Right)
-        {
-            if (GameInput.JoyButtonType == ControllerType.Switch)
-                GameInput.JoyButtonType = ControllerType.XBOX;
-            else
-                GameInput.JoyButtonType = GameInput.JoyButtonType + 1;
-        }
-        else
-        {
-            if (GameInput.JoyButtonType == ControllerType.XBOX)
-                GameInput.JoyButtonType = ControllerType.Switch;
-            else
-                GameInput.JoyButtonType = GameInput.JoyButtonType - 1;
-        }
-        InputType.text = GameInput.JoyButtonType.ToString();
-        GameInput.OnSwitchController?.Invoke(GameInput.UsingJoystick);
+        //if (Right)
+        //{
+        //    if (GameInput.JoyButtonType == JoyIconType.Switch)
+        //        GameInput.JoyButtonType = JoyIconType.XBOX;
+        //    else
+        //        GameInput.JoyButtonType = GameInput.JoyButtonType + 1;
+        //}
+        //else
+        //{
+        //    if (GameInput.JoyButtonType == JoyIconType.XBOX)
+        //        GameInput.JoyButtonType = JoyIconType.Switch;
+        //    else
+        //        GameInput.JoyButtonType = GameInput.JoyButtonType - 1;
+        //}
+        //InputType.text = GameInput.JoyButtonType.ToString();
+        //GameInput.OnSwitchController?.Invoke(GameInput.UsingJoystick);
     }
 
     public void SwitchTab()
@@ -185,9 +185,9 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
     public void Open(Action OnClose = null)
     {
         UpdateInfo(currentSelect);
-        CameraMain.Instance.hardLock = true;
+        CameraMain.Instance.Lock = true;
         MenuRoot.parent.gameObject.SetActive(true);
-        GameManager.Cursorvisible = true;
+        GameInput.Cursorvisible = true;
         SEManager.Instance.PlaySystemSE(SystemSE.Menu);
         open = true;
         onClose = OnClose;
@@ -200,8 +200,8 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
         if (Lock)
             return;
         SEManager.Instance.PlaySystemSE(SystemSE.UI取消);
-        CameraMain.Instance.hardLock = false;
-        GameManager.Cursorvisible = false;
+        CameraMain.Instance.Lock = false;
+        GameInput.Cursorvisible = false;
         open = false;
         MenuRoot.DOScale(Vector3.zero, 0.5f)
             .SetEase(Ease.InBack)

@@ -25,7 +25,7 @@ public class PasswordLock : MonoBehaviour
 
     public void StartMode()
     {
-        GameManager.Cursorvisible = true;
+        GameInput.Cursorvisible = true;
         Player.Instance.Status = PlayerStatus.Wait;
         Player.Instance.Model.SetActive(false);
         foreach (var item in ModeGroup)
@@ -37,7 +37,7 @@ public class PasswordLock : MonoBehaviour
 
     public void FinishMode()
     {
-        GameManager.Cursorvisible = false;
+        GameInput.Cursorvisible = false;
         Player.Instance.Status = PlayerStatus.Moving;
         Player.Instance.Model.SetActive(true);
         foreach (var item in ModeGroup)

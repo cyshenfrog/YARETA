@@ -63,7 +63,7 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
         //rotateEuler = Vector3.Lerp(rotateEuler, rotateEuler + new Vector3(-GameInput.CameraMove.y * 30, GameInput.CameraMove.x * 30), Time.deltaTime);
         Player.Instance.FPCam.transform.localEulerAngles += Vector3.right * -GameInput.CameraMove.y * 30 * Time.deltaTime;
         Player.Instance.transform.localEulerAngles += Vector3.up * GameInput.CameraMove.x * 30 * Time.deltaTime;
-        if (Physics.Raycast(SaveDataManager.MainCam.transform.position, SaveDataManager.MainCam.transform.forward, out hit, 100, ~(1 << 2), QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(GameRef.MainCam.transform.position, GameRef.MainCam.transform.forward, out hit, 100, ~(1 << 2), QueryTriggerInteraction.Ignore))
         {
             outInfo = hit.collider.transform.GetComponent<Obj_Info>();
 
@@ -95,8 +95,8 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
         OnFinish = OnFinishCallback;
         Player.Instance.Status = PlayerStatus.Wait;
         Player.Instance.characterController.enabled = false;
-        Player.Instance.transform.localEulerAngles = new Vector3(0, CameraMain.Instance.CameraControl.eulerAngles.y, 0);
-        Player.Instance.FPCam.transform.localEulerAngles = new Vector3(CameraMain.Instance.CameraControl.eulerAngles.x, 0, 0);
+        Player.Instance.transform.localEulerAngles = new Vector3(0, CameraMain.Instance.MainFreeLookCam.m_XAxis.Value, 0);
+        Player.Instance.FPCam.transform.localEulerAngles = new Vector3(CameraMain.Instance.MainFreeLookCam.transform.eulerAngles.x, 0, 0);
         rotateEuler = Player.Instance.FPCam.transform.localEulerAngles;
         Player.Instance.FPCam.SetActive(true);
         Player.Instance.Model.SetActive(false);
@@ -123,7 +123,7 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
     {
         SEManager.Instance.PlaySystemSE(SystemSE.UI取消);
         ready = false;
-        CameraMain.Instance.Recenter(0, Player.Instance.FPCam.transform.localEulerAngles.x);
+        CameraMain.Instance.Recenter(0);
         StartCoroutine(delay());
 
         IEnumerator delay()

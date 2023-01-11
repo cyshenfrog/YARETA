@@ -67,7 +67,7 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
 
     public void Start()
     {
-        SaveDataManager.MainCam = Camera.main;
+        GameRef.MainCam = Camera.main;
         CanSavePos = true;
         UI_ScanMechine.Instance.OnTargetScore += TargetScoreReached;
         InvokeRepeating("UpdateRespawnPoint", 0, 5);
@@ -152,7 +152,7 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
             yield break;
         }
 
-        CameraMain.Instance.hardLock = true;
+        CameraMain.Instance.Lock = true;
         yield return new WaitForSeconds(1);
         ComicRoot.SetActive(true);
     }
@@ -176,7 +176,7 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
             LogoRoot.gameObject.SetActive(false);
             Player.Instance.Status = PlayerStatus.Moving;
             yield return new WaitForSeconds(4.5f);
-            CameraMain.Instance.hardLock = false;
+            CameraMain.Instance.Lock = false;
             //UI_Talk.Instance.ShowTalk(0, () =>
             //{
             //    InitStage();

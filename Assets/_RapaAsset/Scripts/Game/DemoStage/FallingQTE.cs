@@ -119,7 +119,7 @@ public class FallingQTE : MonoBehaviour
             }
             EndingCam.SetActive(false);
             Player.Instance.Status = PlayerStatus.Moving;
-            CameraMain.Instance.CameraControl.rotation = Quaternion.identity;
+            CameraMain.Instance.Recenter(0);
         }
     }
 

@@ -72,8 +72,8 @@ public class MagnetObject : MonoBehaviour
             if (count < 0) count = 0;
             if (count == 0)
             {
-                CameraMain.Instance.SetCameraMode(CameraMode.Default3rdPerson);
-                Dragable.CamMode = CameraMode.Default3rdPerson;
+                CameraMain.Instance.SetCameraMode(CameraMode.Default);
+                Dragable.CamMode = CameraMode.Default;
             }
         }
     }
@@ -102,7 +102,7 @@ public class MagnetObject : MonoBehaviour
         obj.Dragable.GetComponent<Collider>().enabled = false;
         Dragable.GetComponent<Collider>().enabled = false;
         Dragable.gameObject.SetActive(false);
-        CameraMain.Instance.SetCameraMode(CameraMode.Default3rdPerson);
+        CameraMain.Instance.SetCameraMode(CameraMode.Default);
     }
 
     private void OnTriggerEnter(Collider other)

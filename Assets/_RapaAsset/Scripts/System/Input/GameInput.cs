@@ -28,15 +28,22 @@ public enum Actions
 
 public static class GameInput
 {
+    //Rewire Player Ref
     public static Rewired.Player RewiredPlayer
     { get { return ReInput.isReady ? ReInput.players.GetPlayer(0) : null; } }
+
+    //Device And Joystick Icon Type
 
     public static Keyboard Keyboard { get { return ReInput.controllers.Keyboard; } }
     public static Mouse Mouse { get { return ReInput.controllers.Mouse; } }
     public static Joystick Joystick { get { return UsingJoystick ? (Joystick)ReInput.controllers.GetLastActiveController() : ReInput.controllers.GetJoystick(0); } }
-    public static ControllerType JoyButtonType;
+    public static JoyIconType JoyButtonType;
 
-    private static Rewired.ControllerType lastControllerType;
+    //Input States
+
+    public static Action<bool> OnSwitchController = null;
+
+    private static ControllerType lastControllerType;
 
     public static bool UsingJoystick
     {
@@ -45,13 +52,29 @@ public static class GameInput
             if (lastControllerType != ReInput.controllers.GetLastActiveControllerType())
             {
                 lastControllerType = ReInput.controllers.GetLastActiveControllerType();
-                OnSwitchController?.Invoke(lastControllerType == Rewired.ControllerType.Joystick);
+                OnSwitchController?.Invoke(lastControllerType == ControllerType.Joystick);
+                UpdateCursor();
             }
-            return lastControllerType == Rewired.ControllerType.Joystick;
+            return lastControllerType == ControllerType.Joystick;
         }
     }
 
-    public static Action<bool> OnSwitchController = null;
+    private static bool cursorvisible;
+
+    public static bool Cursorvisible
+    {
+        get { return cursorvisible; }
+        set
+        {
+            cursorvisible = value;
+            if (!UsingJoystick)
+            {
+                Cursor.visible = value;
+            }
+        }
+    }
+
+    #region Inputs
 
     public static bool AnyInput { get { return RewiredPlayer.GetAnyButton(); } }
 
@@ -75,7 +98,7 @@ public static class GameInput
     {
         get
         {
-            return SaveDataManager.MainCam.transform.forward * Move.y + SaveDataManager.MainCam.transform.right * Move.x;
+            return GameRef.MainCam.transform.forward * Move.y + GameRef.MainCam.transform.right * Move.x;
         }
     }
 
@@ -110,19 +133,45 @@ public static class GameInput
         return RewiredPlayer.GetButtonUp(ButtonAction.ToString());
     }
 
+    #endregion Inputs
+
     [RuntimeInitializeOnLoadMethod]
-    public static void RegistOnControllerConnected()
+    private static void Init()
     {
         foreach (var item in ReInput.controllers.GetJoysticks())
         {
             item.calibrationMap.GetAxis(3).deadZone = 0.25f;
         }
         ReInput.ControllerConnectedEvent += OnControllerConnected;
+        OnSwitchController += _OnSwitchController;
+        Application.focusChanged += (focus) => { if (focus) UpdateCursor(); };
+    }
+
+    private static void _OnSwitchController(bool useJoycon)
+    {
+        if (useJoycon)
+        {
+            if (RewiredPlayer.controllers.GetLastActiveController().name.Contains("Sony"))
+                JoyButtonType = JoyIconType.PlayStation;
+            if (RewiredPlayer.controllers.GetLastActiveController().name.Contains("Nintendo"))
+                JoyButtonType = JoyIconType.Switch;
+        }
     }
 
     private static void OnControllerConnected(ControllerStatusChangedEventArgs obj)
     {
-        if (obj.controllerType == Rewired.ControllerType.Joystick)
+        if (obj.controllerType == ControllerType.Joystick)
             ((Joystick)obj.controller).calibrationMap.GetAxis(3).deadZone = 0.25f;
+    }
+
+    public static void UpdateCursor()
+    {
+        if (UsingJoystick)
+            Cursor.visible = false;
+        else
+        {
+            Cursor.lockState = Cursorvisible ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = Cursorvisible;
+        }
     }
 }

@@ -11,6 +11,6 @@ public class StageMain<T> : UnitySingleton_D<T> where T : Component
     // Start is called before the first frame update
     private void Start()
     {
-        SaveDataManager.MainCam = Camera.main;
+        GameRef.MainCam = Camera.main;
     }
 }

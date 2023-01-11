@@ -32,7 +32,7 @@ public class PickEggMode : MonoBehaviour
         PickUI.SetActive(true);
         if (TheGoose)
         {
-            Player_IKManager.Instance.PlayTwoHandIK(GameData.CarringObj.interaction);
+            Player_IKManager.Instance.PlayTwoHandIK(GameRef.CarringObj.interaction);
             TheGoose.GetComponentInChildren<Renderer>().enabled = true;
         }
         picking = false;
@@ -91,15 +91,15 @@ public class PickEggMode : MonoBehaviour
 
     public void StartMode()
     {
-        if (GameData.CarringObj)
+        if (GameRef.CarringObj)
         {
-            TheGoose = GameData.CarringObj.GetComponent<Goose>();
+            TheGoose = GameRef.CarringObj.GetComponent<Goose>();
             if (TheGoose)
             {
-                GameData.CarringObj.DontDrop = true;
+                GameRef.CarringObj.DontDrop = true;
             }
         }
-        CameraMain.Instance.hardLock = true;
+        CameraMain.Instance.Lock = true;
         Player.Instance.PuzzleMode = true;
         active = enabled = true;
         EventCam.SetActive(true);
@@ -111,7 +111,7 @@ public class PickEggMode : MonoBehaviour
 
     public void EndMode()
     {
-        CameraMain.Instance.hardLock = false;
+        CameraMain.Instance.Lock = false;
         Player.Instance.PuzzleMode = false;
         DrawingMode.Instance.LogUI.SetActive(false);
         //CameraMain.Instance.Recenter(0);
@@ -133,9 +133,9 @@ public class PickEggMode : MonoBehaviour
     {
         if (!enabled)
             return;
-        if (!GameData.CarringObj)
+        if (!GameRef.CarringObj)
             return;
-        if (!GameData.CarringObj.GetComponent<Goose>())
+        if (!GameRef.CarringObj.GetComponent<Goose>())
             return;
         StopAllCoroutines();
         Resume();
@@ -165,7 +165,7 @@ public class PickEggMode : MonoBehaviour
             yield return new WaitForSeconds(.2f);
 
             //TheGoose.GetComponent<Rigidbody>().isKinematic = true;
-            GameData.CarringObj.Drop();
+            GameRef.CarringObj.Drop();
             yield return new WaitForSeconds(.2f);
             TheGoose.transform.DOLocalRotate(Vector3.zero, 1, RotateMode.FastBeyond360);
             yield return new WaitForSeconds(2f);
@@ -187,7 +187,7 @@ public class PickEggMode : MonoBehaviour
         if (TheGoose)
         {
             TheGoose = null;
-            GameData.CarringObj.DontDrop = false;
+            GameRef.CarringObj.DontDrop = false;
         }
         if (enabled)
         {

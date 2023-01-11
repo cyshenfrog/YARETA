@@ -161,7 +161,7 @@ public class LakeGoddess : MonoBehaviour
         Player.Instance.Status = PlayerStatus.Wait;
         UI.SetActive(true);
         selecting = true;
-        GameManager.Cursorvisible = true;
+        GameInput.Cursorvisible = true;
     }
 
     // 0 gold, 1 silver, 2 none
@@ -169,7 +169,7 @@ public class LakeGoddess : MonoBehaviour
     {
         SEManager.Instance.PlaySystemSE(SystemSE.UI確認);
         Player.Instance.Model.SetActive(true);
-        GameManager.Cursorvisible = false;
+        GameInput.Cursorvisible = false;
         selecting = false;
         bool honest = false;
         switch (i)

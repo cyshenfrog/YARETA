@@ -26,7 +26,7 @@ public enum ControllerButton
     None
 }
 
-public enum ControllerType
+public enum JoyIconType
 {
     XBOX,
     PlayStation,
@@ -40,18 +40,18 @@ public class ControllerSprites : ScriptableObject
     public Sprite[] Icon_PS;
     public Sprite[] Icon_Switch;
 
-    public Sprite GetSprit(ControllerType controllerType, ControllerButton button)
+    public Sprite GetSprit(JoyIconType controllerType, ControllerButton button)
     {
         switch (controllerType)
         {
-            case ControllerType.XBOX:
+            case JoyIconType.XBOX:
             default:
                 return Icon_Xbox[(int)button];
 
-            case ControllerType.PlayStation:
+            case JoyIconType.PlayStation:
                 return Icon_PS[(int)button];
 
-            case ControllerType.Switch:
+            case JoyIconType.Switch:
                 return Icon_Switch[(int)button];
         }
     }

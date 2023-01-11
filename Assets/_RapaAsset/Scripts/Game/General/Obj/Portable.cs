@@ -41,7 +41,7 @@ public class Portable : MonoBehaviour
             collider.enabled = false;
         }
 
-        GameData.CarringObj = this;
+        GameRef.CarringObj = this;
         if (pause)
             Player.Instance.Status = PlayerStatus.Wait;
         //Player.Instance.PlayerTrigger.UnRegist(GetComponent<Interactable>());
@@ -85,7 +85,7 @@ public class Portable : MonoBehaviour
         }
         Player_IKManager.Instance.ResumeTwoHandIK(() =>
         {
-            GameData.CarringObj = null;
+            GameRef.CarringObj = null;
             if (resumeMoving)
                 Player.Instance.Status = PlayerStatus.Moving;
         });
@@ -102,7 +102,7 @@ public class Portable : MonoBehaviour
                 Player.Instance.Anim.SetTrigger("Equip");
                 Player_IKManager.Instance.ResumeTwoHandIK(() =>
                 {
-                    GameData.CarringObj = null;
+                    GameRef.CarringObj = null;
                     Player.Instance.Status = PlayerStatus.Moving;
                 });
                 gameObject.SetActive(false);
@@ -121,7 +121,7 @@ public class Portable : MonoBehaviour
                 transform.parent = null;
                 Player_IKManager.Instance.ResumeTwoHandIK(() =>
                 {
-                    GameData.CarringObj = null;
+                    GameRef.CarringObj = null;
                     Player.Instance.Status = PlayerStatus.Moving;
                 });
             });

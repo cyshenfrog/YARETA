@@ -50,7 +50,7 @@ public class UI_InteractionHint : UnitySingleton_D<UI_InteractionHint>
 
     public void UpdateIcon(Vector3 pos)
     {
-        InteractButton.transform.position = SaveDataManager.MainCam.WorldToScreenPoint(pos);
+        InteractButton.transform.position = GameRef.MainCam.WorldToScreenPoint(pos);
     }
 
     public void InitIcon(Interactable obj)

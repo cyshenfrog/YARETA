@@ -87,14 +87,14 @@ public class BigMonster : MonoBehaviour
     private void StartChoice()
     {
         Player.Instance.Status = PlayerStatus.Wait;
-        GameManager.Cursorvisible = true;
+        GameInput.Cursorvisible = true;
         selecting = true;
         SelectUI.SetActive(true);
     }
 
     private void StopChoice()
     {
-        GameManager.Cursorvisible = false;
+        GameInput.Cursorvisible = false;
         SelectUI.SetActive(false);
         selecting = false;
     }
@@ -127,7 +127,7 @@ public class BigMonster : MonoBehaviour
             yield return new WaitForSeconds(2.5f);
             EventCam.SetActive(false);
             EventCam2.SetActive(true);
-            GameData.CarringObj.Drop(false);
+            GameRef.CarringObj.Drop(false);
             yield return new WaitForSeconds(0);
 
             Player.Instance.Anim.speed = 1;
@@ -162,7 +162,7 @@ public class BigMonster : MonoBehaviour
             Player.Instance.transform.LookAt(Monster.transform.GetChild(1));
 
             CameraMain.Instance.Recenter(0);
-            CameraMain.Instance.hardLock = true;
+            CameraMain.Instance.Lock = true;
             Cam.SetActive(false);
             FPSCam.SetActive(false);
             yield return new WaitForSeconds(.5f);
@@ -177,7 +177,7 @@ public class BigMonster : MonoBehaviour
             Player.Instance.LerpSpeed(0);
             Player.Instance.Status = PlayerStatus.Moving;
 
-            CameraMain.Instance.hardLock = false;
+            CameraMain.Instance.Lock = false;
             MosterAnim.SetTrigger("Eat");
             yield return new WaitForSeconds(2);
             Carrot.gameObject.SetActive(false);
