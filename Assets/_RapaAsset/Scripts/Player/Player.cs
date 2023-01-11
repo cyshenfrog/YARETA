@@ -123,7 +123,8 @@ public class Player : UnitySingleton_D<Player>
 
     private Tween t;
     private Vector3 targetDirection;
-    private Vector3 onAirVelocity = Vector3.down * 5;
+    private Vector3 AirVelocity = Vector3.down * 5;
+    private Vector3 currentVelocity;
     private Vector3 forward;
     private Vector3 right;
 
@@ -134,7 +135,18 @@ public class Player : UnitySingleton_D<Player>
     private float rotationDiff;
     private float speed;
     private float velocity;
-    private bool grounded => Physics.SphereCast(transform.position + Vector3.up * 0.6f, 0.5f, Vector3.down, out hitInfo, 0.5f, 1 << 0, QueryTriggerInteraction.Ignore);
+    private bool grounded;
+
+    private bool Grounded
+    {
+        get { return grounded; }
+        set
+        {
+            if (grounded != value)
+                OnGround();
+            grounded = value;
+        }
+    }
 
     // State Control
 
@@ -270,15 +282,19 @@ public class Player : UnitySingleton_D<Player>
 
     public virtual void Update()
     {
+        //Basic Section
+        MovementUpdate();
         AirMovementAndCheck();
+        if (characterController.enabled)
+            characterController.Move(AirVelocity * Time.deltaTime);
+
         if (Slowdown)
             Anim.SetFloat("Speed", 0, 0.5f, Time.deltaTime);
         if (Status == PlayerStatus.Climbing)
             ClimbControl(GameInput.Move);
         if (Status != PlayerStatus.Moving)
             return;
-        //Basic Section
-        MovementUpdate();
+
         if (GameRef.CarringObj)
         {
             if (GameInput.GetButtonDown(Actions.Interact) && !GameRef.CarringObj.DontDrop)
@@ -287,7 +303,7 @@ public class Player : UnitySingleton_D<Player>
                 return;
             }
         }
-        if (!grounded)
+        if (!Grounded)
             return;
         if (GameInput.GetButtonDown(Actions.Menu) && !PuzzleMode && SaveDataManager.TutorialPassed)
             OpenMenu();
@@ -353,7 +369,7 @@ public class Player : UnitySingleton_D<Player>
             Anim.SetBool("isSprinting", false);
         }
 
-        if (grounded && !IsJumping && CanSpringAndJump)
+        if (Grounded && !IsJumping && CanSpringAndJump)
         {
             if (GameInput.GetButtonDown(Actions.Jump))
             {
@@ -382,7 +398,7 @@ public class Player : UnitySingleton_D<Player>
         Anim.SetTrigger("Jump");
         currentDrag = AirDrag;
         if (GameInput.IsMove)
-            onAirVelocity = Vector3.up * JumpPower;
+            AirVelocity += Vector3.up * JumpPower;
     }
 
     public virtual void UpdateTargetDirection()
@@ -394,44 +410,48 @@ public class Player : UnitySingleton_D<Player>
         targetDirection = (GameInput.Move.x + DirectionShift) * right + (OneDirMode ? 0 : GameInput.Move.y) * forward;
     }
 
+    private void ClimbCheck()
+    {
+        //爬牆檢測
+        if (Physics.Raycast(transform.position, transform.forward, out climbHitInfo, .6f, 1 << 0, QueryTriggerInteraction.Ignore))
+        {
+            if (Vector3.Angle(climbHitInfo.normal, Vector3.up) < 45)
+                Status = PlayerStatus.Moving;
+            else
+            {
+                Status = PlayerStatus.Climbing;
+                IsJumping = false;
+            }
+        }
+        else if (Status == PlayerStatus.Climbing)
+            Status = PlayerStatus.Moving;
+    }
+
+    private void OnGround()
+    {
+        if (Status == PlayerStatus.Climbing)
+            Status = PlayerStatus.Moving;
+    }
+
     private void AirMovementAndCheck()
     {
-        WalkFX.enableEmission = grounded;
-        Anim.SetBool("Grounded", grounded);
-        if (!grounded)
-        {
-            if (Physics.Raycast(transform.position, transform.forward, out climbHitInfo, .6f, 1 << 0, QueryTriggerInteraction.Ignore))
-            {
-                if (Vector3.Angle(climbHitInfo.normal, Vector3.up) < 45)
-                    Status = PlayerStatus.Moving;
-                else
-                {
-                    Status = PlayerStatus.Climbing;
-                    IsJumping = false;
-                }
-            }
-            else if (Status == PlayerStatus.Climbing)
-                Status = PlayerStatus.Moving;
+        //落地檢測
+        Grounded = Physics.SphereCast(transform.position + Vector3.up * 0.6f, 0.5f, Vector3.down, out hitInfo, 0.5f, 1 << 0, QueryTriggerInteraction.Ignore);
 
-            onAirVelocity = Vector3.Lerp(onAirVelocity, (GameInput.MovementCameraSpace + Vector3.down * GameInput.MovementCameraSpace.y) * AirMoveSpeed + Vector3.down * (IsJumping ? 0 : 10), Time.deltaTime);
-        }
-        else if (!IsJumping)
+        //落地特效、動畫
+        WalkFX.enableEmission = Grounded;
+        Anim.SetBool("Grounded", Grounded);
+        if (!Grounded)
         {
-            if (Status == PlayerStatus.Climbing)
-                Status = PlayerStatus.Moving;
-            onAirVelocity = Vector3.Lerp(onAirVelocity, Vector3.down, Time.deltaTime * 5);
+        AirVelocity = (GameInput.MovementCameraSpace + Vector3.down * GameInput.MovementCameraSpace.y) * AirMoveSpeed + Vector3.down * (IsJumping ? 0 : 10);
         }
 
         if (IsJumping)
         {
-            onAirVelocity -= Vector3.up * currentDrag * Time.deltaTime;
-            if (onAirVelocity.y < 0)
-            {
+            AirVelocity -= Vector3.up * currentDrag * Time.deltaTime;
+            if (AirVelocity.y < 0)
                 currentDrag = Mathf.Lerp(currentDrag, AirDrag, Time.deltaTime * 4);
-            }
         }
-        if (characterController.enabled)
-            characterController.Move(onAirVelocity * Time.deltaTime);
     }
 
     public void OnJumpFinish()
@@ -491,7 +511,7 @@ public class Player : UnitySingleton_D<Player>
     {
         if (Status == PlayerStatus.Wait)
             return;
-        if (!grounded)
+        if (!Grounded)
             Drown();
         else
             WalkBack();
