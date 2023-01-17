@@ -122,8 +122,11 @@ public class Player : UnitySingleton_D<Player>
     // CalculateTemp
 
     private Tween t;
+    private Tween moveLooking;
+    private Tween hSpeedBlend;
     private Vector3 targetDirection;
-    private Vector3 AirVelocity = Vector3.down * 5;
+    private float VirticleVelocity;
+    private float HorizontalVelocity;
     private Vector3 currentVelocity;
     private Vector3 forward;
     private Vector3 right;
@@ -134,7 +137,6 @@ public class Player : UnitySingleton_D<Player>
     private float currentDrag;
     private float rotationDiff;
     private float speed;
-    private float velocity;
     private bool grounded;
 
     private bool Grounded
@@ -219,12 +221,10 @@ public class Player : UnitySingleton_D<Player>
         }
         if (status == PlayerStatus.Static || status == PlayerStatus.Climbing)
         {
-            Anim.applyRootMotion = false;
             characterController.enabled = false;
         }
         else
         {
-            Anim.applyRootMotion = true;
             characterController.enabled = true;
         }
     }
@@ -233,7 +233,8 @@ public class Player : UnitySingleton_D<Player>
     //private bool canSpring;
 
     public bool CanSpringAndJump = true;
-    private bool AutoRunning;
+    private bool autoRunning;
+    private bool running;
 
     //{
     //    get { return canSpring; }
@@ -285,9 +286,6 @@ public class Player : UnitySingleton_D<Player>
         //Basic Section
         MovementUpdate();
         AirMovementAndCheck();
-        if (characterController.enabled)
-            characterController.Move(AirVelocity * Time.deltaTime);
-
         if (Slowdown)
             Anim.SetFloat("Speed", 0, 0.5f, Time.deltaTime);
         if (Status == PlayerStatus.Climbing)
@@ -337,6 +335,21 @@ public class Player : UnitySingleton_D<Player>
 
     private void MovementUpdate()
     {
+        if (GameInput.GetButtonDown(Actions.Move))
+        {
+            moveLooking = transform.DOLookAt(transform.position + GameInput.MovementCameraSpace, 0.2f, AxisConstraint.Y);
+            if (hSpeedBlend.IsActive())
+                hSpeedBlend.Kill();
+            HorizontalVelocity = 0;
+            hSpeedBlend = DOTween.To(() => HorizontalVelocity, x => HorizontalVelocity = x, 4, 0.2f);
+        }
+        else if (GameInput.GetButtonUp(Actions.Move))
+        {
+            if (hSpeedBlend.IsActive())
+                hSpeedBlend.Kill();
+            hSpeedBlend = DOTween.To(() => HorizontalVelocity, x => HorizontalVelocity = x, 0, 0.2f);
+        }
+
         if (OneDirMode)
         {
             speed = GameInput.Move.y + GameInput.Move.x;
@@ -350,22 +363,22 @@ public class Player : UnitySingleton_D<Player>
             speed *= MoveSpeed;
         }
 
-        speed = Mathf.SmoothDamp(Anim.GetFloat("Speed"), speed, ref velocity, 0.1f);
-        Anim.SetFloat("Speed", speed);
+        Anim.SetFloat("Speed", speed, .1f, Time.deltaTime);
 
         //Anim.SetFloat("Direction", GameInput.Move.x);
         if (!OneDirMode && CanSpringAndJump && GameInput.IsMove)
         {
             if (GameInput.GetButtonDown(Actions.ToggleRun))
-                AutoRunning = !AutoRunning;
-            if (GameInput.GetButton(Actions.Run) || AutoRunning)
-                Anim.SetBool("isSprinting", true);
+                autoRunning = !autoRunning;
+            if (GameInput.GetButton(Actions.Run) || autoRunning)
+                running = true;
             else
-                Anim.SetBool("isSprinting", false);
+                running = false;
+            Anim.SetBool("isSprinting", running);
         }
         else
         {
-            AutoRunning = false;
+            autoRunning = false;
             Anim.SetBool("isSprinting", false);
         }
 
@@ -376,7 +389,13 @@ public class Player : UnitySingleton_D<Player>
                 Jump();
             }
         }
+        if (characterController.enabled)
+            characterController.Move((GameInput.MovementCameraSpace.normalized * HorizontalVelocity * (running && Grounded ? 2 : 1) + Vector3.up * VirticleVelocity) * MoveSpeed * Time.deltaTime);
 
+        if (moveLooking.IsActive())
+        {
+            return;
+        }
         if (LookTarget)
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(LookTarget.position - transform.position, Vector3.up), Time.deltaTime * 5);
         else
@@ -398,7 +417,7 @@ public class Player : UnitySingleton_D<Player>
         Anim.SetTrigger("Jump");
         currentDrag = AirDrag;
         if (GameInput.IsMove)
-            AirVelocity += Vector3.up * JumpPower;
+            VirticleVelocity = JumpPower;
     }
 
     public virtual void UpdateTargetDirection()
@@ -441,17 +460,17 @@ public class Player : UnitySingleton_D<Player>
         //落地特效、動畫
         WalkFX.enableEmission = Grounded;
         Anim.SetBool("Grounded", Grounded);
-        if (!Grounded)
+        if (!Grounded && !IsJumping && VirticleVelocity > -10)
         {
-        AirVelocity = (GameInput.MovementCameraSpace + Vector3.down * GameInput.MovementCameraSpace.y) * AirMoveSpeed + Vector3.down * (IsJumping ? 0 : 10);
+            VirticleVelocity -= (IsJumping ? 0 : 10) * Time.deltaTime;
         }
 
-        if (IsJumping)
-        {
-            AirVelocity -= Vector3.up * currentDrag * Time.deltaTime;
-            if (AirVelocity.y < 0)
-                currentDrag = Mathf.Lerp(currentDrag, AirDrag, Time.deltaTime * 4);
-        }
+        //if (IsJumping)
+        //{
+        //    VirticleVelocity -= Vector3.up * currentDrag * Time.deltaTime;
+        //    if (VirticleVelocity.y < 0)
+        //        currentDrag = Mathf.Lerp(currentDrag, AirDrag, Time.deltaTime * 4);
+        //}
     }
 
     public void OnJumpFinish()

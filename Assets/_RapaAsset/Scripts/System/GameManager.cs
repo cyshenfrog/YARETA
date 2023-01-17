@@ -39,4 +39,9 @@ public class GameManager : UnitySingleton_D<GameManager>
             SaveDataManager.TutorialPassed = true;
         }
     }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus) GameInput.UpdateCursor();
+    }
 }

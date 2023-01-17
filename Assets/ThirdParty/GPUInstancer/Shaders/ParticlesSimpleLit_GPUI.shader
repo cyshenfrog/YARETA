@@ -212,7 +212,7 @@ Shader "GPUInstancer/Universal Render Pipeline/Particles/Simple Lit"
             Tags{"LightMode" = "DepthOnly"}
 
             ZWrite On
-            ColorMask R
+            ColorMask 0
             Cull[_Cull]
 
             HLSLPROGRAM

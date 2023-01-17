@@ -23,6 +23,7 @@ public enum Actions
     ToggleRun,
     Up,
     Down,
+    Move,
     EnumLength
 }
 
@@ -76,7 +77,7 @@ public static class GameInput
 
     #region Inputs
 
-    public static bool AnyInput { get { return RewiredPlayer.GetAnyButton(); } }
+    public static bool AnyInput { get { if (Joystick != null) return Joystick.GetAnyButton() || Keyboard.GetAnyButton(); else return Keyboard.GetAnyButton(); } }
 
     public static bool IsMove
     {
@@ -94,11 +95,15 @@ public static class GameInput
         }
     }
 
+    private static Vector3 _movementCameraSpace;
+
     public static Vector3 MovementCameraSpace
     {
         get
         {
-            return GameRef.MainCam.transform.forward * Move.y + GameRef.MainCam.transform.right * Move.x;
+            _movementCameraSpace = GameRef.MainCam.transform.forward * Move.y + GameRef.MainCam.transform.right * Move.x;
+            _movementCameraSpace.y = 0;
+            return _movementCameraSpace;
         }
     }
 
@@ -144,7 +149,6 @@ public static class GameInput
         }
         ReInput.ControllerConnectedEvent += OnControllerConnected;
         OnSwitchController += _OnSwitchController;
-        Application.focusChanged += (focus) => { if (focus) UpdateCursor(); };
     }
 
     private static void _OnSwitchController(bool useJoycon)
