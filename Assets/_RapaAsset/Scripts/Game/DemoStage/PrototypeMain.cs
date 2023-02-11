@@ -73,7 +73,10 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
         InvokeRepeating("UpdateRespawnPoint", 0, 5);
         TargetScanData.AddRange(new int[27] { 0, 1, 2, 9, 10, 15, 16, 20, 21, 22, 34, 35, 39, 40, 41, 42, 43, 44, 46, 47, 49, 50, 51, 52, 53, 56, 57 });
         if (GameManager.Instance.TestMode)
+        {
+            CanScan = true;
             return;
+        }
         Player.Instance.Status = PlayerStatus.Static;
         Player.Instance.transform.position = StartingPosition.position;
         Player.Instance.transform.rotation = StartingPosition.rotation;

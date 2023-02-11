@@ -41,4 +41,9 @@ public class UI_LocalizationText : MonoBehaviour
         text.font = GameManager.Instance.GetFont();
         text.transform.localScale = SaveDataManager.Language == SystemLanguage.English ? Vector3.one : (Vector3.one - Vector3.right * 0.1f);
     }
+
+    private void OnDestroy()
+    {
+        SaveDataManager.OnLanguageChanged -= UpdateText;
+    }
 }

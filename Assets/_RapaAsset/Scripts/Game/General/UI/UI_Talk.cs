@@ -110,7 +110,7 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
         if (!DontLock)
         {
             Player.Instance.Status = PlayerStatus.Wait;
-            Player.Instance.Slowdown = true;
+            Player.Instance.LerpSpeed(0, .5f);
         }
         currentTalks = talks;
         Dialog.text = "";
@@ -223,5 +223,10 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
     private string CheckString(string s, string r)
     {
         return s.Replace("*", r);
+    }
+
+    private void OnDestroy()
+    {
+        SaveDataManager.OnLanguageChanged -= UpdateTextSize;
     }
 }

@@ -30,19 +30,22 @@ public enum Actions
 public static class GameInput
 {
     //Rewire Player Ref
-    public static Rewired.Player RewiredPlayer
-    { get { return ReInput.isReady ? ReInput.players.GetPlayer(0) : null; } }
+
+    public static Rewired.Player RewiredPlayer => ReInput.isReady ? ReInput.players.GetPlayer(0) : null;
 
     //Device And Joystick Icon Type
 
-    public static Keyboard Keyboard { get { return ReInput.controllers.Keyboard; } }
-    public static Mouse Mouse { get { return ReInput.controllers.Mouse; } }
-    public static Joystick Joystick { get { return UsingJoystick ? (Joystick)ReInput.controllers.GetLastActiveController() : ReInput.controllers.GetJoystick(0); } }
-    public static JoyIconType JoyButtonType;
+    public static Keyboard Keyboard => ReInput.controllers.Keyboard;
+    public static Mouse Mouse => ReInput.controllers.Mouse;
+
+    public static Joystick Joystick
+    { get { return UsingJoystick ? (Joystick)ReInput.controllers.GetLastActiveController() : ReInput.controllers.GetJoystick(0); } }
+
+    public static JoystickBrand JoystickBrandType;
 
     //Input States
 
-    public static Action<bool> OnSwitchController = null;
+    public static event Action<bool> OnSwitchController = null;
 
     private static ControllerType lastControllerType;
 
@@ -77,25 +80,14 @@ public static class GameInput
 
     #region Inputs
 
-    public static bool AnyInput { get { if (Joystick != null) return Joystick.GetAnyButton() || Keyboard.GetAnyButton(); else return Keyboard.GetAnyButton(); } }
+    public static bool AnyInput
+    { get { if (Joystick != null) return Joystick.GetAnyButton() || Keyboard.GetAnyButton(); else return Keyboard.GetAnyButton(); } }
 
-    public static bool IsMove
-    {
-        get
-        {
-            return RewiredPlayer.GetAxis2D("MoveX", "MoveY") != Vector2.zero;
-        }
-    }
-
-    public static Vector2 Move
-    {
-        get
-        {
-            return RewiredPlayer.GetAxis2D("MoveX", "MoveY");
-        }
-    }
-
+    public static bool IsMove => RewiredPlayer.GetAxis2D("MoveX", "MoveY") != Vector2.zero;
+    public static Vector2 Move => RewiredPlayer.GetAxis2D("MoveX", "MoveY");
     private static Vector3 _movementCameraSpace;
+    public static bool IsCameraMove => RewiredPlayer.GetAxis2D("CameraX", "CameraY") != Vector2.zero;
+    public static Vector2 CameraMove => RewiredPlayer.GetAxis2D("CameraX", "CameraY");
 
     public static Vector3 MovementCameraSpace
     {
@@ -104,22 +96,6 @@ public static class GameInput
             _movementCameraSpace = GameRef.MainCam.transform.forward * Move.y + GameRef.MainCam.transform.right * Move.x;
             _movementCameraSpace.y = 0;
             return _movementCameraSpace;
-        }
-    }
-
-    public static bool IsCameraMove
-    {
-        get
-        {
-            return RewiredPlayer.GetAxis2D("CameraX", "CameraY") != Vector2.zero;
-        }
-    }
-
-    public static Vector2 CameraMove
-    {
-        get
-        {
-            return RewiredPlayer.GetAxis2D("CameraX", "CameraY");
         }
     }
 
@@ -148,17 +124,17 @@ public static class GameInput
             item.calibrationMap.GetAxis(3).deadZone = 0.25f;
         }
         ReInput.ControllerConnectedEvent += OnControllerConnected;
-        OnSwitchController += _OnSwitchController;
+        OnSwitchController += UpdateBrand;
     }
 
-    private static void _OnSwitchController(bool useJoycon)
+    private static void UpdateBrand(bool useJoycon)
     {
         if (useJoycon)
         {
             if (RewiredPlayer.controllers.GetLastActiveController().name.Contains("Sony"))
-                JoyButtonType = JoyIconType.PlayStation;
+                JoystickBrandType = JoystickBrand.PlayStation;
             if (RewiredPlayer.controllers.GetLastActiveController().name.Contains("Nintendo"))
-                JoyButtonType = JoyIconType.Switch;
+                JoystickBrandType = JoystickBrand.Switch;
         }
     }
 

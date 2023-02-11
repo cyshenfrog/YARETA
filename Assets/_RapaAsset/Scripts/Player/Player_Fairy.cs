@@ -138,10 +138,10 @@ public class Player_Fairy : Player
             item.gameObject.SetActive(true);
         }
         Scanning = true;
-        MoveSpeed = 0.2f;
-        turnSpeed = 1f;
+        MoveMode = MoveMode.Aimming;
+        MoveSpeed = 0.5f;
         PlayerTrigger.enabled = false;
-        //CameraMain.Instance.SetCameraMode(CameraMode.OverShoulder);
+        CameraMain.Instance.SetCameraMode(CameraMode.Aim);
     }
 
     public override void StopScan()
@@ -155,11 +155,11 @@ public class Player_Fairy : Player
         {
             item.SetActive(false);
         }
+        MoveMode = MoveMode.Normal;
         Scanning = false;
         MoveSpeed = 1f;
-        turnSpeed = 3f;
         PlayerTrigger.enabled = true;
-        //CameraMain.Instance.SetCameraMode(CameraMode.Default3rdPerson);
+        CameraMain.Instance.SetCameraMode(CameraMode.Default);
     }
 
     private void OnDrawGizmos()

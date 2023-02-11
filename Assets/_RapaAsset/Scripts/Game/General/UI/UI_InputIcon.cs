@@ -9,7 +9,9 @@ public class UI_InputIcon : MonoBehaviour
 {
     public ControllerButton ControllerIcon;
 
-    public Sprite Controller { get { return GameManager.Instance.ControllerSprites.GetSprit(GameInput.JoyButtonType, ControllerIcon); } }
+    public Sprite Controller
+    { get { return GameManager.Instance.ControllerSprites.GetSprit(GameInput.JoystickBrandType, ControllerIcon); } }
+
     public Sprite KB;
     private ControllerButton ori_C;
     private Sprite ori_KB;
@@ -69,5 +71,10 @@ public class UI_InputIcon : MonoBehaviour
         }
         else
             gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        GameInput.OnSwitchController -= Switch;
     }
 }

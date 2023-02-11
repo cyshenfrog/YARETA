@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/_RapaAsset/Scene/_MainGame.unity
-    guid: 2fad54c64d726884cb913f9e050e3e18
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/_RapaAsset/Scene/LeafTest.unity
     guid: 5fb5342ee84ab254b99c83e7a048c25f

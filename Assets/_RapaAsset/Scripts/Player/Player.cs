@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
-using Lean.Pool;
 using UnityEngine;
-using NaughtyAttributes;
 
 public enum PlayerStatus
 {
@@ -16,72 +14,34 @@ public enum PlayerStatus
 public enum MoveMode
 {
     Normal,
-    OneDirAndTurn,
+    Aimming,
+    Walking,
 }
 
 [RequireComponent(typeof(CharacterController))]
 public class Player : UnitySingleton_D<Player>
 {
-    #region Fields/properties
+    #region Compenents
 
-    // Component
-    [BoxGroup("Component")]
-    [Space]
+    public static Transform FacingTarget;
     public CharacterController characterController;
-
-    [BoxGroup("Component")]
     public Animator Anim;
-
-    [BoxGroup("Component")]
     public GameObject[] Scanners;
-
-    [BoxGroup("Component")]
-    public GameObject Pad;
-
-    [BoxGroup("Component")]
     public GameObject Rock;
-
-    [BoxGroup("Component")]
     public GameObject Egg;
-
-    [BoxGroup("Component")]
     public GameObject Hammer;
-
-    [BoxGroup("Component")]
     public GameObject DrawModel;
-
-    [BoxGroup("Component")]
-    public LeanGameObjectPool RodPool;
-
-    [BoxGroup("Component")]
     public GameObject FPCam;
-
-    [BoxGroup("Component")]
     public GameObject Model;
-
-    [BoxGroup("Component")]
-    public Transform MenuHand;
-
-    [BoxGroup("Component")]
-    public Transform DrawingHand;
-
-    [BoxGroup("Component")]
     public Transform LeftDragPos;
-
-    [BoxGroup("Component")]
     public Transform RightDragPos;
-
-    [BoxGroup("Component")]
     public Transform FrontDragPos;
-
-    [BoxGroup("Component")]
     public PlayerTrigger PlayerTrigger;
-
-    [BoxGroup("Component")]
-    public ParticleSystem WalkFX;
-
-    [BoxGroup("Component")]
-    public GameObject DrownFX;
+    [SerializeField] private GameObject Pad;
+    [SerializeField] private Transform MenuHand;
+    [SerializeField] private Transform DrawingHand;
+    [SerializeField] private ParticleSystem WalkFX;
+    [SerializeField] private GameObject DrownFX;
 
     protected Transform ScanHandTracker_R
     { get { return Player_IKManager.Instance.RightHandRef; } }
@@ -89,57 +49,25 @@ public class Player : UnitySingleton_D<Player>
     protected Transform ScanHandTracker_L
     { get { return Player_IKManager.Instance.LeftHandRef; } }
 
-    // Setting
+    #endregion Compenents
 
-    [BoxGroup("Setting")]
-    [Space]
-    public float turnSpeed = 10f;
+    #region Setting
 
-    [BoxGroup("Setting")]
     public float MoveSpeed = 1;
-
-    [BoxGroup("Setting")]
-    public float AirMoveSpeed = 1;
-
-    [BoxGroup("Setting")]
+    public float TurnSpeed = 10f;
+    public float AirControl = 1;
+    public float AirDrag = 2.5f;
     public float JumpPower = 5;
-
-    [BoxGroup("Setting")]
     public float RocketJumpPower;
 
-    [BoxGroup("Setting")]
-    public float AirDrag = 2.5f;
+    #endregion Setting
 
-    [BoxGroup("Setting")]
-    public bool OneDirMode;
+    #region StateControl
 
-    [BoxGroup("Setting")]
-    public bool PuzzleMode;
+    public bool IsJumping;
+    private bool running;
 
-    [BoxGroup("Setting")]
-    public float DirectionShift;
-
-    // CalculateTemp
-
-    private Tween t;
-    private Tween moveLooking;
-    private Tween hSpeedBlend;
-    private Vector3 targetDirection;
-    private float VirticleVelocity;
-    private float HorizontalVelocity;
-    private Vector3 currentVelocity;
-    private Vector3 forward;
-    private Vector3 right;
-
-    private Quaternion freeRotation;
-    private RaycastHit hitInfo;
-    private RaycastHit climbHitInfo;
-    private float currentDrag;
-    private float rotationDiff;
-    private float speed;
-    private bool grounded;
-
-    private bool Grounded
+    private bool grounded; private bool Grounded
     {
         get { return grounded; }
         set
@@ -150,19 +78,9 @@ public class Player : UnitySingleton_D<Player>
         }
     }
 
-    // State Control
+    public bool PuzzleMode;
 
-    [HideInInspector]
-    public Transform LookTarget;
-
-    public bool IsJumping;
-
-    [SerializeField]
-    [BoxGroup("Status")]
-    [Space]
-    private MoveMode moveMode;
-
-    public MoveMode MoveMode
+    private MoveMode moveMode; public MoveMode MoveMode
     {
         get { return moveMode; }
         set
@@ -170,31 +88,32 @@ public class Player : UnitySingleton_D<Player>
             moveMode = value;
             switch (value)
             {
-                case MoveMode.OneDirAndTurn:
-                    OneDirMode = true;
+                case MoveMode.Aimming:
+                    Anim.SetBool("Aiming", true);
+                    Anim.SetBool("isSprinting", false);
+                    break;
+
+                case MoveMode.Walking:
+                    Anim.SetBool("isSprinting", false);
                     break;
 
                 default:
-                    OneDirMode = false;
+                    Anim.SetBool("Aiming", false);
                     break;
             }
         }
     }
 
-    private PlayerStatus laststatus = PlayerStatus.Moving;
-
-    [SerializeField]
-    [BoxGroup("Status")]
-    private PlayerStatus status = PlayerStatus.Wait;
+    [SerializeField] private PlayerStatus status = PlayerStatus.Wait;
 
     public PlayerStatus Status
+
     {
         get => status;
         set
         {
             if (value == status)
                 return;
-            laststatus = status;
             status = value;
             OnStateChanged(status);
         }
@@ -208,13 +127,12 @@ public class Player : UnitySingleton_D<Player>
             case PlayerStatus.Static:
             case PlayerStatus.Wait:
                 PlayerTrigger.enabled = false;
-                if (!Slowdown)
+                if (!speedTween.IsActive())
                     Anim.SetFloat("Speed", 0);
                 Anim.SetBool("isSprinting", false);
                 break;
 
             case PlayerStatus.Moving:
-                Slowdown = false;
                 PlayerTrigger.enabled = true;
                 //PlayerTrigger.Rescan();
                 break;
@@ -229,27 +147,62 @@ public class Player : UnitySingleton_D<Player>
         }
     }
 
-    public bool Slowdown;
-    //private bool canSpring;
+    #endregion StateControl
 
-    public bool CanSpringAndJump = true;
-    private bool autoRunning;
-    private bool running;
+    #region CalculateTemp
 
-    //{
-    //    get { return canSpring; }
-    //    set
-    //    {
-    //        canSpring = value;
-    //        Anim.SetBool("isSprinting", value);
-    //    }
-    //}
+    private const float MAX_MOVE_SPEED = 4f;
+    private float fallVelocity;
+    private float moveVelocity;
+    private float rotationDiff;
+    private RaycastHit climbHitInfo;
+    private Quaternion targetRotation;
+    private Quaternion freeRotation;
+    private Tween speedTween;
+    private Tween crouchTween;
+    private Tween initFacing;
+    private Tween hSpeedBlend;
+    private Vector3 targetDirection;
+    private Vector3 forward;
+    private Vector3 right;
 
-    #endregion Fields/properties
+    #endregion CalculateTemp
 
-    /////////////////////////////////////
-    //            Control              //
-    /////////////////////////////////////
+    #region PlayerControl
+
+    public virtual void Update()
+    {
+        // Always execute
+        GroundCheck();
+        GravityUpdate();
+        DefaultAnimUpdate();
+
+        // Execute by status
+        switch (Status)
+        {
+            case PlayerStatus.Wait:
+                break;
+
+            case PlayerStatus.Moving:
+                ClimbCheck();
+                MovementControl();
+                UpdateRotation();
+                ActionControl();
+                LocomoationAnimUpdate();
+                break;
+
+            case PlayerStatus.Static:
+                break;
+
+            case PlayerStatus.Climbing:
+                ClimbControl(GameInput.Move);
+                break;
+
+            default:
+                break;
+        }
+    }
+
     private void ClimbControl(Vector2 input)
     {
         //// Check walls in a cross pattern
@@ -271,7 +224,7 @@ public class Player : UnitySingleton_D<Player>
         //}
         //checkDirection /= k;
 
-        float dot = Vector3.Dot(transform.forward, -climbHitInfo.normal);
+        //float dot = Vector3.Dot(transform.forward, -climbHitInfo.normal);
 
         //transform.position = climbHitInfo.point + climbHitInfo.normal * 0.05f;
         transform.forward = Vector3.Lerp(transform.forward,
@@ -281,17 +234,90 @@ public class Player : UnitySingleton_D<Player>
         transform.Translate(input * Time.deltaTime, Space.Self);
     }
 
-    public virtual void Update()
+    private void ClimbCheck()
     {
-        //Basic Section
-        MovementUpdate();
-        AirMovementAndCheck();
-        if (Slowdown)
-            Anim.SetFloat("Speed", 0, 0.5f, Time.deltaTime);
-        if (Status == PlayerStatus.Climbing)
-            ClimbControl(GameInput.Move);
-        if (Status != PlayerStatus.Moving)
-            return;
+        //爬牆檢測
+        if (Physics.Raycast(transform.position, transform.forward, out climbHitInfo, .6f, 1 << 0, QueryTriggerInteraction.Ignore))
+        {
+            if (Vector3.Angle(climbHitInfo.normal, Vector3.up) < 45)
+                Status = PlayerStatus.Moving;
+            else
+            {
+                Status = PlayerStatus.Climbing;
+                IsJumping = false;
+            }
+        }
+        else if (Status == PlayerStatus.Climbing)
+            Status = PlayerStatus.Moving;
+    }
+
+    private void GroundCheck()
+    {
+        //落地檢測
+        Grounded = Physics.SphereCast(transform.position + Vector3.up * 0.6f, 0.5f, Vector3.down, out _, 0.5f, 1 << 0, QueryTriggerInteraction.Ignore);
+
+        //落地特效、動畫
+        WalkFX.enableEmission = Grounded;
+    }
+
+    private void GravityUpdate()
+    {
+        if (!Grounded && !IsJumping && fallVelocity > -10)
+        {
+            fallVelocity -= (IsJumping ? 0 : 10) * Time.deltaTime;
+        }
+
+        //if (IsJumping)
+        //{
+        //    VirticleVelocity -= Vector3.up * currentDrag * Time.deltaTime;
+        //    if (VirticleVelocity.y < 0)
+        //        currentDrag = Mathf.Lerp(currentDrag, AirDrag, Time.deltaTime * 4);
+        //}
+    }
+
+    private void MovementControl()
+    {
+        switch (MoveMode)
+        {
+            case MoveMode.Normal:
+                if (GameInput.GetButtonDown(Actions.ToggleRun))
+                    running = !running;
+                if (GameInput.GetButtonDown(Actions.Run))
+                    running = true;
+                else if (GameInput.GetButtonUp(Actions.Run))
+                    running = false;
+                if (GameInput.GetButtonDown(Actions.Jump))
+                    Jump();
+                break;
+
+            case MoveMode.Walking:
+            case MoveMode.Aimming:
+            default:
+                break;
+        }
+
+        if (GameInput.GetButtonDown(Actions.Move))
+        {
+            initFacing = transform.DOLookAt(transform.position + GameInput.MovementCameraSpace, 0.2f, AxisConstraint.Y);
+            if (hSpeedBlend.IsActive())
+                hSpeedBlend.Kill();
+            moveVelocity = 0;
+            hSpeedBlend = DOTween.To(() => moveVelocity, x => moveVelocity = x, MAX_MOVE_SPEED, 0.2f);
+        }
+        else if (GameInput.GetButtonUp(Actions.Move))
+        {
+            if (hSpeedBlend.IsActive())
+                hSpeedBlend.Kill();
+            hSpeedBlend = DOTween.To(() => moveVelocity, x => moveVelocity = x, 0, 0.2f);
+        }
+
+        if (characterController.enabled)
+            characterController.Move((GameInput.MovementCameraSpace.normalized * moveVelocity * (running && Grounded ? 2 : 1) + Vector3.up * fallVelocity) * MoveSpeed * Time.deltaTime);
+    }
+
+    private void ActionControl()
+    {
+        //Air and grounded
 
         if (GameRef.CarringObj)
         {
@@ -301,16 +327,66 @@ public class Player : UnitySingleton_D<Player>
                 return;
             }
         }
+
+        //Ground only
+
         if (!Grounded)
             return;
-        if (GameInput.GetButtonDown(Actions.Menu) && !PuzzleMode && SaveDataManager.TutorialPassed)
-            OpenMenu();
-        if (GameInput.GetButtonDown(Actions.DrawMode) && SaveDataManager.TutorialPassed)
-            DrawingMode.Instance.StartDrawingMode();
+
         if (PlayerTrigger.NearestObj)
         {
-            if (GameInput.GetButtonDown(PlayerTrigger.NearestObj.InteractButton)) PlayerTrigger.Interact();
+            if (GameInput.GetButtonDown(PlayerTrigger.NearestObj.InteractButton))
+                PlayerTrigger.Interact();
         }
+
+        if (SaveDataManager.TutorialPassed)
+        {
+            if (GameInput.GetButtonDown(Actions.Menu) && !PuzzleMode)
+                OpenMenu();
+            if (GameInput.GetButtonDown(Actions.DrawMode))
+                DrawingMode.Instance.StartDrawingMode();
+        }
+    }
+
+    private void UpdateRotation()
+    {
+        if (initFacing.IsActive() || MoveMode == MoveMode.Aimming)
+            return;
+
+        if (FacingTarget)
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(FacingTarget.position - transform.position, Vector3.up), Time.deltaTime * 5);
+        else
+        {
+            CalcTargetDirection();
+            if (GameInput.IsMove && targetDirection.magnitude > 0.1f)
+            {
+                freeRotation = Quaternion.LookRotation(targetDirection.normalized, transform.up);
+                rotationDiff = freeRotation.eulerAngles.y - transform.eulerAngles.y;
+                targetRotation = Quaternion.Euler(new Vector3(0, rotationDiff != 0 ? freeRotation.eulerAngles.y : transform.eulerAngles.y, 0));
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, TurnSpeed * Time.deltaTime);
+                if (MathF.Abs(rotationDiff) > 5)
+                    Anim.SetFloat("Direction", IsClockwise(transform.rotation, targetRotation, Vector3.up) ? 1 : -1, .2f, Time.deltaTime);
+                else
+                    Anim.SetFloat("Direction", 0, .1f, Time.deltaTime);
+            }
+            else
+                Anim.SetFloat("Direction", 0, .1f, Time.deltaTime);
+        }
+    }
+
+    private void CalcTargetDirection()
+    {
+        right = GameRef.MainCam.transform.TransformDirection(Vector3.right);
+        forward = GameRef.MainCam.transform.TransformDirection(Vector3.forward);
+        forward.y = 0;
+
+        targetDirection = GameInput.Move.x * right + GameInput.Move.y * forward;
+    }
+
+    private void OnGround()
+    {
+        if (Status == PlayerStatus.Climbing)
+            Status = PlayerStatus.Moving;
     }
 
     public void OpenMenu()
@@ -333,144 +409,11 @@ public class Player : UnitySingleton_D<Player>
         });
     }
 
-    private void MovementUpdate()
-    {
-        if (GameInput.GetButtonDown(Actions.Move))
-        {
-            moveLooking = transform.DOLookAt(transform.position + GameInput.MovementCameraSpace, 0.2f, AxisConstraint.Y);
-            if (hSpeedBlend.IsActive())
-                hSpeedBlend.Kill();
-            HorizontalVelocity = 0;
-            hSpeedBlend = DOTween.To(() => HorizontalVelocity, x => HorizontalVelocity = x, 4, 0.2f);
-        }
-        else if (GameInput.GetButtonUp(Actions.Move))
-        {
-            if (hSpeedBlend.IsActive())
-                hSpeedBlend.Kill();
-            hSpeedBlend = DOTween.To(() => HorizontalVelocity, x => HorizontalVelocity = x, 0, 0.2f);
-        }
-
-        if (OneDirMode)
-        {
-            speed = GameInput.Move.y + GameInput.Move.x;
-            speed = Mathf.Clamp(speed, -1f, 1f);
-            speed *= MoveSpeed;
-        }
-        else
-        {
-            speed = Mathf.Abs(GameInput.Move.x) + Mathf.Abs(GameInput.Move.y);
-            speed = Mathf.Clamp(speed, 0f, 1f);
-            speed *= MoveSpeed;
-        }
-
-        Anim.SetFloat("Speed", speed, .1f, Time.deltaTime);
-
-        //Anim.SetFloat("Direction", GameInput.Move.x);
-        if (!OneDirMode && CanSpringAndJump && GameInput.IsMove)
-        {
-            if (GameInput.GetButtonDown(Actions.ToggleRun))
-                autoRunning = !autoRunning;
-            if (GameInput.GetButton(Actions.Run) || autoRunning)
-                running = true;
-            else
-                running = false;
-            Anim.SetBool("isSprinting", running);
-        }
-        else
-        {
-            autoRunning = false;
-            Anim.SetBool("isSprinting", false);
-        }
-
-        if (Grounded && !IsJumping && CanSpringAndJump)
-        {
-            if (GameInput.GetButtonDown(Actions.Jump))
-            {
-                Jump();
-            }
-        }
-        if (characterController.enabled)
-            characterController.Move((GameInput.MovementCameraSpace.normalized * HorizontalVelocity * (running && Grounded ? 2 : 1) + Vector3.up * VirticleVelocity) * MoveSpeed * Time.deltaTime);
-
-        if (moveLooking.IsActive())
-        {
-            return;
-        }
-        if (LookTarget)
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(LookTarget.position - transform.position, Vector3.up), Time.deltaTime * 5);
-        else
-        {
-            UpdateTargetDirection();
-            if (GameInput.IsMove && targetDirection.magnitude > 0.1f)
-            {
-                freeRotation = Quaternion.LookRotation(targetDirection.normalized, transform.up);
-                rotationDiff = freeRotation.eulerAngles.y - transform.eulerAngles.y;
-                Vector3 euler = new Vector3(0, rotationDiff != 0 ? freeRotation.eulerAngles.y : transform.eulerAngles.y, 0);
-
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(euler), turnSpeed * Time.deltaTime);
-            }
-        }
-    }
-
     private void Jump()
     {
         Anim.SetTrigger("Jump");
-        currentDrag = AirDrag;
         if (GameInput.IsMove)
-            VirticleVelocity = JumpPower;
-    }
-
-    public virtual void UpdateTargetDirection()
-    {
-        forward = GameRef.MainCam.transform.TransformDirection(Vector3.forward);
-        forward.y = 0;
-        right = GameRef.MainCam.transform.TransformDirection(Vector3.right);
-
-        targetDirection = (GameInput.Move.x + DirectionShift) * right + (OneDirMode ? 0 : GameInput.Move.y) * forward;
-    }
-
-    private void ClimbCheck()
-    {
-        //爬牆檢測
-        if (Physics.Raycast(transform.position, transform.forward, out climbHitInfo, .6f, 1 << 0, QueryTriggerInteraction.Ignore))
-        {
-            if (Vector3.Angle(climbHitInfo.normal, Vector3.up) < 45)
-                Status = PlayerStatus.Moving;
-            else
-            {
-                Status = PlayerStatus.Climbing;
-                IsJumping = false;
-            }
-        }
-        else if (Status == PlayerStatus.Climbing)
-            Status = PlayerStatus.Moving;
-    }
-
-    private void OnGround()
-    {
-        if (Status == PlayerStatus.Climbing)
-            Status = PlayerStatus.Moving;
-    }
-
-    private void AirMovementAndCheck()
-    {
-        //落地檢測
-        Grounded = Physics.SphereCast(transform.position + Vector3.up * 0.6f, 0.5f, Vector3.down, out hitInfo, 0.5f, 1 << 0, QueryTriggerInteraction.Ignore);
-
-        //落地特效、動畫
-        WalkFX.enableEmission = Grounded;
-        Anim.SetBool("Grounded", Grounded);
-        if (!Grounded && !IsJumping && VirticleVelocity > -10)
-        {
-            VirticleVelocity -= (IsJumping ? 0 : 10) * Time.deltaTime;
-        }
-
-        //if (IsJumping)
-        //{
-        //    VirticleVelocity -= Vector3.up * currentDrag * Time.deltaTime;
-        //    if (VirticleVelocity.y < 0)
-        //        currentDrag = Mathf.Lerp(currentDrag, AirDrag, Time.deltaTime * 4);
-        //}
+            fallVelocity = JumpPower;
     }
 
     public void OnJumpFinish()
@@ -478,9 +421,26 @@ public class Player : UnitySingleton_D<Player>
         IsJumping = false;
     }
 
-    /////////////////////////////////////
-    //          Animation              //
-    /////////////////////////////////////
+    #endregion PlayerControl
+
+    #region Animation
+
+    private void DefaultAnimUpdate()
+    {
+        Anim.SetBool("Grounded", Grounded);
+    }
+
+    private void LocomoationAnimUpdate()
+    {
+        Anim.SetFloat("Speed", moveVelocity / MAX_MOVE_SPEED * MoveSpeed, .1f, Time.deltaTime);
+        Anim.SetFloat("MoveX", GameInput.Move.x);
+        Anim.SetFloat("MoveY", GameInput.Move.y);
+
+        if (GameInput.IsMove)
+            Anim.SetBool("isSprinting", running);
+        else
+            Anim.SetBool("isSprinting", false);
+    }
 
     public void RightHandDrawing()
     {
@@ -536,7 +496,7 @@ public class Player : UnitySingleton_D<Player>
             WalkBack();
     }
 
-    public void Drown()
+    private void Drown()
     {
         Status = PlayerStatus.Wait;
         SEManager.Instance.PlaySystemSE(UnityEngine.Random.value > 0.5f ? SystemSE.進水1 : SystemSE.進水2);
@@ -586,12 +546,12 @@ public class Player : UnitySingleton_D<Player>
         IEnumerator _WalkBack()
         {
             Anim.SetBool("isSprinting", false);
-            CanSpringAndJump = false;
+            MoveMode = MoveMode.Walking;
             Status = PlayerStatus.Wait;
             Anim.SetFloat("Speed", -speed);
             yield return new WaitForSeconds(duration);
             Status = PlayerStatus.Moving;
-            CanSpringAndJump = true;
+            MoveMode = MoveMode.Normal;
         }
     }
 
@@ -687,27 +647,27 @@ public class Player : UnitySingleton_D<Player>
 
     public void LerpSpeed(float to, float duration = 1, float delay = 0, Action onCompelete = null)
     {
-        t.Kill();
-        t = DOTween.To(() => Anim.GetFloat("Speed"), x => Anim.SetFloat("Speed", x), to, duration)
+        speedTween.Kill();
+        speedTween = DOTween.To(() => Anim.GetFloat("Speed"), x => Anim.SetFloat("Speed", x), to, duration)
             .SetDelay(delay)
             .OnComplete(() => onCompelete?.Invoke());
     }
 
     public void StartCrouch()
     {
-        t.Kill();
-        t = DOTween.To(() => Anim.GetFloat("CrouchLevel"), x => Anim.SetFloat("CrouchLevel", x), 1, 1f);
+        crouchTween.Kill();
+        crouchTween = DOTween.To(() => Anim.GetFloat("CrouchLevel"), x => Anim.SetFloat("CrouchLevel", x), 1, 1f);
         CameraMain.Instance.SetCameraMode(CameraMode.Aim);
         Anim.SetBool("isSprinting", false);
-        CanSpringAndJump = false;
+        MoveMode = MoveMode.Walking;
     }
 
     public void EndCrouch()
     {
-        t.Kill();
-        t = DOTween.To(() => Anim.GetFloat("CrouchLevel"), x => Anim.SetFloat("CrouchLevel", x), 0, 1f);
+        crouchTween.Kill();
+        crouchTween = DOTween.To(() => Anim.GetFloat("CrouchLevel"), x => Anim.SetFloat("CrouchLevel", x), 0, 1f);
         CameraMain.Instance.SetCameraMode(CameraMode.Default);
-        CanSpringAndJump = true;
+        MoveMode = MoveMode.Normal;
     }
 
     public virtual void StartScan()
@@ -739,4 +699,18 @@ public class Player : UnitySingleton_D<Player>
             Status = PlayerStatus.Moving;
         }
     }
+
+    #endregion Animation
+
+    #region CalculateFunction
+
+    private bool IsClockwise(Quaternion from, Quaternion to, Vector3 up)
+    {
+        Vector3 fromDir = from * Vector3.forward;
+        Vector3 toDir = to * Vector3.forward;
+        Vector3 cross = Vector3.Cross(fromDir, toDir);
+        return Vector3.Dot(cross, up) > 0;
+    }
+
+    #endregion CalculateFunction
 }

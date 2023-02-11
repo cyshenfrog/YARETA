@@ -25,7 +25,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - m_From: OP3
-    m_To: VCamDefault3rdPerson
+    m_To: 3rdPerson
     m_Blend:
       m_Style: 1
       m_Time: 4
@@ -35,74 +35,8 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: FallingQTEcam2
-    m_To: VCamDefault3rdPerson
-    m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: TutorialStationCam2
-    m_To: VCamDefault3rdPerson
-    m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: TutorialStationCam1
-    m_To: VCamDefault3rdPerson
-    m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: VCamGooseAngry
-    m_To: VCamDefault3rdPerson
-    m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: EggCam
-    m_To: VCamDefault3rdPerson
-    m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: FirstPerson
-    m_To: VCamDefault3rdPerson
-    m_Blend:
-      m_Style: 0
-      m_Time: 2
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
   - m_From: '**ANY CAMERA**'
-    m_To: VCamDefault3rdPerson
+    m_To: 3rdPerson
     m_Blend:
       m_Style: 1
       m_Time: 2
@@ -112,10 +46,10 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: VCamDefault3rdPerson
-    m_To: VCamOverShoulder
+  - m_From: 3rdPerson
+    m_To: AimView
     m_Blend:
-      m_Style: 1
+      m_Style: 2
       m_Time: 4
       m_CustomCurve:
         serializedVersion: 2
@@ -179,9 +113,9 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - m_From: '**ANY CAMERA**'
-    m_To: VCamDragView
+    m_To: AimView
     m_Blend:
-      m_Style: 1
+      m_Style: 3
       m_Time: 4
       m_CustomCurve:
         serializedVersion: 2

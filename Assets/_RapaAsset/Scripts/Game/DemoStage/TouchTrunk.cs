@@ -40,8 +40,8 @@ public class TouchTrunk : MonoBehaviour
                 Player.Instance.Status = PlayerStatus.Moving;
                 Cam.SetActive(true);
                 Player_Fairy.Instance.StartScan();
-                Player.Instance.LookTarget = LookingTarget;
-                Player.Instance.MoveMode = MoveMode.OneDirAndTurn;
+                Player.FacingTarget = LookingTarget;
+                Player.Instance.MoveMode = MoveMode.Aimming;
                 Interaction.enabled = false;
             });
         }
@@ -138,7 +138,7 @@ public class TouchTrunk : MonoBehaviour
         Cam.SetActive(false);
         EndingCam.SetActive(false);
         PrototypeMain.Instance.CanScan = false;
-        Player.Instance.LookTarget = null;
+        Player.FacingTarget = null;
         Player.Instance.MoveMode = MoveMode.Normal;
         Player.Instance.Status = PlayerStatus.Moving;
         Player.Instance.MoveSpeed = 1f;

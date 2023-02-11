@@ -148,7 +148,7 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
             if (questTutorial)
             {
                 questTutorial = false;
-                UI_Talk.Instance.SetInputThisTime(menuIconKB, GameManager.Instance.ControllerSprites.GetSprit(GameInput.JoyButtonType, ControllerButton.Up), Actions.Menu);
+                UI_Talk.Instance.SetInputThisTime(menuIconKB, GameManager.Instance.ControllerSprites.GetSprit(GameInput.JoystickBrandType, ControllerButton.Up), Actions.Menu);
                 UI_Talk.Instance.ShowTalk((int)TalkDataEnum.教學_打開任務介面, () =>
                 {
                     UI_ScanMechine.Instance.Lock = true;

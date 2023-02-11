@@ -10,7 +10,6 @@ public class GameManager : UnitySingleton_D<GameManager>
     public UISheet UISheet;
     public Font EnFont;
     public Font ChFont;
-    public ButtonMapping ButtonMapping;
 
     public Font GetFont()
     {

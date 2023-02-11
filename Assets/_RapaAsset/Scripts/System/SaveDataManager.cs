@@ -73,7 +73,8 @@ public static class SaveDataManager
         }
     }
 
-    public static Action OnLanguageChanged;
+    public static event Action OnLanguageChanged;
+
     public static SaveData SaveData = new SaveData();
     public static bool TutorialPassed;
 

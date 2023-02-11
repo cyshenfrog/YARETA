@@ -24,7 +24,7 @@ public class Dragable : MonoBehaviour
     public Transform StandPos;
     public GameObject[] Model;
     public CameraMode CamMode = CameraMode.Default;
-    public MoveMode MoveMode = MoveMode.OneDirAndTurn;
+    public MoveMode MoveMode = MoveMode.Aimming;
     public UltEvent OnDragStart;
     public UltEvent OnDragFinish;
     public bool Lock;
@@ -81,13 +81,13 @@ public class Dragable : MonoBehaviour
         {
             item.layer = 12;
         }
-        Player.Instance.CanSpringAndJump = CanSpringAndJump;
+        Player.Instance.MoveMode = MoveMode.Walking;
         Player.Instance.WalkTo(StandPos, () =>
         {
             Player.Instance.Status = PlayerStatus.Moving;
             Player.Instance.MoveMode = MoveMode;
             Player.Instance.MoveSpeed = MoveSpeed;
-            Player.Instance.turnSpeed = TurnSpeed;
+            Player.Instance.TurnSpeed = TurnSpeed;
             Player_IKManager.Instance.PlaySimpleIK(LeftHandAnchor, PlayerIK.LeftHand);
             Player_IKManager.Instance.PlaySimpleIK(RightHandAnchor, PlayerIK.RightHand);
             Player_IKManager.Instance.StartLooking(LookPos);
@@ -119,7 +119,7 @@ public class Dragable : MonoBehaviour
             item.layer = 0;
         }
         Player.Instance.Status = PlayerStatus.Wait;
-        Player.Instance.CanSpringAndJump = true;
+        Player.Instance.MoveMode = MoveMode.Normal;
         Player_IKManager.Instance.ResumeSimpleIK(PlayerIK.LeftHand, duration);
         Player_IKManager.Instance.ResumeSimpleIK(PlayerIK.RightHand, duration);
         Player_IKManager.Instance.StopLooking();
@@ -134,7 +134,7 @@ public class Dragable : MonoBehaviour
             Player.Instance.Status = PlayerStatus.Moving;
             Player.Instance.MoveMode = MoveMode.Normal;
             Player.Instance.MoveSpeed = 1;
-            Player.Instance.turnSpeed = 3;
+            Player.Instance.TurnSpeed = 3;
         }
         OnDragFinish.Invoke();
     }
