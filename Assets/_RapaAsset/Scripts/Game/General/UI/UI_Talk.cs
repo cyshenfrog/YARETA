@@ -41,7 +41,7 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
 
     private void UpdateTextSize()
     {
-        Dialog.font = GameManager.Instance.GetFont();
+        Dialog.font = GameData.Font;
         Dialog.transform.localScale = SaveDataManager.Language == SystemLanguage.English ? Vector3.one : (Vector3.one - Vector3.right * 0.1f);
     }
 
@@ -102,7 +102,7 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
         autoMode = Auto;
         talking = !autoMode;
         replacer = ReplaceText;
-        ShowTalk(GameManager.Instance.TalkSheet.GetTalks(StartId));
+        ShowTalk(GameData.TalkSheet.GetTalks(StartId));
     }
 
     public void ShowTalk(string[] talks)

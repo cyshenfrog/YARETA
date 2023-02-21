@@ -292,18 +292,18 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
         {
             case ClearLevel.在畫三小:
                 ItemPic.sprite = DrawingMode.Instance.ShitTextures[SaveDataManager.ScannedData[orderID].ID];
-                Info.text = GameManager.Instance.UISheet.GetUIText(UIDataEnum.再靠近一點看能不能看清楚一點);
+                Info.text =GameData.UISheet.GetUIText(UIDataEnum.再靠近一點看能不能看清楚一點);
                 break;
 
             case ClearLevel.模糊:
                 ItemPic.sprite = DrawingMode.Instance.BlurDrawTextures[SaveDataManager.ScannedData[orderID].ID];
-                Info.text = GameManager.Instance.UISheet.GetUIText(UIDataEnum.再靠近一點看能不能看清楚一點);
+                Info.text =GameData.UISheet.GetUIText(UIDataEnum.再靠近一點看能不能看清楚一點);
                 break;
 
             case ClearLevel.清楚:
             default:
                 ItemPic.sprite = DrawingMode.Instance.DrawTextures[SaveDataManager.ScannedData[orderID].ID];
-                Info.text = GameManager.Instance.ScanSheet.GetInfo(SaveDataManager.ScannedData[orderID].ID, SaveDataManager.language);
+                Info.text = GameData.ScanSheet.GetInfo(SaveDataManager.ScannedData[orderID].ID, SaveDataManager.language);
                 break;
         }
     }

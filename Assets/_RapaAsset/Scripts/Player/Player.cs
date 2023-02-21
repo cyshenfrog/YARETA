@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -64,15 +64,16 @@ public class Player : UnitySingleton_D<Player>
 
     #region StateControl
 
-    public bool IsJumping;
+    public bool CanScan;
     private bool running;
+    private bool facingWall;
 
     private bool grounded; private bool Grounded
     {
         get { return grounded; }
         set
         {
-            if (grounded != value)
+            if ((grounded != value) && value)
                 OnGround();
             grounded = value;
         }
@@ -133,6 +134,7 @@ public class Player : UnitySingleton_D<Player>
                 break;
 
             case PlayerStatus.Moving:
+                Anim.SetBool("IsClimbing", false);
                 PlayerTrigger.enabled = true;
                 //PlayerTrigger.Rescan();
                 break;
@@ -152,9 +154,11 @@ public class Player : UnitySingleton_D<Player>
     #region CalculateTemp
 
     private const float MAX_MOVE_SPEED = 4f;
+    private const int GRAVITY = 10;
     private float fallVelocity;
     private float moveVelocity;
     private float rotationDiff;
+    private float climbAccuValue;
     private RaycastHit climbHitInfo;
     private Quaternion targetRotation;
     private Quaternion freeRotation;
@@ -165,15 +169,13 @@ public class Player : UnitySingleton_D<Player>
     private Vector3 targetDirection;
     private Vector3 forward;
     private Vector3 right;
+    private RaycastHit groundHit;
 
     #endregion CalculateTemp
-
-    #region PlayerControl
 
     public virtual void Update()
     {
         // Always execute
-        GroundCheck();
         GravityUpdate();
         DefaultAnimUpdate();
 
@@ -184,7 +186,8 @@ public class Player : UnitySingleton_D<Player>
                 break;
 
             case PlayerStatus.Moving:
-                ClimbCheck();
+                GroundCheck();
+                ClimbOnCheck();
                 MovementControl();
                 UpdateRotation();
                 ActionControl();
@@ -195,6 +198,7 @@ public class Player : UnitySingleton_D<Player>
                 break;
 
             case PlayerStatus.Climbing:
+                ClimbOffCheck();
                 ClimbControl(GameInput.Move);
                 break;
 
@@ -203,68 +207,26 @@ public class Player : UnitySingleton_D<Player>
         }
     }
 
-    private void ClimbControl(Vector2 input)
+    #region Locomotion
+
+    private Vector3 RemoveY(Vector3 vector)
     {
-        //// Check walls in a cross pattern
-        //Vector3 offset = transform.TransformDirection(Vector2.one * 0.5f);
-        //Vector3 checkDirection = Vector3.zero;
-        //int k = 0;
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    RaycastHit checkHit;
-        //    if (Physics.Raycast(transform.position + offset,
-        //                        transform.forward,
-        //                        out checkHit))
-        //    {
-        //        checkDirection += checkHit.normal;
-        //        k++;
-        //    }
-        //    // Rotate Offset by 90 degrees
-        //    offset = Quaternion.AngleAxis(90f, transform.forward) * offset;
-        //}
-        //checkDirection /= k;
-
-        //float dot = Vector3.Dot(transform.forward, -climbHitInfo.normal);
-
-        //transform.position = climbHitInfo.point + climbHitInfo.normal * 0.05f;
-        transform.forward = Vector3.Lerp(transform.forward,
-            -climbHitInfo.normal,
-            10f * Time.fixedDeltaTime);
-        //(-input.x * transform.right + input.y * transform.up)
-        transform.Translate(input * Time.deltaTime, Space.Self);
-    }
-
-    private void ClimbCheck()
-    {
-        //爬牆檢測
-        if (Physics.Raycast(transform.position, transform.forward, out climbHitInfo, .6f, 1 << 0, QueryTriggerInteraction.Ignore))
-        {
-            if (Vector3.Angle(climbHitInfo.normal, Vector3.up) < 45)
-                Status = PlayerStatus.Moving;
-            else
-            {
-                Status = PlayerStatus.Climbing;
-                IsJumping = false;
-            }
-        }
-        else if (Status == PlayerStatus.Climbing)
-            Status = PlayerStatus.Moving;
+        return new Vector3(vector.x, 0, vector.z);
     }
 
     private void GroundCheck()
     {
         //落地檢測
         Grounded = Physics.SphereCast(transform.position + Vector3.up * 0.6f, 0.5f, Vector3.down, out _, 0.5f, 1 << 0, QueryTriggerInteraction.Ignore);
-
         //落地特效、動畫
         WalkFX.enableEmission = Grounded;
     }
 
     private void GravityUpdate()
     {
-        if (!Grounded && !IsJumping && fallVelocity > -10)
+        if (fallVelocity > -10)
         {
-            fallVelocity -= (IsJumping ? 0 : 10) * Time.deltaTime;
+            fallVelocity -= GRAVITY * Time.deltaTime;
         }
 
         //if (IsJumping)
@@ -418,23 +380,119 @@ public class Player : UnitySingleton_D<Player>
 
     public void OnJumpFinish()
     {
-        IsJumping = false;
     }
 
-    #endregion PlayerControl
+    #endregion Locomotion
+
+    #region Climbing
+
+    private void ClimbControl(Vector2 input)
+    {
+        //// Check walls in a cross pattern
+        //Vector3 offset = transform.TransformDirection(Vector2.one * 0.5f);
+        //Vector3 checkDirection = Vector3.zero;
+        //int k = 0;
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    RaycastHit checkHit;
+        //    if (Physics.Raycast(transform.position + offset,
+        //                        transform.forward,
+        //                        out checkHit))
+        //    {
+        //        checkDirection += checkHit.normal;
+        //        k++;
+        //    }
+        //    // Rotate Offset by 90 degrees
+        //    offset = Quaternion.AngleAxis(90f, transform.forward) * offset;
+        //}
+        //checkDirection /= k;
+
+        //float dot = Vector3.Dot(transform.forward, -climbHitInfo.normal);
+
+        if (Physics.Raycast(transform.position, transform.forward, out climbHitInfo, .6f, 1 << 0, QueryTriggerInteraction.Ignore))
+        {
+            transform.position = climbHitInfo.point + climbHitInfo.normal * 0.05f;
+            transform.forward = Vector3.Lerp(transform.forward,
+                -climbHitInfo.normal,
+                10f * Time.fixedDeltaTime);
+        }
+        //(-input.x * transform.right + input.y * transform.up)
+        transform.Translate(input * Time.deltaTime, Space.Self);
+    }
+
+    private void AccumulateClimbingAction()
+    {
+        climbAccuValue += Time.deltaTime;
+        if (climbAccuValue >= .5f)
+        {
+            climbAccuValue = 0;
+            StartClimbing();
+        }
+    }
+
+    private void ClimbOnCheck()
+    {
+        //爬牆檢測
+        facingWall = Physics.Raycast(transform.position + transform.up, RemoveY(transform.forward), out climbHitInfo, 1, 1 << 0, QueryTriggerInteraction.Ignore);
+        Debug.DrawRay(transform.position + transform.up * 1.6f, RemoveY(transform.forward), Color.red);
+        if (facingWall && GameInput.IsMove)
+        {
+            //if (Vector3.Angle(climbHitInfo.normal, Vector3.up) > 45)
+            AccumulateClimbingAction();
+        }
+        else
+            climbAccuValue = 0;
+    }
+
+    private void ClimbOffCheck()
+    {
+        facingWall = Physics.Raycast(transform.position + transform.up * 1.6f, RemoveY(transform.forward), out _, .6f, 1 << 0, QueryTriggerInteraction.Ignore);
+        Debug.DrawRay(transform.position + transform.up * 1.6f, RemoveY(transform.forward), Color.red);
+        if (Physics.Raycast(transform.position + transform.up, Vector3.down, out groundHit, 1, 1 << 0, QueryTriggerInteraction.Ignore))
+        {
+            Debug.DrawRay(transform.position, Vector3.down * .8f, Color.green);
+            if (Vector3.Angle(groundHit.normal, Vector3.up) < 45)
+                EndClimbing(groundHit.point);
+        }
+        else
+            Debug.DrawRay(transform.position, Vector3.down * .8f, Color.red);
+    }
+
+    private void StartClimbing()
+    {
+        Anim.SetBool("IsClimbing", true);
+        Delay.Instance.Wait(0.1f, () => { fallVelocity = JumpPower * 0.5f; });
+        Delay.Instance.Wait(0.2f, () => { Status = PlayerStatus.Climbing; });
+    }
+
+    private void EndClimbing(Vector3 landingPos)
+    {
+        Anim.SetBool("IsClimbing", false);
+        Status = PlayerStatus.Wait;
+        print("start");
+        transform.DOMove(landingPos, 0.5f)
+            .OnComplete(() =>
+            {
+                print("end");
+                Status = PlayerStatus.Moving;
+            });
+    }
+
+    #endregion Climbing
 
     #region Animation
 
     private void DefaultAnimUpdate()
     {
+        Anim.SetFloat("MoveX", GameInput.Move.x);
+        Anim.SetFloat("MoveY", GameInput.Move.y);
         Anim.SetBool("Grounded", Grounded);
+        Anim.SetBool("FacingWall", facingWall);
     }
 
     private void LocomoationAnimUpdate()
     {
         Anim.SetFloat("Speed", moveVelocity / MAX_MOVE_SPEED * MoveSpeed, .1f, Time.deltaTime);
-        Anim.SetFloat("MoveX", GameInput.Move.x);
-        Anim.SetFloat("MoveY", GameInput.Move.y);
 
         if (GameInput.IsMove)
             Anim.SetBool("isSprinting", running);

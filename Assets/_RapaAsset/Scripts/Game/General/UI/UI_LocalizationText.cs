@@ -33,12 +33,12 @@ public class UI_LocalizationText : MonoBehaviour
     private void UpdateText()
     {
         if (!UpdateFontOnly)
-            text.text = GameManager.Instance.UISheet.GetUIText(UIText);
+            text.text = GameData.UISheet.GetUIText(UIText);
         if (SetAlignment)
         {
             text.alignment = SaveDataManager.Language == SystemLanguage.English ? EnAlignment : ChAlignment;
         }
-        text.font = GameManager.Instance.GetFont();
+        text.font = GameData.Font;
         text.transform.localScale = SaveDataManager.Language == SystemLanguage.English ? Vector3.one : (Vector3.one - Vector3.right * 0.1f);
     }
 

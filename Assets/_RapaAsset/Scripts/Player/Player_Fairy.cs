@@ -51,7 +51,8 @@ public class Player_Fairy : Player
     public override void Update()
     {
         base.Update();
-        if (!PrototypeMain.Instance.CanScan)
+
+        if (!CanScan)
         {
             if (Scanning)
                 StopScan();

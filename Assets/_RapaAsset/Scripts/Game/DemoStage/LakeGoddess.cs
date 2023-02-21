@@ -153,7 +153,7 @@ public class LakeGoddess : MonoBehaviour
         if (PrototypeMain.Instance.SecretEnding)
             return;
 
-        UI_Talk.Instance.ShowTalk((int)TalkDataEnum.女神開場, StartSelect, true, 1, GameManager.Instance.ScanSheet.dataArray[originObj.ID].Name);
+        UI_Talk.Instance.ShowTalk((int)TalkDataEnum.女神開場, StartSelect, true, 1, GameData.ScanSheet.dataArray[originObj.ID].Name);
     }
 
     public void StartSelect()

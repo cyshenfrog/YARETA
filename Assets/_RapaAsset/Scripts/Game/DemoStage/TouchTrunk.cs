@@ -29,7 +29,7 @@ public class TouchTrunk : MonoBehaviour
     {
         Player.Instance.Status = PlayerStatus.Wait;
         Player.Instance.MoveSpeed = 0.2f;
-        PrototypeMain.Instance.CanScan = true;
+        Player_Fairy.Instance.CanScan = true;
         JointRoot.SetActive(true);
         Player.Instance.transform.DOLookAt(transform.position, 0.5f)
             .OnComplete(callback);
@@ -137,7 +137,7 @@ public class TouchTrunk : MonoBehaviour
         JointRoot.SetActive(false);
         Cam.SetActive(false);
         EndingCam.SetActive(false);
-        PrototypeMain.Instance.CanScan = false;
+        Player_Fairy.Instance.CanScan = false;
         Player.FacingTarget = null;
         Player.Instance.MoveMode = MoveMode.Normal;
         Player.Instance.Status = PlayerStatus.Moving;

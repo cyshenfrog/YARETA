@@ -35,24 +35,24 @@ public class UI_ScanDataColumn : MonoBehaviour
         switch (SaveDataManager.ScannedData[order].ClearLevel)
         {
             case ClearLevel.清楚:
-                Name.text = GameManager.Instance.ScanSheet.GetFullName(ID, SaveDataManager.language);
-                Point.text = GameManager.Instance.ScanSheet.dataArray[ID].Fullpoint.ToString();
+                Name.text = GameData.ScanSheet.GetFullName(ID, SaveDataManager.language);
+                Point.text = GameData.ScanSheet.dataArray[ID].Fullpoint.ToString();
                 break;
 
             case ClearLevel.模糊:
-                Name.text = GameManager.Instance.ScanSheet.GetBlurName(ID, SaveDataManager.language);
-                Point.text = GameManager.Instance.ScanSheet.dataArray[ID].Point.ToString();
+                Name.text = GameData.ScanSheet.GetBlurName(ID, SaveDataManager.language);
+                Point.text = GameData.ScanSheet.dataArray[ID].Point.ToString();
                 break;
 
             case ClearLevel.在畫三小:
-                Name.text = GameManager.Instance.ScanSheet.GetFullName(23, SaveDataManager.language);
-                Point.text = GameManager.Instance.ScanSheet.dataArray[23].Fullpoint.ToString();
+                Name.text = GameData.ScanSheet.GetFullName(23, SaveDataManager.language);
+                Point.text = GameData.ScanSheet.dataArray[23].Fullpoint.ToString();
                 break;
 
             default:
                 break;
         }
-        //switch (GameManager.Instance.ScanSheet.dataArray[ID].Level)
+        //switch (GameData.ScanSheet.dataArray[ID].Level)
         //{
         //    case 0:
         //    default:

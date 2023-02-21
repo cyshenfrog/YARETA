@@ -9,8 +9,6 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
 {
     public AudioSource FairyBGM;
     public AudioSource EndingBGM;
-    public bool CanRocketJump;
-    public bool CanScan { get; set; }
 
     public bool Offworked;
     private int whiteStoneCount;
@@ -74,7 +72,7 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
         TargetScanData.AddRange(new int[27] { 0, 1, 2, 9, 10, 15, 16, 20, 21, 22, 34, 35, 39, 40, 41, 42, 43, 44, 46, 47, 49, 50, 51, 52, 53, 56, 57 });
         if (GameManager.Instance.TestMode)
         {
-            CanScan = true;
+            Player_Fairy.Instance.CanScan = true;
             return;
         }
         Player.Instance.Status = PlayerStatus.Static;
@@ -199,11 +197,6 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
     {
     }
 
-    public void RocketJumpTutorial()
-    {
-        CanRocketJump = true;
-    }
-
     public void OffWork()
     {
         StartCoroutine(_OffWork());
@@ -213,7 +206,7 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
     {
         SEManager.Instance.ResetWalkSE();
         UI_General.Instance.InteractUI[0].transform.parent.gameObject.SetActive(false);
-        CanScan = true;
+        Player_Fairy.Instance.CanScan = true;
         Offworked = true;
         UI_FullScreenFade.Instance.BlackAuto(1, 2);
         yield return new WaitForSeconds(1);
