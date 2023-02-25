@@ -60,8 +60,8 @@ public class CameraMain : UnitySingleton_D<CameraMain>
 
     private void AimmingCamRotation()
     {
-        aimCamPOV.m_HorizontalAxis.m_InputAxisValue = GameInput.CameraMove.x;
-        aimCamPOV.m_VerticalAxis.m_InputAxisValue = GameInput.CameraMove.y;
+        aimCamPOV.m_HorizontalAxis.m_InputAxisValue = GameInput.CameraMove.x / 5;
+        aimCamPOV.m_VerticalAxis.m_InputAxisValue = GameInput.CameraMove.y / 5;
     }
 
     public void Recenter(float duration)
@@ -73,6 +73,22 @@ public class CameraMain : UnitySingleton_D<CameraMain>
     public void SetCameraMode(CameraMode mode)
     {
         cameras[(int)CurrentCameraMode].SetActive(false);
+        switch (CurrentCameraMode)
+        {
+            case CameraMode.Default:
+                break;
+
+            case CameraMode.Aim:
+                Lock = true;
+                Delay.Instance.Wait(3f, () => Lock = false);
+                break;
+
+            case CameraMode.TopView:
+                break;
+
+            default:
+                break;
+        }
         CurrentCameraMode = mode;
         cameras[(int)CurrentCameraMode].SetActive(true);
         switch (mode)
@@ -83,6 +99,8 @@ public class CameraMain : UnitySingleton_D<CameraMain>
             case CameraMode.Aim:
                 aimCamPOV.m_HorizontalRecentering.m_enabled = true;
                 aimCamPOV.m_VerticalRecentering.m_enabled = true;
+                Lock = true;
+                Delay.Instance.Wait(3f, () => Lock = false);
                 Delay.Instance.Wait(0.1f, () =>
                  {
                      aimCamPOV.m_HorizontalRecentering.m_enabled = false;

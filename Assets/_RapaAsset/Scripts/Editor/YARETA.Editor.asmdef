@@ -1,0 +1,18 @@
+{
+    "name": "YARETA.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:23fb522afc179604aa94b6851890fffe"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

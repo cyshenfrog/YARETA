@@ -47,7 +47,7 @@ public class FlyLeaf : MonoBehaviour
             //rotation
             dir = Target.position - transform.position;
             dir.y = 0;
-            if (playerOn && GameInput.IsMove)
+            if (playerOn && GameInput.GetButton(Actions.Move))
             {
                 //if (Vector3.Angle(transform.forward, dir) < 170)
 

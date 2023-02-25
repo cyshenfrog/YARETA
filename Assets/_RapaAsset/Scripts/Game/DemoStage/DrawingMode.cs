@@ -96,7 +96,7 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
         Player.Instance.Status = PlayerStatus.Wait;
         Player.Instance.characterController.enabled = false;
         Player.Instance.transform.localEulerAngles = new Vector3(0, CameraMain.Instance.MainFreeLookCam.m_XAxis.Value, 0);
-        Player.Instance.FPCam.transform.localEulerAngles = new Vector3(CameraMain.Instance.MainFreeLookCam.transform.eulerAngles.x, 0, 0);
+        Player.Instance.FPCam.transform.localEulerAngles = new Vector3(GameRef.MainCam.transform.eulerAngles.x, 0, 0);
         rotateEuler = Player.Instance.FPCam.transform.localEulerAngles;
         Player.Instance.FPCam.SetActive(true);
         Player.Instance.Model.SetActive(false);
@@ -109,7 +109,7 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
             LogUI.SetActive(true);
             DrawingUI.SetActive(true);
         }
-        CameraMain.Instance.enabled = false;
+        CameraMain.Instance.Lock = true;
         StartCoroutine(delay());
 
         IEnumerator delay()
@@ -123,9 +123,7 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
     {
         SEManager.Instance.PlaySystemSE(SystemSE.UI取消);
         ready = false;
-        CameraMain.Instance.Recenter(0);
         StartCoroutine(delay());
-
         IEnumerator delay()
         {
             yield return new WaitForSeconds(UI_ButtonBlink.Duration);
@@ -142,7 +140,8 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
                 LogUI.SetActive(false);
                 DrawingUI.SetActive(false);
             }
-            CameraMain.Instance.enabled = true;
+
+            CameraMain.Instance.Lock = false;
             OnFinish?.Invoke();
             yield return new WaitForSeconds(UI_ButtonBlink.Duration);
             if (questTutorial)

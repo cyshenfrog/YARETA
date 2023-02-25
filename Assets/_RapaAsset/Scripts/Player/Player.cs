@@ -122,12 +122,24 @@ public class Player : UnitySingleton_D<Player>
 
     public virtual void OnStateChanged(PlayerStatus status)
     {
+        Anim.applyRootMotion = status == PlayerStatus.Wait;
+        PlayerTrigger.enabled = status == PlayerStatus.Moving;
+        characterController.enabled = status == PlayerStatus.Moving || status == PlayerStatus.Wait;
         switch (status)
         {
             case PlayerStatus.Climbing:
+                if (!speedTween.IsActive())
+                    Anim.SetFloat("Speed", 0);
+                Anim.SetBool("isSprinting", false);
+                break;
+
             case PlayerStatus.Static:
+                if (!speedTween.IsActive())
+                    Anim.SetFloat("Speed", 0);
+                Anim.SetBool("isSprinting", false);
+                break;
+
             case PlayerStatus.Wait:
-                PlayerTrigger.enabled = false;
                 if (!speedTween.IsActive())
                     Anim.SetFloat("Speed", 0);
                 Anim.SetBool("isSprinting", false);
@@ -135,17 +147,7 @@ public class Player : UnitySingleton_D<Player>
 
             case PlayerStatus.Moving:
                 Anim.SetBool("IsClimbing", false);
-                PlayerTrigger.enabled = true;
-                //PlayerTrigger.Rescan();
                 break;
-        }
-        if (status == PlayerStatus.Static || status == PlayerStatus.Climbing)
-        {
-            characterController.enabled = false;
-        }
-        else
-        {
-            characterController.enabled = true;
         }
     }
 
@@ -154,7 +156,7 @@ public class Player : UnitySingleton_D<Player>
     #region CalculateTemp
 
     private const float MAX_MOVE_SPEED = 4f;
-    private const int GRAVITY = 10;
+    private const int GRAVITY = 12;
     private float fallVelocity;
     private float moveVelocity;
     private float rotationDiff;
@@ -244,9 +246,9 @@ public class Player : UnitySingleton_D<Player>
             case MoveMode.Normal:
                 if (GameInput.GetButtonDown(Actions.ToggleRun))
                     running = !running;
-                if (GameInput.GetButtonDown(Actions.Run))
+                if (GameInput.GetButton(Actions.Run) && GameInput.GetButton(Actions.Move))
                     running = true;
-                else if (GameInput.GetButtonUp(Actions.Run))
+                else
                     running = false;
                 if (GameInput.GetButtonDown(Actions.Jump))
                     Jump();
@@ -260,7 +262,6 @@ public class Player : UnitySingleton_D<Player>
 
         if (GameInput.GetButtonDown(Actions.Move))
         {
-            initFacing = transform.DOLookAt(transform.position + GameInput.MovementCameraSpace, 0.2f, AxisConstraint.Y);
             if (hSpeedBlend.IsActive())
                 hSpeedBlend.Kill();
             moveVelocity = 0;
@@ -274,7 +275,7 @@ public class Player : UnitySingleton_D<Player>
         }
 
         if (characterController.enabled)
-            characterController.Move((GameInput.MovementCameraSpace.normalized * moveVelocity * (running && Grounded ? 2 : 1) + Vector3.up * fallVelocity) * MoveSpeed * Time.deltaTime);
+            characterController.Move((GameInput.MovementCameraSpace.normalized * moveVelocity * (running ? 1.5f : 1) + Vector3.up * fallVelocity) * MoveSpeed * Time.deltaTime);
     }
 
     private void ActionControl()
@@ -314,13 +315,17 @@ public class Player : UnitySingleton_D<Player>
     {
         if (initFacing.IsActive() || MoveMode == MoveMode.Aimming)
             return;
-
+        if (GameInput.GetButtonDown(Actions.Move))
+        {
+            initFacing = transform.DOLookAt(transform.position + GameInput.MovementCameraSpace, 0.2f, AxisConstraint.Y);
+            return;
+        }
         if (FacingTarget)
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(FacingTarget.position - transform.position, Vector3.up), Time.deltaTime * 5);
         else
         {
             CalcTargetDirection();
-            if (GameInput.IsMove && targetDirection.magnitude > 0.1f)
+            if (GameInput.GetButton(Actions.Move) && targetDirection.magnitude > 0.1f)
             {
                 freeRotation = Quaternion.LookRotation(targetDirection.normalized, transform.up);
                 rotationDiff = freeRotation.eulerAngles.y - transform.eulerAngles.y;
@@ -374,8 +379,8 @@ public class Player : UnitySingleton_D<Player>
     private void Jump()
     {
         Anim.SetTrigger("Jump");
-        if (GameInput.IsMove)
-            fallVelocity = JumpPower;
+        if (GameInput.GetButton(Actions.Move))
+            fallVelocity = JumpPower * (running ? 1.2f : 1);
     }
 
     public void OnJumpFinish()
@@ -388,27 +393,6 @@ public class Player : UnitySingleton_D<Player>
 
     private void ClimbControl(Vector2 input)
     {
-        //// Check walls in a cross pattern
-        //Vector3 offset = transform.TransformDirection(Vector2.one * 0.5f);
-        //Vector3 checkDirection = Vector3.zero;
-        //int k = 0;
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    RaycastHit checkHit;
-        //    if (Physics.Raycast(transform.position + offset,
-        //                        transform.forward,
-        //                        out checkHit))
-        //    {
-        //        checkDirection += checkHit.normal;
-        //        k++;
-        //    }
-        //    // Rotate Offset by 90 degrees
-        //    offset = Quaternion.AngleAxis(90f, transform.forward) * offset;
-        //}
-        //checkDirection /= k;
-
-        //float dot = Vector3.Dot(transform.forward, -climbHitInfo.normal);
-
         if (Physics.Raycast(transform.position, transform.forward, out climbHitInfo, .6f, 1 << 0, QueryTriggerInteraction.Ignore))
         {
             transform.position = climbHitInfo.point + climbHitInfo.normal * 0.05f;
@@ -416,7 +400,6 @@ public class Player : UnitySingleton_D<Player>
                 -climbHitInfo.normal,
                 10f * Time.fixedDeltaTime);
         }
-        //(-input.x * transform.right + input.y * transform.up)
         transform.Translate(input * Time.deltaTime, Space.Self);
     }
 
@@ -435,7 +418,7 @@ public class Player : UnitySingleton_D<Player>
         //爬牆檢測
         facingWall = Physics.Raycast(transform.position + transform.up, RemoveY(transform.forward), out climbHitInfo, 1, 1 << 0, QueryTriggerInteraction.Ignore);
         Debug.DrawRay(transform.position + transform.up * 1.6f, RemoveY(transform.forward), Color.red);
-        if (facingWall && GameInput.IsMove)
+        if (facingWall && GameInput.GetButton(Actions.Move))
         {
             //if (Vector3.Angle(climbHitInfo.normal, Vector3.up) > 45)
             AccumulateClimbingAction();
@@ -447,15 +430,11 @@ public class Player : UnitySingleton_D<Player>
     private void ClimbOffCheck()
     {
         facingWall = Physics.Raycast(transform.position + transform.up * 1.6f, RemoveY(transform.forward), out _, .6f, 1 << 0, QueryTriggerInteraction.Ignore);
-        Debug.DrawRay(transform.position + transform.up * 1.6f, RemoveY(transform.forward), Color.red);
         if (Physics.Raycast(transform.position + transform.up, Vector3.down, out groundHit, 1, 1 << 0, QueryTriggerInteraction.Ignore))
         {
-            Debug.DrawRay(transform.position, Vector3.down * .8f, Color.green);
             if (Vector3.Angle(groundHit.normal, Vector3.up) < 45)
                 EndClimbing(groundHit.point);
         }
-        else
-            Debug.DrawRay(transform.position, Vector3.down * .8f, Color.red);
     }
 
     private void StartClimbing()
@@ -469,11 +448,9 @@ public class Player : UnitySingleton_D<Player>
     {
         Anim.SetBool("IsClimbing", false);
         Status = PlayerStatus.Wait;
-        print("start");
         transform.DOMove(landingPos, 0.5f)
             .OnComplete(() =>
             {
-                print("end");
                 Status = PlayerStatus.Moving;
             });
     }
@@ -494,7 +471,7 @@ public class Player : UnitySingleton_D<Player>
     {
         Anim.SetFloat("Speed", moveVelocity / MAX_MOVE_SPEED * MoveSpeed, .1f, Time.deltaTime);
 
-        if (GameInput.IsMove)
+        if (GameInput.GetButton(Actions.Move))
             Anim.SetBool("isSprinting", running);
         else
             Anim.SetBool("isSprinting", false);
@@ -715,7 +692,6 @@ public class Player : UnitySingleton_D<Player>
     {
         crouchTween.Kill();
         crouchTween = DOTween.To(() => Anim.GetFloat("CrouchLevel"), x => Anim.SetFloat("CrouchLevel", x), 1, 1f);
-        CameraMain.Instance.SetCameraMode(CameraMode.Aim);
         Anim.SetBool("isSprinting", false);
         MoveMode = MoveMode.Walking;
     }
@@ -724,7 +700,6 @@ public class Player : UnitySingleton_D<Player>
     {
         crouchTween.Kill();
         crouchTween = DOTween.To(() => Anim.GetFloat("CrouchLevel"), x => Anim.SetFloat("CrouchLevel", x), 0, 1f);
-        CameraMain.Instance.SetCameraMode(CameraMode.Default);
         MoveMode = MoveMode.Normal;
     }
 

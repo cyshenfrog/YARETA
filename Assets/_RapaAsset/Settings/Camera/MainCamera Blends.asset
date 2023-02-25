@@ -35,22 +35,22 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: '**ANY CAMERA**'
-    m_To: 3rdPerson
+  - m_From: 3rdPerson
+    m_To: AimView
     m_Blend:
       m_Style: 1
-      m_Time: 2
+      m_Time: 3
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: 3rdPerson
-    m_To: AimView
+  - m_From: AimView
+    m_To: 3rdPerson
     m_Blend:
-      m_Style: 2
-      m_Time: 4
+      m_Style: 1
+      m_Time: 3
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []

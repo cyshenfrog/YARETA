@@ -10,8 +10,6 @@ Material:
   m_Name: M_trunk_NightGlow
   m_Shader: {fileID: -6465566751694194690, guid: 830fb2a37e69daa4ba7e60f2642f2332,
     type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _EMISSION
@@ -23,7 +21,6 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:

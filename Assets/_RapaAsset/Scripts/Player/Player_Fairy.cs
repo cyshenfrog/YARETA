@@ -140,7 +140,7 @@ public class Player_Fairy : Player
         }
         Scanning = true;
         MoveMode = MoveMode.Aimming;
-        MoveSpeed = 0.5f;
+        MoveSpeed *= 0.5f;
         PlayerTrigger.enabled = false;
         CameraMain.Instance.SetCameraMode(CameraMode.Aim);
     }
@@ -158,7 +158,7 @@ public class Player_Fairy : Player
         }
         MoveMode = MoveMode.Normal;
         Scanning = false;
-        MoveSpeed = 1f;
+        MoveSpeed *= 2f;
         PlayerTrigger.enabled = true;
         CameraMain.Instance.SetCameraMode(CameraMode.Default);
     }

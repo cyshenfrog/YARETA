@@ -74,6 +74,8 @@ public static class GameInput
             if (!UsingJoystick)
             {
                 Cursor.visible = value;
+
+                Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
             }
         }
     }
@@ -83,7 +85,6 @@ public static class GameInput
     public static bool AnyInput
     { get { if (Joystick != null) return Joystick.GetAnyButton() || Keyboard.GetAnyButton(); else return Keyboard.GetAnyButton(); } }
 
-    public static bool IsMove => RewiredPlayer.GetAxis2D("MoveX", "MoveY") != Vector2.zero;
     public static Vector2 Move => RewiredPlayer.GetAxis2D("MoveX", "MoveY");
     private static Vector3 _movementCameraSpace;
     public static bool IsCameraMove => RewiredPlayer.GetAxis2D("CameraX", "CameraY") != Vector2.zero;
@@ -150,7 +151,6 @@ public static class GameInput
             Cursor.visible = false;
         else
         {
-            Cursor.lockState = Cursorvisible ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = Cursorvisible;
         }
     }

@@ -2,8 +2,9 @@
     "name": "YARETA.External.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:25e3dd68e4f35024e870d81e6f6e8a18",
-        "GUID:c579267770062bf448e75eb160330b7f"
+        "YARETA.External",
+        "Unity.RenderPipelines.Universal.Editor",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [
         "Editor"
@@ -12,7 +13,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

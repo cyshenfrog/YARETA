@@ -9,7 +9,7 @@ public class PlayerAnimEvent : UnitySingleton_D<PlayerAnimEvent>
 
     public void OnStep()
     {
-        if (GameInput.IsMove)
+        if (GameInput.GetButton(Actions.Move))
             SEManager.Instance.PlayStepSE();
     }
 

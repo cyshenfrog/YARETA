@@ -30,9 +30,9 @@ public class MagnetObject : MonoBehaviour
     {
         if (!draging)
             return;
-        if (!GameInput.IsMove && AudioSource.isPlaying)
+        if (!GameInput.GetButton(Actions.Move) && AudioSource.isPlaying)
             AudioSource.Pause();
-        if (GameInput.IsMove && !AudioSource.isPlaying)
+        if (GameInput.GetButton(Actions.Move) && !AudioSource.isPlaying)
             AudioSource.Play();
     }
 

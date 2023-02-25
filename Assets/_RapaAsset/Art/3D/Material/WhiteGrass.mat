@@ -144,7 +144,7 @@ Material:
     - _ScalemapInfluence: {r: 0, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SubsurfaceColor: {r: 1, g: 1, b: 1, a: 1}
-    - _WindDirection: {r: -0.7199921, g: 0, b: 0.69398224, a: 0}
+    - _WindDirection: {r: -0.41126594, g: 0, b: 0.9115154, a: 0}
     - _WindSpeed: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5473917896841254419

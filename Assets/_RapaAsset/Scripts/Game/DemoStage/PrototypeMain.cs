@@ -93,7 +93,7 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
             return;
         if (SaveDataManager.TutorialPassed && Player.Instance.Status == PlayerStatus.Moving && !Player.Instance.PuzzleMode)
         {
-            if (!GameInput.IsMove && !GameInput.IsCameraMove && !GameInput.AnyInput)
+            if (!GameInput.GetButton(Actions.Move) && !GameInput.IsCameraMove && !GameInput.AnyInput)
             {
                 if (menuHintCD >= 23 && !UI_General.Instance.InteractUI[0].activeSelf)
                     UI_General.Instance.ShowActionUI(ButtonAction.MenuHint);
