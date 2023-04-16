@@ -1,10 +1,5 @@
 ﻿using System.Collections;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
-
-using System;
-using UnityEngine.Events;
 
 public class FallingQTE : MonoBehaviour
 {

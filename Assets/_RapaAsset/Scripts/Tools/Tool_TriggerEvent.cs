@@ -1,59 +1,37 @@
-﻿using UltEvents;
+﻿using Sirenix.OdinInspector;
+using UltEvents;
 using UnityEngine;
-using NaughtyAttributes;
+
+public enum FilterType
+{
+    None,
+    Layer,
+    Tag,
+    PlayerTag,
+    GameObject,
+}
 
 public class Tool_TriggerEvent : MonoBehaviour
 {
+    public FilterType Filter;
     public bool Disable;
-
-    [SerializeField]
-    private bool _TargetPlayer;
-
-    public bool TargetPlayer
-    {
-        get { return _TargetPlayer; }
-        set
-        {
-            _TargetPlayer = value;
-            if (value)
-            {
-                Target = Player.Instance.gameObject;
-            }
-        }
-    }
 
     public bool TargetPortableObject;
 
-    [HideIf("TargetPlayer")]
+    [ShowIf("Filter", FilterType.GameObject)]
     public GameObject Target;
 
-    [HideIf("TargetPlayer")]
+    [ShowIf("Filter", FilterType.GameObject)]
     public GameObject[] Targets;
 
-    private bool haveTarget { get { return Target || TargetPlayer; } }
-
-    [HideIf("haveTarget")]
-    public bool UseLayer = true;
-
-    [HideIf("haveTarget")]
-    public bool UseTag;
-
-    [ShowIf("UseLayer")]
+    [ShowIf("Filter", FilterType.Layer)]
     public LayerMask TargetLayrer;
 
-    [ShowIf("UseTag")]
+    [ShowIf("Filter", FilterType.Tag)]
     public string Tag;
 
     public UltEvent TriggerEvent;
     public UltEvent TriggerExitEvent;
-
-    private void Start()
-    {
-        if (TargetPlayer)
-        {
-            Target = Player.Instance.gameObject;
-        }
-    }
 
     public void SetDisable(bool b)
     {
@@ -71,31 +49,45 @@ public class Tool_TriggerEvent : MonoBehaviour
                 TriggerEvent.Invoke();
             }
         }
-        if (Target)
+        switch (Filter)
         {
-            if (other.gameObject == Target)
-                TriggerEvent.Invoke();
-        }
-        else if (Targets.Length != 0)
-        {
-            foreach (var item in Targets)
-            {
-                if (other.gameObject == item)
+            case FilterType.None:
+                break;
+
+            case FilterType.Layer:
+                if (TargetLayrer == (TargetLayrer | (1 << other.gameObject.layer)))
                     TriggerEvent.Invoke();
-            }
-        }
-        else
-        {
-            if (!UseLayer && !UseTag)
-                return;
 
-            if (UseLayer && TargetLayrer != (TargetLayrer | (1 << other.gameObject.layer)))
-                return;
+                break;
 
-            if (UseTag && !other.CompareTag(Tag))
-                return;
+            case FilterType.Tag:
+                if (other.CompareTag(Tag))
+                    TriggerEvent.Invoke();
+                break;
 
-            TriggerEvent.Invoke();
+            case FilterType.PlayerTag:
+                if (other.CompareTag("Player"))
+                    TriggerEvent.Invoke();
+                break;
+
+            case FilterType.GameObject:
+                if (Target)
+                {
+                    if (other.gameObject == Target)
+                        TriggerEvent.Invoke();
+                }
+                else if (Targets.Length != 0)
+                {
+                    foreach (var item in Targets)
+                    {
+                        if (other.gameObject == item)
+                            TriggerEvent.Invoke();
+                    }
+                }
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -103,31 +95,44 @@ public class Tool_TriggerEvent : MonoBehaviour
     {
         if (Disable)
             return;
-        if (Target)
+        switch (Filter)
         {
-            if (other.gameObject == Target)
-                TriggerExitEvent.Invoke();
-        }
-        else if (Targets.Length != 0)
-        {
-            foreach (var item in Targets)
-            {
-                if (other.gameObject == item)
+            case FilterType.None:
+                break;
+
+            case FilterType.Layer:
+                if (TargetLayrer == (TargetLayrer | (1 << other.gameObject.layer)))
                     TriggerExitEvent.Invoke();
-            }
-        }
-        else
-        {
-            if (!UseLayer && !UseTag)
-                return;
+                break;
 
-            if (UseLayer && TargetLayrer != (TargetLayrer | (1 << other.gameObject.layer)))
-                return;
+            case FilterType.Tag:
+                if (other.CompareTag(Tag))
+                    TriggerExitEvent.Invoke();
+                break;
 
-            if (UseTag && !other.CompareTag(Tag))
-                return;
+            case FilterType.PlayerTag:
+                if (other.CompareTag("Player"))
+                    TriggerExitEvent.Invoke();
+                break;
 
-            TriggerExitEvent.Invoke();
+            case FilterType.GameObject:
+                if (Target)
+                {
+                    if (other.gameObject == Target)
+                        TriggerExitEvent.Invoke();
+                }
+                else if (Targets.Length != 0)
+                {
+                    foreach (var item in Targets)
+                    {
+                        if (other.gameObject == item)
+                            TriggerExitEvent.Invoke();
+                    }
+                }
+                break;
+
+            default:
+                break;
         }
     }
 }

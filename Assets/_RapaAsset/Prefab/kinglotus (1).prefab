@@ -601,7 +601,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    gravitySource: 0
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
@@ -4141,7 +4140,6 @@ ParticleSystem:
         m_RotationOrder: 4
     minVertexDistance: 0.2
     textureMode: 0
-    textureScale: {x: 1, y: 1}
     ribbonCount: 1
     shadowBias: 0.5
     worldSpace: 0
@@ -5005,7 +5003,7 @@ Transform:
   m_Children:
   - {fileID: 2772224407865087291}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 14.73, z: 0}
 --- !u!137 &4312288905375903700
 SkinnedMeshRenderer:
@@ -5087,8 +5085,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a89d5b52034f74694ca87535d4ce83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Filter: 3
   Disable: 0
   _TargetPlayer: 1
+  TargetPlayer: 1
   TargetPortableObject: 1
   Target: {fileID: 0}
   Targets: []

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using NaughtyAttributes;
 using DG.Tweening;
 
@@ -19,7 +17,7 @@ public enum UpdateType
 
 public class Tool_TransformFollow : MonoBehaviour
 {
-    public global::UpdateType UpdateType;
+    public UpdateType UpdateType;
     public SmoothMoveType SmoothType;
 
     [SerializeField]
@@ -77,11 +75,16 @@ public class Tool_TransformFollow : MonoBehaviour
     public bool FollowRot;
     private Vector3 speed;
 
-    public Transform SetTarget { set { Target = value; } }
-    public bool SetFollowPos { set { FollowPos = value; } }
-    public bool SetFollowRot { set { FollowRot = value; } }
-    public bool SetLocalShift { set { LocalShift = value; } }
-    public bool SetSnap { set { Snap = value; } }
+    public Transform SetTarget
+    { set { Target = value; } }
+    public bool SetFollowPos
+    { set { FollowPos = value; } }
+    public bool SetFollowRot
+    { set { FollowRot = value; } }
+    public bool SetLocalShift
+    { set { LocalShift = value; } }
+    public bool SetSnap
+    { set { Snap = value; } }
 
     private Tween mt;
 
@@ -103,7 +106,8 @@ public class Tool_TransformFollow : MonoBehaviour
         }
     }
 
-    public Vector3 SetPosOffset { set { PosOffset = value; } }
+    public Vector3 SetPosOffset
+    { set { PosOffset = value; } }
 
     private void Start()
     {

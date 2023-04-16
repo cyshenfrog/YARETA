@@ -5,7 +5,6 @@ Email :: thomas.ir.rasor@gmail.com
 */
 
 using UnityEngine;
-using System.Collections;
 
 public class CameraOrbit : MonoBehaviour
 {

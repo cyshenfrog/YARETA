@@ -154,7 +154,7 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
                 Dialog2.text = s[1];
             }
             else
-                Dialog.text = Tool_StringTool.CheckLineBreak(currentTalks[talkCount]);
+                Dialog.text = Tool.CheckLineBreak(currentTalks[talkCount]);
             talkCount++;
             if (overrideInput && talkCount == currentTalks.Length)
                 UpdateOverrideIcon(GameInput.UsingJoystick);
@@ -183,13 +183,13 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
         split = currentTalks[talkCount].Contains("*");
         Dialog.text = "";
         Dialog2.text = "";
-        Dialog.DOText(CheckString(Tool_StringTool.CheckLineBreak(s[0]), replacer), split ? 0.7f : 1)
+        Dialog.DOText(CheckString(Tool.CheckLineBreak(s[0]), replacer), split ? 0.7f : 1)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
                 if (split)
                 {
-                    Dialog2.DOText(CheckString(Tool_StringTool.CheckLineBreak(s[1]), replacer), .3f)
+                    Dialog2.DOText(CheckString(Tool.CheckLineBreak(s[1]), replacer), .3f)
                         .SetEase(Ease.Linear);
                 }
                 talkCount++;

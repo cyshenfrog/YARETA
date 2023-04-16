@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using UnityEngine;
 
 public class PlayerAnimEvent : UnitySingleton_D<PlayerAnimEvent>
 {

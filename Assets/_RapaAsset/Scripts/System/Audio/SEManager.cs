@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using DG.Tweening;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 public enum SystemSE
 {

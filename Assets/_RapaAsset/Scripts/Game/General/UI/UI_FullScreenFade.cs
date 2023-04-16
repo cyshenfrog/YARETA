@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using System;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_FullScreenFade : UnitySingleton_D<UI_FullScreenFade>

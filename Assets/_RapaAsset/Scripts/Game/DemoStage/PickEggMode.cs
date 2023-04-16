@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using RootMotion.FinalIK;
 
 public class PickEggMode : MonoBehaviour
 {

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Cinemachine;
+﻿using Cinemachine;
 using UnityEngine;
 using DG.Tweening;
 
@@ -67,7 +66,7 @@ public class CameraMain : UnitySingleton_D<CameraMain>
     public void Recenter(float duration)
     {
         DOTween.To(() => MainFreeLookCam.m_YAxis.Value, x => MainFreeLookCam.m_YAxis.Value = x, .5f, duration);
-        DOTween.To(() => MainFreeLookCam.m_XAxis.Value, x => MainFreeLookCam.m_XAxis.Value = x, Tools.GetTrimmedEular(MainFreeLookCam.LookAt.eulerAngles.y), duration);
+        DOTween.To(() => MainFreeLookCam.m_XAxis.Value, x => MainFreeLookCam.m_XAxis.Value = x, Tool.GetTrimmedEular(MainFreeLookCam.LookAt.eulerAngles.y), duration);
     }
 
     public void SetCameraMode(CameraMode mode)

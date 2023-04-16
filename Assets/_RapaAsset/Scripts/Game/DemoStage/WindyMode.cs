@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using Cinemachine.Utility;
 using DG.Tweening;
 using UltEvents;
 

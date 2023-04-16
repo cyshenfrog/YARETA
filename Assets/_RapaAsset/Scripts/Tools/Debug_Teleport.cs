@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UltEvents;
+﻿using UltEvents;
 using UnityEngine;
 
 public class Debug_Teleport : MonoBehaviour

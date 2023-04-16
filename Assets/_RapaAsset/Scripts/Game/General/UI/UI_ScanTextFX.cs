@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Lean.Pool;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class UI_ScanTextFX : UnitySingleton_D<UI_ScanTextFX>
 {

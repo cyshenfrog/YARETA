@@ -3825,13 +3825,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a89d5b52034f74694ca87535d4ce83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Filter: 1
   Disable: 0
-  _TargetPlayer: 0
   TargetPortableObject: 0
   Target: {fileID: 0}
   Targets: []
-  UseLayer: 1
-  UseTag: 0
   TargetLayrer:
     serializedVersion: 2
     m_Bits: 16384
@@ -5144,13 +5142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a89d5b52034f74694ca87535d4ce83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Filter: 1
   Disable: 0
-  _TargetPlayer: 0
   TargetPortableObject: 0
   Target: {fileID: 0}
   Targets: []
-  UseLayer: 1
-  UseTag: 0
   TargetLayrer:
     serializedVersion: 2
     m_Bits: 16384
@@ -6332,32 +6328,29 @@ MonoBehaviour:
   Scanners:
   - {fileID: 5451365358642000115}
   - {fileID: 3723188279132136564}
-  Pad: {fileID: 4675287117977357392}
   Rock: {fileID: 6806707618154927261}
   Egg: {fileID: 6557664875035219793}
   Hammer: {fileID: 3193750669751813749}
   DrawModel: {fileID: 59232974588554712}
-  RodPool: {fileID: 0}
   FPCam: {fileID: 1577755124}
   Model: {fileID: 1261091296075481913}
-  MenuHand: {fileID: 1862377012}
-  DrawingHand: {fileID: 2138514597697252706}
   LeftDragPos: {fileID: 1332967855}
   RightDragPos: {fileID: 4357294761385200666}
   FrontDragPos: {fileID: 5291059734108615473}
   PlayerTrigger: {fileID: 103106689477458680}
+  Pad: {fileID: 4675287117977357392}
+  MenuHand: {fileID: 1862377012}
+  DrawingHand: {fileID: 2138514597697252706}
   WalkFX: {fileID: 6484553185089617886}
   DrownFX: {fileID: 1394745847579132698}
-  turnSpeed: 10
-  Speed: 1
-  AirMoveSpeed: 5
+  MoveSpeed: 1
+  TurnSpeed: 10
+  AirControl: 1
+  AirDrag: 4
   JumpPower: 7
   RocketJumpPower: 12
-  AirDrag: 4
+  CanScan: 0
   PuzzleMode: 0
-  FacingTarget: {fileID: 0}
-  IsJumping: 0
-  moveMode: 0
   status: 0
   InitHandPos_R: {fileID: 163864119}
   InitHandPos_L: {fileID: 1592610297}

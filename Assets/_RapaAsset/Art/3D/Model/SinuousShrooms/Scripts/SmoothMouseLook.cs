@@ -1,6 +1,5 @@
 using UnityEngine;
-using System.Collections;
-	
+
 [AddComponentMenu("SSFS/Smoothed Mouse Look")]
 
 public class SmoothMouseLook : MonoBehaviour

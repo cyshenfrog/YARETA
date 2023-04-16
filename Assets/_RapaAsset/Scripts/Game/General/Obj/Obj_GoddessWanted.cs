@@ -1,5 +1,3 @@
-﻿using UnityEngine;
-
-public class Obj_GoddessWanted : Obj_Info
+﻿public class Obj_GoddessWanted : Obj_Info
 {
 }
