@@ -7,7 +7,7 @@ using UnityEngine;
 /// can be serialized onto an asset data file.
 ///
 [System.Serializable]
-public class UISheet : ScriptableObject
+public class UISheet : SingletonSO<UISheet>
 {
     [HideInInspector]
     [SerializeField]

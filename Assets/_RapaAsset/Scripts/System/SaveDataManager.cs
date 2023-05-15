@@ -100,11 +100,11 @@ public static class SaveDataManager
             switch (ScannedData[orderID].ClearLevel)
             {
                 case ClearLevel.清楚:
-                    CurrentScore += GameData.ScanSheet.dataArray[ScannedData[orderID].ID].Fullpoint;
+                    CurrentScore += ScanSheet.Instance.dataArray[ScannedData[orderID].ID].Fullpoint;
                     break;
 
                 case ClearLevel.模糊:
-                    CurrentScore += GameData.ScanSheet.dataArray[ScannedData[orderID].ID].Point;
+                    CurrentScore += ScanSheet.Instance.dataArray[ScannedData[orderID].ID].Point;
                     break;
 
                 case ClearLevel.在畫三小:
@@ -118,7 +118,7 @@ public static class SaveDataManager
             switch (ScannedData[orderID].UploadedLevel)
             {
                 case ClearLevel.模糊:
-                    CurrentScore -= GameData.ScanSheet.dataArray[ScannedData[orderID].ID].Point;
+                    CurrentScore -= ScanSheet.Instance.dataArray[ScannedData[orderID].ID].Point;
                     break;
 
                 case ClearLevel.在畫三小:
@@ -128,11 +128,11 @@ public static class SaveDataManager
             switch (ScannedData[orderID].ClearLevel)
             {
                 case ClearLevel.清楚:
-                    CurrentScore += GameData.ScanSheet.dataArray[ScannedData[orderID].ID].Fullpoint;
+                    CurrentScore += ScanSheet.Instance.dataArray[ScannedData[orderID].ID].Fullpoint;
                     break;
 
                 case ClearLevel.模糊:
-                    CurrentScore += GameData.ScanSheet.dataArray[ScannedData[orderID].ID].Point;
+                    CurrentScore += ScanSheet.Instance.dataArray[ScannedData[orderID].ID].Point;
                     break;
 
                 case ClearLevel.在畫三小:
@@ -160,10 +160,10 @@ public static class SaveDataManager
                 SEManager.Instance.PlaySystemSE(clearLevel == ClearLevel.清楚 ? SystemSE.畫好了 : SystemSE.UI確認);
                 ScannedData[order] = new ScanData(id, clearLevel, true, ScannedData[order].ClearLevel);
                 UI_ScanMechine.Instance.UpdateSlot(order, id);
-                DrawingMode.Instance.ShowUnlockHint("+ " + GameData.ScanSheet.GetName(id, clearLevel, language), false);
+                DrawingMode.Instance.ShowUnlockHint("+ " + ScanSheet.Instance.GetName(id, clearLevel, language), false);
             }
             else
-                DrawingMode.Instance.ShowUnlockHint(GameData.ScanSheet.GetName(id, clearLevel, language), true);
+                DrawingMode.Instance.ShowUnlockHint(ScanSheet.Instance.GetName(id, clearLevel, language), true);
         }
         else
         {
@@ -172,7 +172,7 @@ public static class SaveDataManager
             ScannedData.Add(new ScanData(id, clearLevel));
             UI_ScanMechine.Instance.AddScannedData(id);
             PrototypeMain.Instance.RemoveTargetScanData(id);
-            DrawingMode.Instance.ShowUnlockHint("+ " + GameData.ScanSheet.GetName(id, clearLevel, language), false);
+            DrawingMode.Instance.ShowUnlockHint("+ " + ScanSheet.Instance.GetName(id, clearLevel, language), false);
         }
     }
 

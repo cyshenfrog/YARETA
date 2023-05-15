@@ -9,8 +9,10 @@ public class Obj_Info : MonoBehaviour
     public bool Weird;
     public bool Drawable = true;
     public bool BigObj;
+
     public bool GoddessWant
-    { get { return GameData.ScanSheet.dataArray[ID].Goddesswant; } }
+    { get { return ScanSheet.Instance.dataArray[ID].Goddesswant; } }
+
     public ScanDataEnum ScanData;
 
     public ScanDataEnum GetScanData
@@ -37,7 +39,7 @@ public class Obj_Info : MonoBehaviour
         if (ID == 24)
         {
             //if (PrototypeMain.Instance.WhiteStoneCount != 0)
-            SaveDataManager.CurrentScore += GameData.ScanSheet.dataArray[ID].Fullpoint;
+            SaveDataManager.CurrentScore += ScanSheet.Instance.dataArray[ID].Fullpoint;
             PrototypeMain.Instance.WhiteStoneCount++;
         }
         SaveDataManager.AddScannedData(ID, 0);
@@ -48,7 +50,7 @@ public class Obj_Info : MonoBehaviour
         if (ID == 24)
         {
             if (PrototypeMain.Instance.WhiteStoneCount != 0)
-                SaveDataManager.CurrentScore += GameData.ScanSheet.dataArray[ID].Fullpoint;
+                SaveDataManager.CurrentScore += ScanSheet.Instance.dataArray[ID].Fullpoint;
             PrototypeMain.Instance.WhiteStoneCount++;
         }
         SaveDataManager.AddScannedData(ID, 0);

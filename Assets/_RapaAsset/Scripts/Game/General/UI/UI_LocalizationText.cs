@@ -30,7 +30,7 @@ public class UI_LocalizationText : MonoBehaviour
     private void UpdateText()
     {
         if (!UpdateFontOnly)
-            text.text = GameData.UISheet.GetUIText(UIText);
+            text.text = UISheet.Instance.GetUIText(UIText);
         if (SetAlignment)
         {
             text.alignment = SaveDataManager.Language == SystemLanguage.English ? EnAlignment : ChAlignment;

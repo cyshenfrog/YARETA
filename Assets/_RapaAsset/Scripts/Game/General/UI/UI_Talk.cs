@@ -102,7 +102,7 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
         autoMode = Auto;
         talking = !autoMode;
         replacer = ReplaceText;
-        ShowTalk(GameData.TalkSheet.GetTalks(StartId));
+        ShowTalk(TalkSheet.Instance.GetTalks(StartId));
     }
 
     public void ShowTalk(string[] talks)

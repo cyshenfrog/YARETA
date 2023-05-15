@@ -51,7 +51,6 @@ public class Player_Fairy : Player
     public override void Update()
     {
         base.Update();
-
         if (!CanScan)
         {
             if (Scanning)
@@ -163,72 +162,72 @@ public class Player_Fairy : Player
         CameraMain.Instance.SetCameraMode(CameraMode.Default);
     }
 
-    private void OnDrawGizmos()
-    {
-        Vector3 startPos = transform.position + offset + transform.right * (size.y + 0.3f) - transform.forward * 0.7f;
-        bool isHit = Physics.SphereCast(startPos, size.y, transform.forward, out hit,
-            maxDistance, TouchScanMask);
-        if (isHit)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(startPos, transform.forward * hit.distance);
-            Gizmos.DrawWireSphere(startPos + transform.forward * hit.distance, size.y);
-            Gizmos.color = Color.green;
-            Gizmos.DrawSphere(hit.point, .2f);
-        }
-        else
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawRay(startPos, transform.forward * maxDistance);
-        }
-        startPos = transform.position + offset - transform.right * (size.y + 0.3f) - transform.forward * 0.7f;
-        isHit = Physics.SphereCast(startPos, size.y, transform.forward, out hit,
-            maxDistance, TouchScanMask);
-        if (isHit)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(startPos, transform.forward * hit.distance);
-            Gizmos.DrawWireSphere(startPos + transform.forward * hit.distance, size.y);
-            Gizmos.color = Color.green;
-            Gizmos.DrawSphere(hit.point, .2f);
-        }
-        else
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawRay(startPos, transform.forward * maxDistance);
-        }
-        //Vector3 startPos = transform.position + transform.right * size.x + offset - transform.forward * 0.7f;
-        //bool isHit = Physics.BoxCast(startPos, size, transform.forward, out hit, transform.rotation, maxDistance, mask);
-        //if (isHit)
-        //{
-        //    Gizmos.color = Color.red;
-        //    Gizmos.DrawRay(startPos, transform.forward * hit.distance);
-        //    Gizmos.DrawWireCube(startPos + transform.forward * hit.distance, size);
-        //    Gizmos.color = Color.green;
-        //    Gizmos.DrawSphere(hit.point, .1f);
-        //}
-        //else
-        //{
-        //    Gizmos.color = Color.green;
-        //    Gizmos.DrawRay(startPos, transform.forward * maxDistance);
-        //}
-        //startPos = transform.position - transform.right * size.x + offset - transform.forward * 0.7f;
-        //isHit = Physics.BoxCast(startPos, size, transform.forward, out hit,
-        //    transform.rotation, maxDistance, mask);
-        //if (isHit)
-        //{
-        //    Gizmos.color = Color.red;
-        //    Gizmos.DrawRay(startPos, transform.forward * hit.distance);
-        //    Gizmos.DrawWireCube(startPos + transform.forward * hit.distance, size);
-        //    Gizmos.color = Color.green;
-        //    Gizmos.DrawSphere(hit.point, .1f);
-        //}
-        //else
-        //{
-        //    Gizmos.color = Color.green;
-        //    Gizmos.DrawRay(startPos, transform.forward * maxDistance);
-        //}
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Vector3 startPos = transform.position + offset + transform.right * (size.y + 0.3f) - transform.forward * 0.7f;
+    //    bool isHit = Physics.SphereCast(startPos, size.y, transform.forward, out hit,
+    //        maxDistance, TouchScanMask);
+    //    if (isHit)
+    //    {
+    //        Gizmos.color = Color.red;
+    //        Gizmos.DrawRay(startPos, transform.forward * hit.distance);
+    //        Gizmos.DrawWireSphere(startPos + transform.forward * hit.distance, size.y);
+    //        Gizmos.color = Color.green;
+    //        Gizmos.DrawSphere(hit.point, .2f);
+    //    }
+    //    else
+    //    {
+    //        Gizmos.color = Color.green;
+    //        Gizmos.DrawRay(startPos, transform.forward * maxDistance);
+    //    }
+    //    startPos = transform.position + offset - transform.right * (size.y + 0.3f) - transform.forward * 0.7f;
+    //    isHit = Physics.SphereCast(startPos, size.y, transform.forward, out hit,
+    //        maxDistance, TouchScanMask);
+    //    if (isHit)
+    //    {
+    //        Gizmos.color = Color.red;
+    //        Gizmos.DrawRay(startPos, transform.forward * hit.distance);
+    //        Gizmos.DrawWireSphere(startPos + transform.forward * hit.distance, size.y);
+    //        Gizmos.color = Color.green;
+    //        Gizmos.DrawSphere(hit.point, .2f);
+    //    }
+    //    else
+    //    {
+    //        Gizmos.color = Color.green;
+    //        Gizmos.DrawRay(startPos, transform.forward * maxDistance);
+    //    }
+    //    //Vector3 startPos = transform.position + transform.right * size.x + offset - transform.forward * 0.7f;
+    //    //bool isHit = Physics.BoxCast(startPos, size, transform.forward, out hit, transform.rotation, maxDistance, mask);
+    //    //if (isHit)
+    //    //{
+    //    //    Gizmos.color = Color.red;
+    //    //    Gizmos.DrawRay(startPos, transform.forward * hit.distance);
+    //    //    Gizmos.DrawWireCube(startPos + transform.forward * hit.distance, size);
+    //    //    Gizmos.color = Color.green;
+    //    //    Gizmos.DrawSphere(hit.point, .1f);
+    //    //}
+    //    //else
+    //    //{
+    //    //    Gizmos.color = Color.green;
+    //    //    Gizmos.DrawRay(startPos, transform.forward * maxDistance);
+    //    //}
+    //    //startPos = transform.position - transform.right * size.x + offset - transform.forward * 0.7f;
+    //    //isHit = Physics.BoxCast(startPos, size, transform.forward, out hit,
+    //    //    transform.rotation, maxDistance, mask);
+    //    //if (isHit)
+    //    //{
+    //    //    Gizmos.color = Color.red;
+    //    //    Gizmos.DrawRay(startPos, transform.forward * hit.distance);
+    //    //    Gizmos.DrawWireCube(startPos + transform.forward * hit.distance, size);
+    //    //    Gizmos.color = Color.green;
+    //    //    Gizmos.DrawSphere(hit.point, .1f);
+    //    //}
+    //    //else
+    //    //{
+    //    //    Gizmos.color = Color.green;
+    //    //    Gizmos.DrawRay(startPos, transform.forward * maxDistance);
+    //    //}
+    //}
 
     public void WindMode(bool on)
     {

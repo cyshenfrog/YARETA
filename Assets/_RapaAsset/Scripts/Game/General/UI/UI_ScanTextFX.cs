@@ -16,10 +16,10 @@ public class UI_ScanTextFX : UnitySingleton_D<UI_ScanTextFX>
     private IEnumerator _ShowTextFX(Obj_Info obj, Vector3 pos)
     {
         obj.OnScanEvent.Invoke();
-        hint = GameData.ScanSheet.dataArray[obj.ID].Name;
+        hint = ScanSheet.Instance.dataArray[obj.ID].Name;
         if (obj.Weird)
             hint += "?";
-        level = GameData.ScanSheet.dataArray[obj.ID].Level;
+        level = ScanSheet.Instance.dataArray[obj.ID].Level;
         yield return new WaitForSeconds(Random.Range(0, 0.2f));
         //FxPool.Spawn(Vector3.left * -9999, Quaternion.identity, FxRoot, true).GetComponentInChildren<ObjTextFx>().Init(hint, level, obj.BigObj ? Player.Instance.transform.position + Player.Instance.transform.forward : obj.transform.position);
         FxPool.Spawn(Vector3.left * -9999, Quaternion.identity).GetComponentInChildren<ObjTextFx>().Init(hint, level, pos);

@@ -32,7 +32,7 @@ public class UI_InteractionHint : UnitySingleton_D<UI_InteractionHint>
     public void SetText(UIDataEnum text, ControllerButton JoystickOverride = ControllerButton.None, Sprite KBOverride = null)
     {
         _currentText = text;
-        ActionText.text = GameData.UISheet.GetUIText(text);
+        ActionText.text = UISheet.Instance.GetUIText(text);
 
         if (KBOverride)
             InteractIcon.KB = KBOverride;

@@ -7,7 +7,7 @@ using UnityEngine;
 /// can be serialized onto an asset data file.
 ///
 [System.Serializable]
-public class TalkSheet : ScriptableObject
+public class TalkSheet : SingletonSO<TalkSheet>
 {
     [HideInInspector]
     [SerializeField]
