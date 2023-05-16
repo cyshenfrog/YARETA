@@ -365,7 +365,7 @@ namespace GPUInstancer
 
             if (showPrototypesBox)
             {
-                int prototypeRowCount = Mathf.FloorToInt((EditorGUIUtility.currentViewWidth - 30f) / (_manager.isPrototypeTextMode ? PROTOTYPE_TEXT_RECT_SIZE_X : PROTOTYPE_RECT_SIZE));
+                int prototypeRowCount = Mathf.Max(Mathf.FloorToInt((EditorGUIUtility.currentViewWidth - 30f) / (_manager.isPrototypeTextMode ? PROTOTYPE_TEXT_RECT_SIZE_X : PROTOTYPE_RECT_SIZE)), 1);
                 DrawHelpText(GPUInstancerEditorConstants.HELPTEXT_prototypes);
 
                 DrawPrototypeBoxButtons();

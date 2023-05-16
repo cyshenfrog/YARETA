@@ -22,16 +22,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 639d1aa1c95cd443c831165564f4a19b, type: 2}
   - {fileID: 11400000, guid: 93c1abb83c5ea4a1e84d8475a0d245db, type: 2}
   - {fileID: 11400000, guid: 8f6e84df0785d4fb4893c311e7702e84, type: 2}
-  - {fileID: 11400000, guid: 62c94a9c1a21d3e4abdbf71a4b175f8c, type: 2}
   - {fileID: 11400000, guid: 6646d2562bb9379498d38addaba2d66d, type: 2}
-  m_DefaultRendererIndex: 5
+  m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 1
   m_RequireOpaqueTexture: 1
   m_OpaqueDownsampling: 0
   m_SupportsTerrainHoles: 1
+  m_StoreActionsOptimization: 0
   m_SupportsHDR: 0
   m_MSAA: 1
   m_RenderScale: 1
+  m_UpscalingFilter: 0
+  m_FsrOverrideSharpness: 0
+  m_FsrSharpness: 0.92
   m_MainLightRenderingMode: 1
   m_MainLightShadowsSupported: 1
   m_MainLightShadowmapResolution: 2048
@@ -52,6 +55,7 @@ MonoBehaviour:
   m_CascadeBorder: 0.2
   m_ShadowDepthBias: 1
   m_ShadowNormalBias: 1
+  m_AnyShadowsSupported: 1
   m_SoftShadowsSupported: 1
   m_ConservativeEnclosingSphere: 0
   m_NumIterationsEnclosingSphere: 64
@@ -62,7 +66,6 @@ MonoBehaviour:
   m_MixedLightingSupported: 1
   m_SupportsLightLayers: 0
   m_DebugLevel: 0
-  m_StoreActionsOptimization: 0
   m_UseAdaptivePerformance: 1
   m_ColorGradingMode: 0
   m_ColorGradingLutSize: 32

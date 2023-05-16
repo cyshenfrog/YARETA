@@ -1118,6 +1118,17 @@ namespace GPUInstancer
             return variationData;
         }
 
+        public ComputeBuffer GetVariationBuffer(GPUInstancerPrefabPrototype prototype, string bufferName)
+        {
+            foreach (IPrefabVariationData item in _variationDataList)
+            {
+                if (item.GetPrototype() == prototype && item.GetBufferName() == bufferName)
+                    return item.GetBuffer();
+            }
+            Debug.LogError(prototype + " does not contain a variation buffer with name: " + bufferName);
+            return null;
+        }
+
         public virtual GPUInstancerPrefabPrototype DefineGameObjectAsPrefabPrototypeAtRuntime(GameObject prototypeGameObject, bool attachScript = true)
         {
             if (!Application.isPlaying)
@@ -1324,6 +1335,7 @@ namespace GPUInstancer
         void SetNewBufferSize(int newCount);
         GPUInstancerPrefabPrototype GetPrototype();
         string GetBufferName();
+        ComputeBuffer GetBuffer();
         void ReleaseBuffer();
     }
 
@@ -1439,6 +1451,11 @@ namespace GPUInstancer
         public GPUInstancerPrefabPrototype GetPrototype()
         {
             return prototype;
+        }
+
+        public ComputeBuffer GetBuffer()
+        {
+            return variationBuffer;
         }
 
         public string GetBufferName()

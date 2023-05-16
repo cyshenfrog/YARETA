@@ -32,6 +32,12 @@ namespace GPUInstancer
                 for (int i = 0; i < _enteredInstances.Count; i++)
                 {
                     GPUInstancerPrefab prefabInstance = _enteredInstances[i];
+                    if (prefabInstance == null)
+                    {
+                        _enteredInstances.RemoveAt(i);
+                        i--;
+                        continue;
+                    }
                     if (!IsInsideCollider(prefabInstance))
                     {
                         rb = prefabInstance.GetComponent<Rigidbody>();

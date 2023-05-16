@@ -5085,18 +5085,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a89d5b52034f74694ca87535d4ce83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Filter: 3
+  Filter: 1
   Disable: 0
-  _TargetPlayer: 1
-  TargetPlayer: 1
-  TargetPortableObject: 1
+  TargetPortableObject: 0
   Target: {fileID: 0}
   Targets: []
-  UseLayer: 1
-  UseTag: 0
   TargetLayrer:
     serializedVersion: 2
-    m_Bits: 1025
+    m_Bits: 1152
   Tag: 
   TriggerEvent:
     _PersistentCalls:

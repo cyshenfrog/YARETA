@@ -123,6 +123,10 @@ namespace GPUInstancer
 
                 if (prototypeList.Count != terrain.terrainData.detailPrototypes.Length)
                     terrainSettings.warningText = "Detail Prototypes on the Unity Terrain do not match the Detail Prototypes in this Detail Manager. Adding and removing Detail Prototypes should be done from the Detail Manager and not from the Unity Terrain. To fix this error, you can press the Generate Prototypes button below. This will reset the prototypes in this manager with the default settings.";
+#if UNITY_2022_2_OR_NEWER
+                else if (terrain.terrainData.detailScatterMode == DetailScatterMode.CoverageMode)
+                    terrainSettings.warningText = "\"Detail Scatter Mode\" terrain setting is set to \"Coverage Mode\" which is not supported. Go to terrain settings and change the \"Detail Scatter Mode\" setting to \"Instance Count Mode\" to be able to use the Detail Manager.";
+#endif
                 else
                     terrainSettings.warningText = null;
 
@@ -142,7 +146,12 @@ namespace GPUInstancer
 
             if (!string.IsNullOrEmpty(terrainSettings.warningText))
             {
-                Debug.LogError("A GPU Instancer Detail Manager currently has errors. Please refer to the error description in the Detail manager.");
+                Debug.LogError("A GPU Instancer Detail Manager currently has errors. Please refer to the error description in the Detail manager.", this);
+#if UNITY_EDITOR
+                if (gpuiSimulator != null)
+                    gpuiSimulator.StopSimulation();
+                keepSimulationLive = false;
+#endif
                 return;
             }
 

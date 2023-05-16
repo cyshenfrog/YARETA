@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a45e579af74dd45832a08d7a2696b6, type: 3}
   m_Name: GPUInstancerSettings
   m_EditorClassIdentifier: 
-  versionNo: 1.75
-  shaderBindings: {fileID: 11400000, guid: 48cae2d2da4c8fb4b8b7bf1ddc73bcc6, type: 2}
-  billboardAtlasBindings: {fileID: 11400000, guid: 46381c8d7431d0d44a3e9a060eabc6bd,
+  versionNo: 1.77
+  shaderBindings: {fileID: 11400000, guid: fed0ad2ba133f7d49ace9e3ec8592371, type: 2}
+  billboardAtlasBindings: {fileID: 11400000, guid: 2950c5b6043b7174596e31545c0305fc,
     type: 2}
-  shaderVariantCollection: {fileID: 20000000, guid: 539d840f32ccf094c8b3d6d676dc3376,
+  shaderVariantCollection: {fileID: 20000000, guid: efa0a8ae40e1b7745a4a37e50be296ad,
     type: 2}
   packagesLoaded: 1
   isHDRP: 0

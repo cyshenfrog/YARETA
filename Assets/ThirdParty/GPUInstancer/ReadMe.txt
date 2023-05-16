@@ -1,5 +1,5 @@
-GPU Instancer v1.7.5
-Copyright ©2018-22 GurBu Technologies
+GPU Instancer v1.7.7
+Copyright ©2018-23 GurBu Technologies
 ---------------------------------
 Thank you for supporting GPU Instancer!
 
@@ -194,6 +194,21 @@ folder to view the demo scenes in your project. For more information, please che
 ---------------------------------
 CHANGE LOG
 ---------------------------------
+
+v1.7.7
+
+Fixed: Crash caused by previews on Unity 2022.2 when using Forward+ rendering mode
+
+v1.7.6
+
+New: Added GetVariationBuffer API method to access variation ComputeBuffer
+
+Changed: Detail Manager will show an error message when Detail Scatter Mode is set to Coverage Mode
+
+Fixed: Error when adding billboard to objects with LOD groups with more than 4 levels
+Fixed: Error when destroying object within Modification Collider
+Fixed: Tree Manager uses the original prefab when adding prefab variation
+Fixed: Detail Manager spatial partitioning error when detail resolution is higher than the terrain size
 
 v1.7.5
 

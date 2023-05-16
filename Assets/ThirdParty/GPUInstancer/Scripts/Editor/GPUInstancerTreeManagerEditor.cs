@@ -101,7 +101,7 @@ namespace GPUInstancer
             if (prefabType == PrefabAssetType.Regular || prefabType == PrefabAssetType.Variant || prefabType == PrefabAssetType.Model)
             {
                 GameObject newPrefabObject = (GameObject)PrefabUtility.GetCorrespondingObjectFromSource(prefabObject);
-                if (newPrefabObject != null)
+                if (newPrefabObject != null && PrefabUtility.GetPrefabInstanceStatus(prefabObject) == PrefabInstanceStatus.Connected)
                 {
                     while (newPrefabObject.transform.parent != null)
                         newPrefabObject = newPrefabObject.transform.parent.gameObject;

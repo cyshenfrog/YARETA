@@ -149,6 +149,9 @@ namespace GPUInstancer
 
         public Texture2D GetPreviewForGameObject(GameObject gameObject, Rect prevRect, Color backgroundColor, GPUInstancerRuntimeData runtimeData = null)
         {
+#if UNITY_2022_2_OR_NEWER
+            if (GPUInstancerConstants.gpuiSettings.isURP && gameObject != null) return AssetPreview.GetAssetPreview(gameObject);
+#endif
             if (!_camera || lights == null)
             {
                 Cleanup();
@@ -305,7 +308,11 @@ namespace GPUInstancer
                 _camera.Render();
                 UnityEditorInternal.InternalEditorUtility.RemoveCustomLighting();
             }
-            else if (runtimeData != null && runtimeData.instanceLODs != null && runtimeData.instanceLODs.Count > 0 && runtimeData.instanceLODs[0].renderers != null)
+            else if (runtimeData != null && runtimeData.instanceLODs != null && runtimeData.instanceLODs.Count > 0 && runtimeData.instanceLODs[0].renderers != null
+#if UNITY_2022_2_OR_NEWER
+                && !GPUInstancerConstants.gpuiSettings.isURP
+#endif
+                )
             {
                 float maxBounds = Mathf.Max(Mathf.Max(runtimeData.instanceBounds.extents.x, runtimeData.instanceBounds.extents.y), runtimeData.instanceBounds.extents.z);
                 _camera.transform.position = runtimeData.instanceBounds.center;

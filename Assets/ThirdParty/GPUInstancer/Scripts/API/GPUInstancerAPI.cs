@@ -571,6 +571,18 @@ namespace GPUInstancer
         }
 
         /// <summary>
+        /// Returns the ComputeBuffer that is created for the variation. Please note that the Compute Shader will be destroyed and recreated when the buffer size changes or the manager is reinitialized.
+        /// </summary>
+        /// <param name="manager">The manager that defines the prototypes you want to GPU instance.</param>
+        /// <param name="prototype">The GPU Instancer prototype to define variations.</param>
+        /// <param name="bufferName">The name of the variation buffer in the prototype's shader.</param>
+        /// <returns>Variation ComputeBuffer</returns>
+        public static ComputeBuffer GetVariationBuffer(GPUInstancerPrefabManager manager, GPUInstancerPrefabPrototype prototype, string bufferName)
+        {
+            return manager.GetVariationBuffer(prototype, bufferName);
+        }
+
+        /// <summary>
         /// Use this method to create prefab instances with the given transform information without creating GameObjects.
         /// </summary>
         /// <param name="prefabManager">The GPUI Prefab Manager that the prefab prototype is defined on</param>

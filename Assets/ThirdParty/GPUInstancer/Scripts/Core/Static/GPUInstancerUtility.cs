@@ -2168,6 +2168,8 @@ namespace GPUInstancer
 
                     float lodSize = (1 - runtimeData.prototype.billboard.billboardDistance) / QualitySettings.lodBias;
                     int index = (runtimeData.instanceLODs.Count - 1) * 4;
+                    if (runtimeData.instanceLODs.Count > 4)
+                        index = (runtimeData.instanceLODs.Count - 5) * 4 + 1;
 
                     if (lodSize > runtimeData.lodSizes[index])
                     {
@@ -2537,7 +2539,7 @@ namespace GPUInstancer
                     List<int> divisors = GetDivisors(gcd).ToList();
                     divisors.Add(gcd);
                     divisors.RemoveAll(d => d > spData.cellRowAndCollumnCountPerTerrain);
-                    spData.cellRowAndCollumnCountPerTerrain = divisors.Last();
+                    spData.cellRowAndCollumnCountPerTerrain = divisors.Count == 0 ? 1 : divisors.Last();
                 }
             }
 

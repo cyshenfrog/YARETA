@@ -68,8 +68,8 @@ MonoBehaviour:
   occlusionOffset: 0
   occlusionAccuracy: 1
   boundsOffset: {x: 0, y: 0, z: 0}
-  isLODCrossFade: 1
-  isLODCrossFadeAnimate: 1
+  isLODCrossFade: 0
+  isLODCrossFadeAnimate: 0
   lodFadeTransitionWidth: 0.1
   lodBiasAdjustment: 1
   billboard:
@@ -99,7 +99,6 @@ MonoBehaviour:
   checkedForBillboardExtensions: 1
   autoUpdateTransformData: 0
   treeType: 3
-  warningText: 
   prototypeIndex: 2
   isApplyRotation: 1
   isApplyPrefabScale: 1
@@ -148,8 +147,8 @@ MonoBehaviour:
   occlusionOffset: 0
   occlusionAccuracy: 1
   boundsOffset: {x: 0, y: 0, z: 0}
-  isLODCrossFade: 1
-  isLODCrossFadeAnimate: 1
+  isLODCrossFade: 0
+  isLODCrossFadeAnimate: 0
   lodFadeTransitionWidth: 0.1
   lodBiasAdjustment: 1
   billboard:
@@ -179,7 +178,6 @@ MonoBehaviour:
   checkedForBillboardExtensions: 1
   autoUpdateTransformData: 0
   treeType: 3
-  warningText: 
   prototypeIndex: 1
   isApplyRotation: 1
   isApplyPrefabScale: 1
@@ -228,8 +226,8 @@ MonoBehaviour:
   occlusionOffset: 0
   occlusionAccuracy: 1
   boundsOffset: {x: 0, y: 0, z: 0}
-  isLODCrossFade: 1
-  isLODCrossFadeAnimate: 1
+  isLODCrossFade: 0
+  isLODCrossFadeAnimate: 0
   lodFadeTransitionWidth: 0.1
   lodBiasAdjustment: 1
   billboard:
@@ -259,7 +257,6 @@ MonoBehaviour:
   checkedForBillboardExtensions: 1
   autoUpdateTransformData: 0
   treeType: 3
-  warningText: 
   prototypeIndex: 0
   isApplyRotation: 1
   isApplyPrefabScale: 1

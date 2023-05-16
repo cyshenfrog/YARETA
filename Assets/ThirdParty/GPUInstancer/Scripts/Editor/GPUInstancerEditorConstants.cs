@@ -8,8 +8,8 @@ namespace GPUInstancer
 {
     public static class GPUInstancerEditorConstants
     {
-        public static readonly string GPUI_VERSION = "GPU Instancer v1.7.5";
-        public static readonly float GPUI_VERSION_NO = 1.75f;
+        public static readonly string GPUI_VERSION = "GPU Instancer v1.7.7";
+        public static readonly float GPUI_VERSION_NO = 1.77f;
 
         public static readonly string PUBLISHER_NAME = "GurBu Technologies";
         public static readonly string PACKAGE_NAME = "GPU Instancer";
