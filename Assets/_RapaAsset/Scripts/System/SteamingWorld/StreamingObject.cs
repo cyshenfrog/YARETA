@@ -1,18 +1,15 @@
-using RTree;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaticWorldObject : MonoBehaviour
+public class StreamingObject : MonoBehaviour
 {
-    private Guid Guid = Guid.NewGuid();
     public Rect[] Rects => GetRects();
 
     private Rect[] GetRects()
     {
         List<Rect> Rects = new List<Rect>();
         var colliders = GetComponentsInChildren<BoxCollider>();
-        if (colliders != null)
+        if (colliders.Length != 0)
         {
             foreach (var box in colliders)
             {
@@ -24,8 +21,9 @@ public class StaticWorldObject : MonoBehaviour
         return Rects.ToArray();
     }
 
-    public RTreeData ToRTreeData()
+    public RTreeData GetRTreeData(string prefabPath)
     {
-        return new RTreeData(new Envelope(Rects[0].xMin, Rects[0].yMin, Rects[0].xMax, Rects[0].yMax), Guid);
+        return new RTreeData(gameObject.GetInstanceID(), transform.position, transform.rotation, prefabPath);
+        //return new RTreeData(new Envelope(Rects[0].xMin, Rects[0].yMin, Rects[0].xMax, Rects[0].yMax), prefabPath, transform.localRotation);
     }
 }

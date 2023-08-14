@@ -10,7 +10,11 @@
         "DOTweenPro.Scripts",
         "DOTween.Modules",
         "RootMotion",
-        "YARETA.External"
+        "YARETA.External",
+        "Sisus.HierarchyFolders",
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "EasySave3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

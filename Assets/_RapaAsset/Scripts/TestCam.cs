@@ -40,7 +40,7 @@ public class TestCam : MonoBehaviour
             transform.position += transform.up * Time.deltaTime * Speed;
         }
 
-        transform.localEulerAngles += 100 * Time.deltaTime * (Vector3.down * ReInput.controllers.Mouse.screenPositionDelta.x + Vector3.left * ReInput.controllers.Mouse.screenPositionDelta.y);
+        transform.localEulerAngles += Time.deltaTime * 100 * (Vector3.down * GameInput.CameraMove.x + Vector3.left * GameInput.CameraMove.y);
 
         if (ReInput.controllers.Keyboard.GetKeyDown(KeyCode.LeftShift))
         {

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace RTree
 {
-	public partial class RTree<T>
+    public partial class RTree<T>
 	{
 		#region Sort Functions
 		private static readonly IComparer<ISpatialData> CompareMinX =

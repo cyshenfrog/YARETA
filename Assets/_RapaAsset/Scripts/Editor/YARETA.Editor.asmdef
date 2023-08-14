@@ -2,7 +2,9 @@
     "name": "YARETA.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:23fb522afc179604aa94b6851890fffe"
+        "GUID:23fb522afc179604aa94b6851890fffe",
+        "GUID:8dbfd4694fdecd34495bb83f1b6586aa",
+        "GUID:f8beaa1be6afd1b40bb175cf7e832840"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace RTree
 {
-	public partial class RTree<T>
+    public partial class RTree<T>
 	{
 		internal class Node : ISpatialData
 		{
