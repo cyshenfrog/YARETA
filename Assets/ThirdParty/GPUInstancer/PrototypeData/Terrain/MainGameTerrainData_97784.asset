@@ -1584,6 +1584,86 @@ MonoBehaviour:
   isApplyRotation: 1
   isApplyPrefabScale: 1
   isApplyTerrainHeight: 1
+--- !u!114 &6014415280386333196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff76622da7f54144871ed74349ba8ed, type: 3}
+  m_Name: "Tree_21_\u5927\u602A\u9CE5\u767D\u8349_\u5C0F"
+  m_EditorClassIdentifier: 
+  prefabObject: {fileID: 7639292927578318408, guid: 75d7aee30ec93eb41923c913d14dcf3c,
+    type: 3}
+  isShadowCasting: 1
+  useCustomShadowDistance: 0
+  shadowDistance: 0
+  shadowLODMap:
+  - 0
+  - 4
+  - 0
+  - 0
+  - 1
+  - 5
+  - 0
+  - 0
+  - 2
+  - 6
+  - 0
+  - 0
+  - 3
+  - 7
+  - 0
+  - 0
+  useOriginalShaderForShadow: 1
+  cullShadows: 0
+  minDistance: 0
+  maxDistance: 2500
+  isFrustumCulling: 1
+  isOcclusionCulling: 1
+  frustumOffset: 0.2
+  minCullingDistance: 0
+  occlusionOffset: 0
+  occlusionAccuracy: 1
+  boundsOffset: {x: 0, y: 0, z: 0}
+  isLODCrossFade: 0
+  isLODCrossFadeAnimate: 1
+  lodFadeTransitionWidth: 0.1
+  lodBiasAdjustment: 1
+  billboard:
+    billboardQuality: 1
+    atlasResolution: 2048
+    frameCount: 8
+    replaceLODCullWithBillboard: 1
+    isOverridingOriginalCutoff: 0
+    cutoffOverride: -1
+    billboardBrightness: 0.5
+    billboardDistance: 0.8
+    quadSize: 2.2499986
+    yPivotOffset: 0.8537491
+    albedoAtlasTexture: {fileID: 2800000, guid: d2847d6552ad66a4c951ecbfc0efb80c,
+      type: 3}
+    normalAtlasTexture: {fileID: 2800000, guid: 15a8d7eb4b9af0441b0471e411fd38ce,
+      type: 3}
+    customBillboardInLODGroup: 0
+    useCustomBillboard: 0
+    customBillboardMesh: {fileID: 0}
+    customBillboardMaterial: {fileID: 0}
+    isBillboardShadowCasting: 0
+    billboardFaceCamPos: 0
+    normalStrength: 1
+  isBillboardDisabled: 0
+  useGeneratedBillboard: 1
+  checkedForBillboardExtensions: 0
+  autoUpdateTransformData: 0
+  treeType: 0
+  prototypeIndex: 21
+  isApplyRotation: 1
+  isApplyPrefabScale: 1
+  isApplyTerrainHeight: 1
 --- !u!114 &6812589805022043193
 MonoBehaviour:
   m_ObjectHideFlags: 0
