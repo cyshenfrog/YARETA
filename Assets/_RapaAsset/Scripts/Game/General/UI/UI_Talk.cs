@@ -41,7 +41,7 @@ public class UI_Talk : UnitySingleton_D<UI_Talk>
 
     private void UpdateTextSize()
     {
-        Dialog.font = GameData.Font;
+        Dialog.font = GameData.Instance.Font;
         Dialog.transform.localScale = SaveDataManager.Language == SystemLanguage.English ? Vector3.one : (Vector3.one - Vector3.right * 0.1f);
     }
 

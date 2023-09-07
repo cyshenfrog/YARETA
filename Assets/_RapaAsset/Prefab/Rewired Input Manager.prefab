@@ -441,16 +441,158 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 0
+    - _id: 61
+      _name: A
+      _type: 1
+      _descriptiveName: A
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 62
+      _name: B
+      _type: 1
+      _descriptiveName: B
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 63
+      _name: X
+      _type: 1
+      _descriptiveName: X
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 64
+      _name: Y
+      _type: 1
+      _descriptiveName: Y
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 65
+      _name: Up0
+      _type: 1
+      _descriptiveName: Up
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 66
+      _name: Action5
+      _type: 1
+      _descriptiveName: Action5
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 67
+      _name: Action6
+      _type: 1
+      _descriptiveName: Action6
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 68
+      _name: Action7
+      _type: 1
+      _descriptiveName: Action7
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 69
+      _name: Action8
+      _type: 1
+      _descriptiveName: Action8
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 70
+      _name: Action9
+      _type: 1
+      _descriptiveName: Action9
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 71
+      _name: Action10
+      _type: 1
+      _descriptiveName: Action10
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 72
+      _name: Action11
+      _type: 1
+      _descriptiveName: Action11
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 73
+      _name: Action12
+      _type: 1
+      _descriptiveName: Action12
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 74
+      _name: Action13
+      _type: 1
+      _descriptiveName: Action13
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 6
+    - _id: 75
+      _name: Tutorial
+      _type: 1
+      _descriptiveName: Tutorial
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 0
     actionCategories:
     - _name: Default
       _descriptiveName: Default
       _tag: 
       _id: 0
       _userAssignable: 1
+    - _name: FullJoy
+      _descriptiveName: FullJoy
+      _tag: 
+      _id: 6
+      _userAssignable: 1
     actionCategoryMap:
       list:
       - categoryId: 0
-        actionIds: 03000000040000000a0000000b0000000c0000000d00000022000000200000002300000021000000000000000100000038000000020000000500000006000000070000000e0000000f000000090000000800000039000000
+        actionIds: 03000000040000000a0000000b0000000c0000000d00000022000000200000002300000021000000000000000100000038000000020000000500000006000000070000000e0000000f0000000900000008000000390000004b000000
+      - categoryId: 6
+        actionIds: 3d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a000000
     inputBehaviors:
     - _id: 0
       _name: Default
@@ -1155,8 +1297,8 @@ MonoBehaviour:
     controllerMapLayoutManagerRuleSets: []
     controllerMapEnablerRuleSets: []
     playerIdCounter: 2
-    actionIdCounter: 58
-    actionCategoryIdCounter: 6
+    actionIdCounter: 76
+    actionCategoryIdCounter: 7
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 2
     joystickLayoutIdCounter: 1

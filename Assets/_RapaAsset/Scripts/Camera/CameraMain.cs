@@ -22,7 +22,9 @@ public class CameraMain : UnitySingleton_D<CameraMain>
     private void Start()
     {
         cameras = new GameObject[3] { MainFreeLookCam.gameObject, AimCam.gameObject, TopDownCam.gameObject };
-        aimCamPOV = (CinemachinePOV)AimCam.GetComponentPipeline()[1];
+
+        //會有disable get不到的狀況，尚未確定有注視，暫時註解
+        //aimCamPOV = (CinemachinePOV)AimCam.GetComponentPipeline()[1];
     }
 
     // Update is called once per frame

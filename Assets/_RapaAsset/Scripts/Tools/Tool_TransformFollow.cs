@@ -77,12 +77,16 @@ public class Tool_TransformFollow : MonoBehaviour
 
     public Transform SetTarget
     { set { Target = value; } }
+
     public bool SetFollowPos
     { set { FollowPos = value; } }
+
     public bool SetFollowRot
     { set { FollowRot = value; } }
+
     public bool SetLocalShift
     { set { LocalShift = value; } }
+
     public bool SetSnap
     { set { Snap = value; } }
 
@@ -135,7 +139,10 @@ public class Tool_TransformFollow : MonoBehaviour
     {
         if (UpdateType != global::UpdateType.Update)
             return;
-        SmoothUpdate();
+        if (Snap)
+            transform.position = TargetPos;
+        else
+            SmoothUpdate();
     }
 
     // Update is called once per frame

@@ -35,7 +35,7 @@ public class UI_LocalizationText : MonoBehaviour
         {
             text.alignment = SaveDataManager.Language == SystemLanguage.English ? EnAlignment : ChAlignment;
         }
-        text.font = GameData.Font;
+        text.font = GameData.Instance.Font;
         text.transform.localScale = SaveDataManager.Language == SystemLanguage.English ? Vector3.one : (Vector3.one - Vector3.right * 0.1f);
     }
 

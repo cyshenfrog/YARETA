@@ -76,7 +76,7 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
         }
         if (Tutorial.activeSelf)
         {
-            if (GameInput.GetButtonDown(Actions.Tutorial) || GameInput.GetButtonDown(Actions.Menu) || GameInput.GetButtonDown(Actions.Cancel))
+            if (GameInput.GetButtonDown(Actions.Setting) || GameInput.GetButtonDown(Actions.Menu) || GameInput.GetButtonDown(Actions.Cancel))
             {
                 SwitchTab();
             }
@@ -98,7 +98,7 @@ public class UI_ScanMechine : UnitySingleton_D<UI_ScanMechine>
         {
             Close();
         }
-        if (GameInput.GetButtonDown(Actions.Tutorial))
+        if (GameInput.GetButtonDown(Actions.Setting))
         {
             SwitchTab();
         }

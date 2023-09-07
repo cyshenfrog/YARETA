@@ -1,17 +1,12 @@
 using UnityEngine;
 
-public static class GameData
+[CreateAssetMenu]
+public class GameData : SingletonSO<GameData>
 {
-    private const string ROOT_PATH = "GameData/";
-    private const string CONTROLLER_SPRITES_PATH = ROOT_PATH + "ControllerSprites";
-    private const string EN_FONT_PATH = ROOT_PATH + "Font_en";
-    private const string CHT_FONT_PATH = ROOT_PATH + "Font_cht";
+    public Font EnFont;
+    public Font ChtFont;
 
-    public static ControllerSprites ControllerSprites;
-    [SerializeField] private static Font EnFont;
-    [SerializeField] private static Font ChtFont;
-
-    public static Font Font
+    public Font Font
     {
         get
         {
@@ -27,13 +22,5 @@ public static class GameData
                     return EnFont;
             }
         }
-    }
-
-    [RuntimeInitializeOnLoadMethod]
-    private static void Init()
-    {
-        ControllerSprites = (ControllerSprites)Resources.Load(CONTROLLER_SPRITES_PATH);
-        EnFont = (Font)Resources.Load(EN_FONT_PATH);
-        ChtFont = (Font)Resources.Load(CHT_FONT_PATH);
     }
 }

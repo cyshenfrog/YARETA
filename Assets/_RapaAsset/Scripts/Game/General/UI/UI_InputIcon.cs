@@ -8,7 +8,7 @@ public class UI_InputIcon : MonoBehaviour
     public ControllerButton ControllerIcon;
 
     public Sprite Controller
-    { get { return GameData.ControllerSprites.GetSprit(GameInput.JoystickBrandType, ControllerIcon); } }
+    { get { return ControllerSprites.Instance.GetSprit(GameInput.JoystickBrandType, ControllerIcon); } }
 
     public Sprite KB;
     private ControllerButton ori_C;

@@ -32,7 +32,7 @@ public enum JoystickBrand
 }
 
 [CreateAssetMenu]
-public class ControllerSprites : ScriptableObject
+public class ControllerSprites : SingletonSO<ControllerSprites>
 {
     public Sprite[] Icon_Xbox;
     public Sprite[] Icon_PS;

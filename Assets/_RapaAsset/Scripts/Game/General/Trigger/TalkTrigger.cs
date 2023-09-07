@@ -23,7 +23,7 @@ public class TalkTrigger : MonoBehaviour
         if (MovieMode)
             UI_FullScreenFade.Instance.SetMovieMode(true);
         if (OverrideKey)
-            UI_Talk.Instance.SetInputThisTime(OverrideInputKB, GameData.ControllerSprites.GetSprit(GameInput.JoystickBrandType, OverrideInputJoy), OverrideAction);
+            UI_Talk.Instance.SetInputThisTime(OverrideInputKB, ControllerSprites.Instance.GetSprit(GameInput.JoystickBrandType, OverrideInputJoy), OverrideAction);
         UI_Talk.Instance.ShowTalk((int)Talk, () =>
         {
             OnCompelete.Invoke();

@@ -14,7 +14,8 @@
         "Sisus.HierarchyFolders",
         "Unity.Addressables",
         "Unity.ResourceManager",
-        "EasySave3"
+        "EasySave3",
+        "Obi"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

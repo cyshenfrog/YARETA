@@ -14,7 +14,7 @@ public enum Actions
     DrawMode,
     Menu,
     OffWork,
-    Tutorial,
+    Setting,
     Confirm,
     Cancel,
     Neither,
@@ -122,7 +122,7 @@ public static class GameInput
     {
         foreach (var item in ReInput.controllers.GetJoysticks())
         {
-            item.calibrationMap.GetAxis(3).deadZone = 0.25f;
+            //item.calibrationMap.GetAxis(3).deadZone = 0.25f;
         }
         ReInput.ControllerConnectedEvent += OnControllerConnected;
         OnSwitchController += UpdateBrand;
@@ -134,8 +134,10 @@ public static class GameInput
         {
             if (RewiredPlayer.controllers.GetLastActiveController().name.Contains("Sony"))
                 JoystickBrandType = JoystickBrand.PlayStation;
-            if (RewiredPlayer.controllers.GetLastActiveController().name.Contains("Nintendo"))
+            else if (RewiredPlayer.controllers.GetLastActiveController().name == "Pro Controller")
                 JoystickBrandType = JoystickBrand.Switch;
+            else
+                JoystickBrandType = JoystickBrand.XBOX;
         }
     }
 
