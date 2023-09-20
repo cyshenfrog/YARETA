@@ -16,6 +16,7 @@ public enum MoveMode
     Normal,
     Aimming,
     Walking,
+    RocketJump
 }
 
 [RequireComponent(typeof(CharacterController))]
@@ -33,6 +34,8 @@ public class Player : UnitySingleton_D<Player>
     public GameObject DrawModel;
     public GameObject FPCam;
     public GameObject Model;
+    public DynamicBone MLMDynamic;
+    public Transform MLM;
     public Transform LeftDragPos;
     public Transform RightDragPos;
     public Transform FrontDragPos;
@@ -58,7 +61,10 @@ public class Player : UnitySingleton_D<Player>
     public float AirControl = 1;
     public float AirDrag = 2.5f;
     public float JumpPower = 5;
-    public float RocketJumpPower;
+    public float RocketJumpSpeed = 5;
+    public float RocketFallSpeed = 1;
+    public float RocketJumpMaxTime = 5;
+    private bool HoldJump;
 
     #endregion Setting
 
@@ -157,8 +163,8 @@ public class Player : UnitySingleton_D<Player>
 
     private const float MAX_MOVE_SPEED = 4f;
     private const int GRAVITY = 12;
-    private float fallVelocity;
-    private float moveVelocity;
+    private float vSpeed;
+    private float hSpeed;
     private float rotationDiff;
     private float climbAccuValue;
     private RaycastHit climbHitInfo;
@@ -168,15 +174,44 @@ public class Player : UnitySingleton_D<Player>
     private Tween crouchTween;
     private Tween initFacing;
     private Tween hSpeedBlend;
+    private Tween vSpeedBlend;
     private Vector3 targetDirection;
     private Vector3 forward;
     private Vector3 right;
     private RaycastHit groundHit;
+    private bool useGravity = true;
+    private bool offBeatJump;
+    private float rocketJumpTime;
+    private GUIStyle style;
 
     #endregion CalculateTemp
 
+    private void Start()
+    {
+        style = new GUIStyle();
+        style.fontSize = 100;
+        style.normal.textColor = Color.white;
+    }
+
+    private void OnGUI()
+    {
+        if (offBeatJump)
+        {
+            //print off beat jump with big font
+            GUI.Label(new Rect(0, 0, 100, 100), "(F1切換)反拍跳", style);
+        }
+        else
+        {
+            GUI.Label(new Rect(0, 0, 100, 100), "(F1切換)力巴爾蓄力跳", style);
+        }
+    }
+
     public virtual void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            offBeatJump = !offBeatJump;
+        }
         // Always execute
         GravityUpdate();
         DefaultAnimUpdate();
@@ -226,9 +261,11 @@ public class Player : UnitySingleton_D<Player>
 
     private void GravityUpdate()
     {
-        if (fallVelocity > -10)
+        if (!useGravity)
+            return;
+        if (vSpeed > -10)
         {
-            fallVelocity -= GRAVITY * Time.deltaTime;
+            vSpeed -= GRAVITY * Time.deltaTime;
         }
 
         //if (IsJumping)
@@ -245,13 +282,55 @@ public class Player : UnitySingleton_D<Player>
         {
             case MoveMode.Normal:
                 if (GameInput.GetButtonDown(Actions.ToggleRun))
-                    running = !running;
+                    SetRunning(!running);
                 if (GameInput.GetButton(Actions.Run) && GameInput.GetButton(Actions.Move))
-                    running = true;
+                    SetRunning(true);
                 else
-                    running = false;
+                    SetRunning(false);
+                if (offBeatJump)
+                {
+                    if (grounded)
+                    {
+                        if (GameInput.GetButton(Actions.Jump))
+                        {
+                            rocketJumpTime += Time.deltaTime;
+                            if (rocketJumpTime > .5f)
+                            {
+                                rocketJumpTime = 0;
+                                RocketJump();
+                            }
+                        }
+                        if (GameInput.GetButtonUp(Actions.Jump))
+                        {
+                            rocketJumpTime = 0;
+                            Jump();
+                        }
+                    }
+                }
+                else
+                {
+                    if (grounded)
+                    {
+                        if (GameInput.GetButtonDown(Actions.Jump))
+                        {
+                            HoldJump = true;
+                            Jump();
+                        }
+                    }
+                    if (GameInput.GetButtonUp(Actions.Jump))
+                        HoldJump = false;
+                }
+
+                break;
+
+            case MoveMode.RocketJump:
                 if (GameInput.GetButtonDown(Actions.Jump))
-                    Jump();
+                    EndRocketFall();
+                if (GameInput.GetButtonUp(Actions.Jump))
+                {
+                    RocketFall();
+                    HoldJump = false;
+                }
                 break;
 
             case MoveMode.Walking:
@@ -264,18 +343,18 @@ public class Player : UnitySingleton_D<Player>
         {
             if (hSpeedBlend.IsActive())
                 hSpeedBlend.Kill();
-            moveVelocity = 0;
-            hSpeedBlend = DOTween.To(() => moveVelocity, x => moveVelocity = x, MAX_MOVE_SPEED, 0.2f);
+            hSpeed = 0;
+            hSpeedBlend = DOTween.To(() => hSpeed, x => hSpeed = x, MAX_MOVE_SPEED, 0.2f);
         }
         else if (GameInput.GetButtonUp(Actions.Move))
         {
             if (hSpeedBlend.IsActive())
                 hSpeedBlend.Kill();
-            hSpeedBlend = DOTween.To(() => moveVelocity, x => moveVelocity = x, 0, 0.2f);
+            hSpeedBlend = DOTween.To(() => hSpeed, x => hSpeed = x, 0, 0.2f);
         }
 
         if (characterController.enabled)
-            characterController.Move((GameInput.MovementCameraSpace.normalized * moveVelocity * (running ? 1.5f : 1) + Vector3.up * fallVelocity) * MoveSpeed * Time.deltaTime);
+            characterController.Move((GameInput.MovementCameraSpace.normalized * hSpeed * MoveSpeed + Vector3.up * vSpeed) * Time.deltaTime);
     }
 
     private void ActionControl()
@@ -350,10 +429,58 @@ public class Player : UnitySingleton_D<Player>
         targetDirection = GameInput.Move.x * right + GameInput.Move.y * forward;
     }
 
+    private void SetRunning(bool run)
+    {
+        running = run;
+        MoveSpeed = run ? 1.5f : 1;
+    }
+
     private void OnGround()
     {
+        if (moveMode == MoveMode.RocketJump)
+            EndRocketFall();
+        if (HoldJump && !offBeatJump)
+            RocketJump();
         if (Status == PlayerStatus.Climbing)
             Status = PlayerStatus.Moving;
+        HoldJump = false;
+    }
+
+    private void RocketJump()
+    {
+        MoveSpeed = 0;
+        moveMode = MoveMode.RocketJump;
+        if (vSpeedBlend.IsActive())
+            vSpeedBlend.Kill();
+        vSpeed = 0;
+        vSpeedBlend = DOTween.To(() => vSpeed, x => vSpeed = x, RocketJumpSpeed, 0.5f)
+            .OnComplete(() => useGravity = false);
+
+        MLMDynamic.enabled = false;
+        MLM.DOLocalMoveY(-1f, 1f)
+            .SetRelative(true);
+        //Rope.Instance.SetRopeLength(1);
+        Player_IKManager.Instance.PlaySimpleIK(MLM, PlayerIK.LeftHand);
+        Delay.Instance.Wait(RocketJumpMaxTime, RocketFall);
+    }
+
+    private void RocketFall()
+    {
+        MoveSpeed = 0.5f;
+        if (vSpeedBlend.IsActive())
+            vSpeedBlend.Kill();
+        vSpeedBlend = DOTween.To(() => vSpeed, x => vSpeed = x, -1, 1f);
+    }
+
+    private void EndRocketFall()
+    {
+        MoveSpeed = 1f;
+        moveMode = MoveMode.Normal;
+        useGravity = true;
+        Player_IKManager.Instance.ResumeSimpleIK(PlayerIK.LeftHand);
+        MLM.DOLocalMoveY(1, 1f)
+            .SetRelative(true)
+            .OnComplete(() => MLMDynamic.enabled = true);
     }
 
     public void OpenMenu()
@@ -379,8 +506,8 @@ public class Player : UnitySingleton_D<Player>
     private void Jump()
     {
         Anim.SetTrigger("Jump");
-        if (GameInput.GetButton(Actions.Move))
-            fallVelocity = JumpPower * (running ? 1.2f : 1);
+        //if (GameInput.GetButton(Actions.Move))
+        vSpeed = JumpPower * (running ? 1.2f : 1);
     }
 
     public void OnJumpFinish()
@@ -440,7 +567,7 @@ public class Player : UnitySingleton_D<Player>
     private void StartClimbing()
     {
         Anim.SetBool("IsClimbing", true);
-        Delay.Instance.Wait(0.1f, () => { fallVelocity = JumpPower * 0.5f; });
+        Delay.Instance.Wait(0.1f, () => { vSpeed = JumpPower * 0.5f; });
         Delay.Instance.Wait(0.2f, () => { Status = PlayerStatus.Climbing; });
     }
 
@@ -469,7 +596,7 @@ public class Player : UnitySingleton_D<Player>
 
     private void LocomoationAnimUpdate()
     {
-        Anim.SetFloat("Speed", moveVelocity / MAX_MOVE_SPEED * MoveSpeed, .1f, Time.deltaTime);
+        Anim.SetFloat("Speed", hSpeed / MAX_MOVE_SPEED * MoveSpeed, .1f, Time.deltaTime);
 
         if (GameInput.GetButton(Actions.Move))
             Anim.SetBool("isSprinting", running);

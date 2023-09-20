@@ -5,7 +5,7 @@ using Rewired;
 public enum Actions
 {
     Jump,
-    RoketJump,
+    RocketJump,
     Run,
     Interact,
     Left,

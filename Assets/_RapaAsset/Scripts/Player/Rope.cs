@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Obi;
-using static NPOI.HSSF.Util.HSSFColor;
 
-public class Rope : MonoBehaviour
+public class Rope : UnitySingleton_DR<Rope>
 {
     public ObiParticleGroup group;
     public float intensity = 1;
@@ -24,5 +21,10 @@ public class Rope : MonoBehaviour
         {
             cursor.ChangeLength(TargetRope.restLength + 1f * Time.deltaTime);
         }
+    }
+
+    public void SetRopeLength(float deltaLength)
+    {
+        cursor.ChangeLength(TargetRope.restLength + deltaLength);
     }
 }

@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_RapaAsset/Scene/_MainGame.unity
+    guid: 54b14141480afa1498cd2101c01914ff
+  - enabled: 0
     path: Assets/RTreeTest/BuildTest.unity
     guid: 53f6163eeeb7dcf44b8893983140efa6
   m_configObjects:

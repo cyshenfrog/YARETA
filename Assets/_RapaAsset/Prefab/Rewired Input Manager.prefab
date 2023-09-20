@@ -576,6 +576,15 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 0
+    - _id: 76
+      _name: Action14
+      _type: 1
+      _descriptiveName: Action14
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 0
     actionCategories:
     - _name: Default
       _descriptiveName: Default
@@ -590,7 +599,7 @@ MonoBehaviour:
     actionCategoryMap:
       list:
       - categoryId: 0
-        actionIds: 03000000040000000a0000000b0000000c0000000d00000022000000200000002300000021000000000000000100000038000000020000000500000006000000070000000e0000000f0000000900000008000000390000004b000000
+        actionIds: 03000000040000000a0000000b0000000c0000000d00000022000000200000002300000021000000000000000100000038000000020000000500000006000000070000000e0000000f0000000900000008000000390000004b0000004c000000
       - categoryId: 6
         actionIds: 3d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a000000
     inputBehaviors:
@@ -1297,7 +1306,7 @@ MonoBehaviour:
     controllerMapLayoutManagerRuleSets: []
     controllerMapEnablerRuleSets: []
     playerIdCounter: 2
-    actionIdCounter: 76
+    actionIdCounter: 77
     actionCategoryIdCounter: 7
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 2
