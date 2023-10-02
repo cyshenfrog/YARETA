@@ -23,7 +23,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 5.001981
     yPivotOffset: 2.21974
-    modifiedDate: 08/23/2023 14:39:45.511
+    modifiedDate: 09/25/2023 14:28:04.002
   - prefab: {fileID: 6501662004301292571, guid: a744a73cc7adbad45b2dff1abc45de84,
       type: 3}
     atlasResolution: 2048
@@ -34,7 +34,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 4.135874
     yPivotOffset: 1.5890172
-    modifiedDate: 08/23/2023 14:39:47.352
+    modifiedDate: 09/25/2023 14:28:04.775
   - prefab: {fileID: 524485513811522114, guid: c18a11f3fea139e40a768936b798d3be, type: 3}
     atlasResolution: 2048
     frameCount: 8
@@ -44,7 +44,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 4.1775503
     yPivotOffset: 1.2097315
-    modifiedDate: 08/23/2023 14:39:48.847
+    modifiedDate: 09/25/2023 14:28:05.581
   - prefab: {fileID: 2626211078514614833, guid: 4c36be0133eaea941a4382fa731c0f8c,
       type: 3}
     atlasResolution: 2048
@@ -55,7 +55,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 4.4755373
     yPivotOffset: 1.0689539
-    modifiedDate: 08/23/2023 14:39:50.337
+    modifiedDate: 09/25/2023 14:28:06.387
   - prefab: {fileID: 1337858070167518894, guid: 0ba7f359c84b6ee428820c8c317cc371,
       type: 3}
     atlasResolution: 2048
@@ -66,7 +66,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 7.3294864
     yPivotOffset: 1.1173024
-    modifiedDate: 08/23/2023 14:39:51.703
+    modifiedDate: 09/25/2023 14:28:07.227
   - prefab: {fileID: 8858212128289502798, guid: d11970cf712147d4e81a06524fa20546,
       type: 3}
     atlasResolution: 2048
@@ -77,7 +77,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 12.330695
     yPivotOffset: 2.31942
-    modifiedDate: 08/23/2023 14:39:53.104
+    modifiedDate: 09/25/2023 14:28:08.010
   - prefab: {fileID: 6293787720792032923, guid: 718f3943462d14a4f9a77264f8a05302,
       type: 3}
     atlasResolution: 2048
@@ -88,7 +88,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 10.170477
     yPivotOffset: 0.2690053
-    modifiedDate: 08/23/2023 14:39:54.467
+    modifiedDate: 09/25/2023 14:28:08.814
   - prefab: {fileID: 3242360994421669520, guid: 4e61a4355627448498c2b0dfd1815e2c,
       type: 3}
     atlasResolution: 2048
@@ -99,18 +99,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 10.773283
     yPivotOffset: 1.622519
-    modifiedDate: 08/23/2023 14:39:56.073
-  - prefab: {fileID: 7639292927578318408, guid: 75d7aee30ec93eb41923c913d14dcf3c,
-      type: 3}
-    atlasResolution: 2048
-    frameCount: 8
-    albedoAtlasTexture: {fileID: 2800000, guid: d2847d6552ad66a4c951ecbfc0efb80c,
-      type: 3}
-    normalAtlasTexture: {fileID: 2800000, guid: 15a8d7eb4b9af0441b0471e411fd38ce,
-      type: 3}
-    quadSize: 2.2499986
-    yPivotOffset: 0.8537491
-    modifiedDate: 09/08/2023 00:18:30.048
+    modifiedDate: 09/25/2023 14:28:09.579
   - prefab: {fileID: 4930446936646158404, guid: ac193ac7870242447a81bec9be57f6a4,
       type: 3}
     atlasResolution: 2048
@@ -121,7 +110,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 10.698602
     yPivotOffset: 1.7748458
-    modifiedDate: 09/08/2023 00:20:31.035
+    modifiedDate: 09/25/2023 14:28:10.462
   - prefab: {fileID: 4917792817923107615, guid: b7dee5425db31004a8390b07ec501ea5,
       type: 3}
     atlasResolution: 2048
@@ -132,7 +121,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 2.3598924
     yPivotOffset: 0.71261954
-    modifiedDate: 09/08/2023 00:20:32.537
+    modifiedDate: 09/25/2023 14:28:11.443
   - prefab: {fileID: 5516230238936085905, guid: 4640c194d8db1094e8b1762a025cc785,
       type: 3}
     atlasResolution: 2048
@@ -143,7 +132,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 2.0654387
     yPivotOffset: 0.6400851
-    modifiedDate: 09/08/2023 00:20:34.351
+    modifiedDate: 09/25/2023 14:28:12.450
   - prefab: {fileID: 6358986918674749513, guid: 9de30e11bf9228f4ca5676967c0bdadf,
       type: 3}
     atlasResolution: 2048
@@ -154,7 +143,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 2.0339136
     yPivotOffset: 1.0194619
-    modifiedDate: 09/08/2023 00:20:36.275
+    modifiedDate: 09/25/2023 14:28:13.877
   - prefab: {fileID: 7639292927578318408, guid: f66e3eafed9be5842a48e50187090d6d,
       type: 3}
     atlasResolution: 2048
@@ -165,7 +154,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 5.0019855
     yPivotOffset: 2.3197432
-    modifiedDate: 09/08/2023 00:20:37.926
+    modifiedDate: 09/25/2023 14:28:15.578
   - prefab: {fileID: 4186316784673583873, guid: a57e215004ae45440a7155ad94c74def,
       type: 3}
     atlasResolution: 2048
@@ -176,7 +165,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 2.768555
     yPivotOffset: 1.0233322
-    modifiedDate: 09/08/2023 00:20:39.462
+    modifiedDate: 09/25/2023 14:28:16.569
   - prefab: {fileID: 8632713883127716172, guid: c17836a32d301fe4089f6b89321770cd,
       type: 3}
     atlasResolution: 2048
@@ -187,7 +176,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 3.7597666
     yPivotOffset: 1.4028213
-    modifiedDate: 09/08/2023 00:20:41.137
+    modifiedDate: 09/25/2023 14:28:17.506
   - prefab: {fileID: 2507935674504859034, guid: 3bbc619c896d9a2498022e46597dd249,
       type: 3}
     atlasResolution: 2048
@@ -198,7 +187,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 2.815535
     yPivotOffset: 0.857428
-    modifiedDate: 09/08/2023 00:20:42.750
+    modifiedDate: 09/25/2023 14:28:18.528
   - prefab: {fileID: 4917792817923107615, guid: 7d4b274fe7a45dd419194fb04a69d08e,
       type: 3}
     atlasResolution: 2048
@@ -209,7 +198,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 2.3598924
     yPivotOffset: 0.71261954
-    modifiedDate: 09/08/2023 00:20:44.729
+    modifiedDate: 09/25/2023 14:28:19.458
   - prefab: {fileID: 5516230238936085905, guid: fee75abb8157d8e47a7cc5dbaeab3709,
       type: 3}
     atlasResolution: 2048
@@ -220,7 +209,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 2.0654387
     yPivotOffset: 0.6400851
-    modifiedDate: 09/08/2023 00:20:46.141
+    modifiedDate: 09/25/2023 14:28:20.767
   - prefab: {fileID: 6358986918674749513, guid: 2272bd059369dd34a846abb3d34d465e,
       type: 3}
     atlasResolution: 2048
@@ -231,7 +220,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 2.0339136
     yPivotOffset: 1.0194619
-    modifiedDate: 09/08/2023 00:20:47.589
+    modifiedDate: 09/25/2023 14:28:21.771
   - prefab: {fileID: 7639292927578318408, guid: 0ab645c301d23b94991883df9092c14c,
       type: 3}
     atlasResolution: 2048
@@ -242,7 +231,7 @@ MonoBehaviour:
       type: 3}
     quadSize: 5.0019855
     yPivotOffset: 2.3197432
-    modifiedDate: 09/08/2023 00:20:49.361
+    modifiedDate: 09/25/2023 14:28:22.923
   - prefab: {fileID: 3880484385578584401, guid: 4ed156a993341cb459b10e3db5c4fa1a,
       type: 3}
     atlasResolution: 2048
@@ -253,4 +242,15 @@ MonoBehaviour:
       type: 3}
     quadSize: 7.3294864
     yPivotOffset: 1.1173024
-    modifiedDate: 09/08/2023 00:20:50.782
+    modifiedDate: 09/25/2023 14:28:24.758
+  - prefab: {fileID: 7639292927578318408, guid: 75d7aee30ec93eb41923c913d14dcf3c,
+      type: 3}
+    atlasResolution: 2048
+    frameCount: 8
+    albedoAtlasTexture: {fileID: 2800000, guid: d2847d6552ad66a4c951ecbfc0efb80c,
+      type: 3}
+    normalAtlasTexture: {fileID: 2800000, guid: 15a8d7eb4b9af0441b0471e411fd38ce,
+      type: 3}
+    quadSize: 2.2499986
+    yPivotOffset: 0.8537491
+    modifiedDate: 09/25/2023 14:28:25.766

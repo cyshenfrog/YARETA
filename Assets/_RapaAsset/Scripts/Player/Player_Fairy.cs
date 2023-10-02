@@ -138,10 +138,10 @@ public class Player_Fairy : Player
             item.gameObject.SetActive(true);
         }
         Scanning = true;
-        MoveMode = MoveMode.Aimming;
+        //MoveMode = MoveMode.Aimming;
         MoveSpeed *= 0.5f;
         PlayerTrigger.enabled = false;
-        CameraMain.Instance.SetCameraMode(CameraMode.Aim);
+        //CameraMain.Instance.SetCameraMode(CameraMode.Aim);
     }
 
     public override void StopScan()

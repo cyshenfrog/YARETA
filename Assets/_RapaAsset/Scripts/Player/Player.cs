@@ -64,7 +64,6 @@ public class Player : UnitySingleton_D<Player>
     public float RocketJumpSpeed = 5;
     public float RocketFallSpeed = 1;
     public float RocketJumpMaxTime = 5;
-    private bool HoldJump;
 
     #endregion Setting
 
@@ -180,7 +179,6 @@ public class Player : UnitySingleton_D<Player>
     private Vector3 right;
     private RaycastHit groundHit;
     private bool useGravity = true;
-    private bool offBeatJump;
     private float rocketJumpTime;
     private GUIStyle style;
 
@@ -193,25 +191,8 @@ public class Player : UnitySingleton_D<Player>
         style.normal.textColor = Color.white;
     }
 
-    private void OnGUI()
-    {
-        if (offBeatJump)
-        {
-            //print off beat jump with big font
-            GUI.Label(new Rect(0, 0, 100, 100), "(F1切換)反拍跳", style);
-        }
-        else
-        {
-            GUI.Label(new Rect(0, 0, 100, 100), "(F1切換)力巴爾蓄力跳", style);
-        }
-    }
-
     public virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            offBeatJump = !offBeatJump;
-        }
         // Always execute
         GravityUpdate();
         DefaultAnimUpdate();
@@ -287,38 +268,30 @@ public class Player : UnitySingleton_D<Player>
                     SetRunning(true);
                 else
                     SetRunning(false);
-                if (offBeatJump)
+
+                if (grounded)
                 {
-                    if (grounded)
+                    if (GameInput.GetButtonDown(Actions.Jump))
                     {
-                        if (GameInput.GetButton(Actions.Jump))
-                        {
-                            rocketJumpTime += Time.deltaTime;
-                            if (rocketJumpTime > .5f)
-                            {
-                                rocketJumpTime = 0;
-                                RocketJump();
-                            }
-                        }
-                        if (GameInput.GetButtonUp(Actions.Jump))
-                        {
-                            rocketJumpTime = 0;
-                            Jump();
-                        }
+                        rocketJumpTime = 0;
+                        Jump();
                     }
                 }
                 else
                 {
-                    if (grounded)
+                    if (GameInput.GetButton(Actions.Jump))
                     {
-                        if (GameInput.GetButtonDown(Actions.Jump))
+                        rocketJumpTime += Time.deltaTime;
+                        if (rocketJumpTime > .4f)
                         {
-                            HoldJump = true;
-                            Jump();
+                            rocketJumpTime = 0;
+                            RocketJump();
                         }
                     }
-                    if (GameInput.GetButtonUp(Actions.Jump))
-                        HoldJump = false;
+                    if (GameInput.GetButtonDown(Actions.Jump))
+                    {
+                        RocketJump();
+                    }
                 }
 
                 break;
@@ -327,10 +300,7 @@ public class Player : UnitySingleton_D<Player>
                 if (GameInput.GetButtonDown(Actions.Jump))
                     EndRocketFall();
                 if (GameInput.GetButtonUp(Actions.Jump))
-                {
                     RocketFall();
-                    HoldJump = false;
-                }
                 break;
 
             case MoveMode.Walking:
@@ -439,11 +409,8 @@ public class Player : UnitySingleton_D<Player>
     {
         if (moveMode == MoveMode.RocketJump)
             EndRocketFall();
-        if (HoldJump && !offBeatJump)
-            RocketJump();
         if (Status == PlayerStatus.Climbing)
             Status = PlayerStatus.Moving;
-        HoldJump = false;
     }
 
     private void RocketJump()
@@ -453,14 +420,10 @@ public class Player : UnitySingleton_D<Player>
         if (vSpeedBlend.IsActive())
             vSpeedBlend.Kill();
         vSpeed = 0;
-        vSpeedBlend = DOTween.To(() => vSpeed, x => vSpeed = x, RocketJumpSpeed, 0.5f)
-            .OnComplete(() => useGravity = false);
+        useGravity = false;
+        vSpeedBlend = DOTween.To(() => vSpeed, x => vSpeed = x, RocketJumpSpeed, 0.5f);
 
-        MLMDynamic.enabled = false;
-        MLM.DOLocalMoveY(-1f, 1f)
-            .SetRelative(true);
-        //Rope.Instance.SetRopeLength(1);
-        Player_IKManager.Instance.PlaySimpleIK(MLM, PlayerIK.LeftHand);
+        PullMLM();
         Delay.Instance.Wait(RocketJumpMaxTime, RocketFall);
     }
 
@@ -477,7 +440,23 @@ public class Player : UnitySingleton_D<Player>
         MoveSpeed = 1f;
         moveMode = MoveMode.Normal;
         useGravity = true;
+        ReleaseMLM();
+    }
+
+    private void PullMLM()
+    {
+        MLMDynamic.enabled = false;
+        MLM.DOKill();
+        MLM.DOLocalMoveY(-1f, 1f)
+            .SetRelative(true);
+        //Rope.Instance.SetRopeLength(1);
+        Player_IKManager.Instance.PlaySimpleIK(MLM, PlayerIK.LeftHand);
+    }
+
+    private void ReleaseMLM()
+    {
         Player_IKManager.Instance.ResumeSimpleIK(PlayerIK.LeftHand);
+        MLM.DOKill();
         MLM.DOLocalMoveY(1, 1f)
             .SetRelative(true)
             .OnComplete(() => MLMDynamic.enabled = true);
