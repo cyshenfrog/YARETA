@@ -136,6 +136,7 @@ public class Player : UnitySingleton_D<Player>
                 if (!speedTween.IsActive())
                     Anim.SetFloat("Speed", 0);
                 Anim.SetBool("isSprinting", false);
+                useGravity = false;
                 break;
 
             case PlayerStatus.Static:
@@ -152,9 +153,12 @@ public class Player : UnitySingleton_D<Player>
 
             case PlayerStatus.Moving:
                 Anim.SetBool("IsClimbing", false);
+                useGravity = true;
                 break;
         }
     }
+
+    public Action OnJump;
 
     #endregion StateControl
 
@@ -180,16 +184,8 @@ public class Player : UnitySingleton_D<Player>
     private RaycastHit groundHit;
     private bool useGravity = true;
     private float rocketJumpTime;
-    private GUIStyle style;
 
     #endregion CalculateTemp
-
-    private void Start()
-    {
-        style = new GUIStyle();
-        style.fontSize = 100;
-        style.normal.textColor = Color.white;
-    }
 
     public virtual void Update()
     {
@@ -487,6 +483,7 @@ public class Player : UnitySingleton_D<Player>
         Anim.SetTrigger("Jump");
         //if (GameInput.GetButton(Actions.Move))
         vSpeed = JumpPower * (running ? 1.2f : 1);
+        OnJump?.Invoke();
     }
 
     public void OnJumpFinish()
@@ -536,17 +533,21 @@ public class Player : UnitySingleton_D<Player>
     private void ClimbOffCheck()
     {
         facingWall = Physics.Raycast(transform.position + transform.up * 1.6f, RemoveY(transform.forward), out _, .6f, 1 << 0, QueryTriggerInteraction.Ignore);
-        if (Physics.Raycast(transform.position + transform.up, Vector3.down, out groundHit, 1, 1 << 0, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(transform.position + transform.up, Vector3.down, out groundHit, .25f, 1 << 0, QueryTriggerInteraction.Ignore))
         {
             if (Vector3.Angle(groundHit.normal, Vector3.up) < 45)
                 EndClimbing(groundHit.point);
+        }
+        if (!facingWall)
+        {
+            EndClimbing(transform.position + Vector3.up * 2);
         }
     }
 
     private void StartClimbing()
     {
         Anim.SetBool("IsClimbing", true);
-        Delay.Instance.Wait(0.1f, () => { vSpeed = JumpPower * 0.5f; });
+        Delay.Instance.Wait(0.1f, () => { vSpeed = 6; });
         Delay.Instance.Wait(0.2f, () => { Status = PlayerStatus.Climbing; });
     }
 

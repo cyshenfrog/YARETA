@@ -9,7 +9,7 @@ public enum ActionText
     用力拔,
 }
 
-public class UI_InteractionHint : UnitySingleton_D<UI_InteractionHint>
+public class UI_InteractionHint : UnitySingleton_DR<UI_InteractionHint>
 {
     public UI_ButtonBlink InteractButton;
     public UI_InputIcon InteractIcon;

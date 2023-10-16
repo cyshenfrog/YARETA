@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
+using Sirenix.OdinInspector;
 using UltEvents;
 using UnityEngine;
-using NaughtyAttributes;
 
 public class Interactable : MonoBehaviour
 {
