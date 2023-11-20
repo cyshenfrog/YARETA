@@ -53,7 +53,7 @@ public class BigMonster : MonoBehaviour
             OriginTrees.SetActive(false);
             BrokenTrees.SetActive(true);
             Player.Instance.Status = PlayerStatus.Wait;
-            Player.Instance.Model.SetActive(false);
+            Player.Instance.SetModelActive(false);
             yield return new WaitForSeconds(.5f);
             yield return new WaitForSeconds(0.1f);
             Cam.SetActive(true);
@@ -73,7 +73,7 @@ public class BigMonster : MonoBehaviour
             //{
             //    Player.Instance.Status = PlayerStatus.Wait;
             //});
-            Player.Instance.Model.SetActive(true);
+            Player.Instance.SetModelActive(true);
             //Cam.transform.DOLocalRotate(Vector3.left * 60, 3, RotateMode.FastBeyond360)
             //    .SetRelative(true)
             //    .SetEase(Ease.Linear)

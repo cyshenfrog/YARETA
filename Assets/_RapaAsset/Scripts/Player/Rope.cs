@@ -9,6 +9,11 @@ public class Rope : UnitySingleton_DR<Rope>
     public ObiRope TargetRope;
     public ObiRopeCursor cursor;
 
+    private void Start()
+    {
+        transform.parent = null;
+    }
+
     private void Update()
     {
         if (Input.GetKey(KeyCode.UpArrow))

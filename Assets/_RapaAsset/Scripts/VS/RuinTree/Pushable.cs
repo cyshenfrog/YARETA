@@ -1,8 +1,6 @@
 using DG.Tweening;
 using RootMotion.FinalIK;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Pushable : MonoBehaviour

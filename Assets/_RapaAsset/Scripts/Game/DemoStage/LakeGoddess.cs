@@ -67,7 +67,7 @@ public class LakeGoddess : MonoBehaviour
 
         Player.Instance.Status = PlayerStatus.Wait;
         Player.Instance.PuzzleMode = true;
-        Player.Instance.Model.SetActive(false);
+        Player.Instance.SetModelActive(false);
         SEManager.Instance.PlaySystemSE(SystemSE.小女神登場);
         if (!SecretPool)
         {
@@ -115,7 +115,7 @@ public class LakeGoddess : MonoBehaviour
         PrototypeMain.Instance.SecretEnding = true;
         UI_FullScreenFade.Instance.SetMovieMode(true);
         Player.Instance.Status = PlayerStatus.Wait;
-        Player.Instance.Model.SetActive(false);
+        Player.Instance.SetModelActive(false);
         GoddessModel.DOLocalMoveY(-0.7f, 3)
             .SetRelative()
             .SetLoops(2, LoopType.Yoyo);
@@ -137,7 +137,7 @@ public class LakeGoddess : MonoBehaviour
                     .OnComplete(() => PostFX.gameObject.SetActive(false));
                 SecretGroup.SetActive(false);
                 Player.Instance.Status = PlayerStatus.Moving;
-                Player.Instance.Model.SetActive(true);
+                Player.Instance.SetModelActive(true);
             });
         }
     }
@@ -167,7 +167,7 @@ public class LakeGoddess : MonoBehaviour
     public void Select(int i)
     {
         SEManager.Instance.PlaySystemSE(SystemSE.UI確認);
-        Player.Instance.Model.SetActive(true);
+        Player.Instance.SetModelActive(true);
         GameInput.Cursorvisible = false;
         selecting = false;
         bool honest = false;

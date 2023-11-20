@@ -41,7 +41,7 @@ public class SerialRoot : MonoBehaviour
         Player.Instance.Status = PlayerStatus.Static;
         Player.Instance.transform.LookAt(Nodes[0], Vector3.up);
         enabled = true;
-        Player.Instance.Model.SetActive(false);
+        Player.Instance.SetModelActive(false);
         initMousePos = GameInput.Mouse.screenPosition;
         StartGroup.SetActive(true);
         pulling = false;
@@ -132,7 +132,7 @@ public class SerialRoot : MonoBehaviour
         {
             SEManager.Instance.PlaySystemSE(SystemSE.物品產生);
             //GetComponent<Collider>().enabled = false;
-            Player.Instance.Model.SetActive(true);
+            Player.Instance.SetModelActive(true);
 
             yield return new WaitForSeconds(0);
             if (KeepFPSCam)

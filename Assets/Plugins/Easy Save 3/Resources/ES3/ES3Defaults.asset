@@ -30,6 +30,7 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
+    - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - Boxophobic.AtmosphericHeightFog.Runtime
     - Boxophobic.Utils.Scripts
@@ -38,6 +39,7 @@ MonoBehaviour:
     - DOTween.Modules
     - DOTweenPro.Scripts
     - EasySave3
+    - ExternalAttributes.Core
     - FastScriptReload.Runtime
     - GPUInstancer
     - Kino.Aqua.Runtime

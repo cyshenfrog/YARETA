@@ -10,7 +10,7 @@ public class Portable : MonoBehaviour
     public Transform Pivot;
     public InteractionObject interaction;
     private Rigidbody rb;
-    private Collider[] cols;
+    public Collider[] cols;
     public UltEvent OnTake;
     public UltEvent OnDrop;
     public bool DontDrop;
@@ -28,6 +28,14 @@ public class Portable : MonoBehaviour
         //transform.parent = null;
     }
 
+    public void SetColliders(bool active)
+    {
+        foreach (var collider in cols)
+        {
+            collider.enabled = active;
+        }
+    }
+
     public void Take(bool pause = true)
     {
         StartCoroutine(_Take(pause));
@@ -36,11 +44,7 @@ public class Portable : MonoBehaviour
     public IEnumerator _Take(bool pause = true)
     {
         if (rb) rb.isKinematic = true;
-        foreach (var collider in cols)
-        {
-            collider.enabled = false;
-        }
-
+        SetColliders(false);
         GameRef.CarringObj = this;
         if (pause)
             Player.Instance.Status = PlayerStatus.Wait;
@@ -79,10 +83,7 @@ public class Portable : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         transform.parent = null;
-        foreach (var collider in cols)
-        {
-            collider.enabled = true;
-        }
+        SetColliders(true);
         Player_IKManager.Instance.ResumeTwoHandIK(() =>
         {
             GameRef.CarringObj = null;

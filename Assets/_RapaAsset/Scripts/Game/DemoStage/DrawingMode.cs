@@ -98,7 +98,7 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
         Player.Instance.FPCam.transform.localEulerAngles = new Vector3(GameRef.MainCam.transform.eulerAngles.x, 0, 0);
         rotateEuler = Player.Instance.FPCam.transform.localEulerAngles;
         Player.Instance.FPCam.SetActive(true);
-        Player.Instance.Model.SetActive(false);
+        Player.Instance.SetModelActive(false);
         if (PrototypeMain.Instance.Offworked)
         {
             OffworkUI.SetActive(true);
@@ -128,7 +128,7 @@ public class DrawingMode : UnitySingleton_D<DrawingMode>
             yield return new WaitForSeconds(UI_ButtonBlink.Duration);
             Player.Instance.FPCam.SetActive(false);
             Player.Instance.characterController.enabled = true;
-            Player.Instance.Model.SetActive(true);
+            Player.Instance.SetModelActive(true);
             Player.Instance.Status = PlayerStatus.Moving;
             if (PrototypeMain.Instance.Offworked)
             {

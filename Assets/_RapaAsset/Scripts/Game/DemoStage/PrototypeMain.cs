@@ -63,7 +63,6 @@ public class PrototypeMain : UnitySingleton_D<PrototypeMain>
 
     public void Start()
     {
-        GameRef.MainCam = Camera.main;
         CanSavePos = true;
         UI_ScanMechine.Instance.OnTargetScore += TargetScoreReached;
         RespawnPos = Player.Instance.transform.position;

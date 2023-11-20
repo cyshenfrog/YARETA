@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public enum ActionText
@@ -59,27 +60,19 @@ public class UI_InteractionHint : UnitySingleton_DR<UI_InteractionHint>
         InteractButton.SetHold(hold);
     }
 
-    public void Interact(Interactable obj)
+    public void Interact(Action callback)
     {
-        InteractButton.OnBlinkFinish = then;
+        InteractButton.OnBlinkFinish = callback;
         InteractButton.Press();
-        void then()
-        {
-            obj.Interact();
-            if (!obj.IsInteractable)
-            {
-                InteractButton.transform.position = 9999 * Vector3.down;
-                Player.Instance.PlayerTrigger.UnRegist(obj);
-            }
-        }
     }
 
     public void CloseIcon()
     {
-        Delay.Instance.Wait(UI_ButtonBlink.Duration, then);
-        void then()
-        {
-            InteractButton.transform.position = 9999 * Vector3.down;
-        }
+        InteractButton.transform.position = 9999 * Vector3.down;
+        //Delay.Instance.Wait(UI_ButtonBlink.Duration, then);
+        //void then()
+        //{
+        //    InteractButton.transform.position = 9999 * Vector3.down;
+        //}
     }
 }

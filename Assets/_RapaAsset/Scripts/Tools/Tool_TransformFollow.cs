@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using NaughtyAttributes;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 
 public enum SmoothMoveType
 {
@@ -73,6 +73,19 @@ public class Tool_TransformFollow : MonoBehaviour
     public Vector3 PosOffset;
 
     public bool FollowRot;
+
+    [BoxGroup("Position Follow")]
+    [ShowIf("FollowRot")]
+    public bool FollowRot_X = true;
+
+    [BoxGroup("Position Follow")]
+    [ShowIf("FollowRot")]
+    public bool FollowRot_Y = true;
+
+    [BoxGroup("Position Follow")]
+    [ShowIf("FollowRot")]
+    public bool FollowRot_Z = true;
+
     private Vector3 speed;
 
     public Transform SetTarget
@@ -123,21 +136,21 @@ public class Tool_TransformFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (UpdateType != global::UpdateType.FixedUpdate)
+        if (UpdateType != UpdateType.FixedUpdate)
             return;
         SmoothUpdate();
     }
 
     private void Update()
     {
-        if (UpdateType != global::UpdateType.LateUpdate)
+        if (UpdateType != UpdateType.LateUpdate)
             return;
         SmoothUpdate();
     }
 
     private void LateUpdate()
     {
-        if (UpdateType != global::UpdateType.Update)
+        if (UpdateType != UpdateType.Update)
             return;
         if (Snap)
             transform.position = TargetPos;
@@ -174,7 +187,7 @@ public class Tool_TransformFollow : MonoBehaviour
         }
         else if (FollowRot)
         {
-            transform.rotation = Snap ? Target.rotation : Quaternion.Slerp(transform.rotation, Target.rotation, Time.deltaTime / SmoothRotTime);
+            transform.rotation = Snap ? Target.rotation : Quaternion.Slerp(transform.rotation, Quaternion.Euler(FollowRot_X ? Target.eulerAngles.x : transform.eulerAngles.x, FollowRot_Y ? Target.eulerAngles.y : transform.eulerAngles.y, FollowRot_Z ? Target.eulerAngles.z : transform.eulerAngles.z), Time.deltaTime / SmoothRotTime);
         }
     }
 

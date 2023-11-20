@@ -54,7 +54,7 @@ public class PlayerTrigger : MonoBehaviour
 
     private void Interact(Interactable obj)
     {
-        UI_InteractionHint.Instance.Interact(obj);
+        UI_InteractionHint.Instance.Interact(() => _Interact(obj));
         CheckObjList();
     }
 
@@ -62,8 +62,18 @@ public class PlayerTrigger : MonoBehaviour
     {
         if (!NearestObj)
             return;
-        UI_InteractionHint.Instance.Interact(NearestObj);
+        UI_InteractionHint.Instance.Interact(() => _Interact(NearestObj));
         CheckObjList();
+    }
+
+    private void _Interact(Interactable obj)
+    {
+        obj.Interact();
+        if (!obj.IsInteractable)
+        {
+            UI_InteractionHint.Instance.CloseIcon();
+            Player.Instance.PlayerTrigger.UnRegist(obj);
+        }
     }
 
     public void UnRegist(Interactable obj)

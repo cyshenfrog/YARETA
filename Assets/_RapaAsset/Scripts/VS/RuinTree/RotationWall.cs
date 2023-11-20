@@ -1,7 +1,5 @@
-using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using UltEvents;
 using UnityEngine;
 
 public class RotationWall : MonoBehaviour
@@ -9,7 +7,9 @@ public class RotationWall : MonoBehaviour
     public Pushable PushForward;
     public Pushable PushBack;
     public float Speed = 10f;
+    public float TargetAngle;
     public Action OnStop;
+    public UltEvent OnCorrect;
     private bool rotating;
     private bool isFront;
 
@@ -54,5 +54,11 @@ public class RotationWall : MonoBehaviour
     {
         rotating = false;
         OnStop?.Invoke();
+        if (Mathf.Abs(transform.eulerAngles.y - TargetAngle) < 1f)
+        {
+            OnCorrect?.Invoke();
+            PushForward.Stop();
+            PushBack.Stop();
+        }
     }
 }

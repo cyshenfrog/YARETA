@@ -20,7 +20,7 @@ public class PickEggMode : MonoBehaviour
     {
         if (!Draw)
             Player.Instance.Anim.SetTrigger("Resume");
-        Player.Instance.Model.SetActive(true);
+        Player.Instance.SetModelActive(true);
         if (DrawEgg && TheGoose)
             Player.Instance.Egg.SetActive(false);
         else
@@ -80,7 +80,7 @@ public class PickEggMode : MonoBehaviour
                 Player.Instance.Egg.SetActive(false);
             else
                 Player.Instance.Rock.SetActive(false);
-            Player.Instance.Model.SetActive(false);
+            Player.Instance.SetModelActive(false);
             DrawingMode.Instance.Draw((DrawEgg && TheGoose) ? EggInfo : StoneInfo, 0);
             yield return new WaitForSeconds(3);
             Resume(true);

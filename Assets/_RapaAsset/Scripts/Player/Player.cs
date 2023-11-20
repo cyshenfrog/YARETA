@@ -33,7 +33,7 @@ public class Player : UnitySingleton_D<Player>
     public GameObject Hammer;
     public GameObject DrawModel;
     public GameObject FPCam;
-    public GameObject Model;
+    public GameObject[] Models;
     public DynamicBone MLMDynamic;
     public Transform MLM;
     public Transform LeftDragPos;
@@ -73,7 +73,9 @@ public class Player : UnitySingleton_D<Player>
     private bool running;
     private bool facingWall;
 
-    private bool grounded; private bool Grounded
+    private bool grounded;
+
+    public bool Grounded
     {
         get { return grounded; }
         set
@@ -329,6 +331,17 @@ public class Player : UnitySingleton_D<Player>
 
         if (GameRef.CarringObj)
         {
+            if (PlayerTrigger.NearestObj)
+            {
+                if (PlayerTrigger.NearestObj is Placeable)
+                {
+                    if (GameInput.GetButtonDown(PlayerTrigger.NearestObj.InteractButton))
+                    {
+                        PlayerTrigger.Interact();
+                        return;
+                    }
+                }
+            }
             if (GameInput.GetButtonDown(Actions.Interact) && !GameRef.CarringObj.DontDrop)
             {
                 GameRef.CarringObj.Drop();
@@ -850,6 +863,14 @@ public class Player : UnitySingleton_D<Player>
         Vector3 toDir = to * Vector3.forward;
         Vector3 cross = Vector3.Cross(fromDir, toDir);
         return Vector3.Dot(cross, up) > 0;
+    }
+
+    public void SetModelActive(bool active)
+    {
+        foreach (var item in Models)
+        {
+            item.SetActive(active);
+        }
     }
 
     #endregion CalculateFunction

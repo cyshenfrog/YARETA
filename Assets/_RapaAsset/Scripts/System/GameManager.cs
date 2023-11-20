@@ -21,6 +21,7 @@ public class GameManager : UnitySingleton_D<GameManager>
         Application.targetFrameRate = 60;
         Screen.SetResolution(1920, 1080, true);
 
+        GameRef.MainCam = Camera.main;
         if (TestMode)
         {
             SaveDataManager.TutorialPassed = true;
